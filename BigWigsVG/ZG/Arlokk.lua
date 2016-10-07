@@ -27,9 +27,14 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a skull icon on the marked person (requires promoted or higher)",
 
 	mark_trigger = "Feast on ([^%s]+), my pretties!$",
-
+	mark_trigger_vg = "(.*) (.*) afflicted by Mark of Arlokk",
+	
 	mark_warning_self = "You are marked!",
 	mark_warning_other = "%s is marked!",
+	
+	you = "You",
+	are = "are",
+	
 } end )
 
 ----------------------------------
@@ -40,7 +45,7 @@ BigWigsArlokk = BigWigs:NewModule(boss)
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsArlokk.enabletrigger = boss
 BigWigsArlokk.toggleoptions = {"youmark", "othermark", "icon", "bosskill"}
-BigWigsArlokk.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsArlokk.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -49,6 +54,11 @@ BigWigsArlokk.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
 function BigWigsArlokk:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
+	
 end
 
 ------------------------------
@@ -73,4 +83,13 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-
+function BigWigsArlokk:PeriodicEvent( msg )
+	local _,_,wplayer,wtype = string.find(msg, L["mark_trigger_vg"])
+	if wplayer and wtype then
+		if wplayer == L["you"] and wtype == L["are"] then
+			wplayer = UnitName("player")
+		end
+		self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], wplayer), "Urgent" ) 
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mark_warning_other"], wplayer), 120, "Interface\\Icons\\Ability_Hunter_SniperShot")
+	end
+end
