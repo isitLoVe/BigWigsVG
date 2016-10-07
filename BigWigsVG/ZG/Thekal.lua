@@ -73,7 +73,7 @@ end
 
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if self.db.profile.punch and msg == L["punch_trigger"] then
-		self:ScheduleEvent("BigWigs_Message", 20, L["punch_message"], "Urgent", nil, "Alert")
+		self:ScheduleEvent("BigWigs_Message", 20, L["punch_message"], "Urgent", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["punch_bar"], 25, "Interface\\Icons\\Ability_WarStomp")
 	end
 end

@@ -78,7 +78,7 @@ end
 
 function BigWigsMarli:PeriodicEvent( msg )
 	if self.db.profile.drain and string.find(msg, L["drainlife_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["drainlife_message"], "Urgent", true, "Alert")
+		self:TriggerEvent("BigWigs_Message", L["drainlife_message"], "Urgent", nil, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["drainlife_bar"], 7, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 	elseif string.find(msg, L["web_trigger"]) then
 		local _,_,wplayer,wtype = string.find(msg, L["web_trigger"])
