@@ -68,9 +68,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Strategy broadcast detected from %s. Strategy set to %s."] = true,
 	["Invalid Thaddius strategy received from %s."] = true,
 
-	soundleft = "Interface\\AddOns\\BigWigs\\sounds\\GoLeft.wav",
-	soundright = "Interface\\AddOns\\BigWigs\\sounds\\GoRight.wav",
-	soundacross = "Interface\\AddOns\\BigWigs\\sounds\\SwitchSides.wav",
+	soundleft = "Interface\\AddOns\\BigWigsVG\\sounds\\GoLeft.wav",
+	soundright = "Interface\\AddOns\\BigWigsVG\\sounds\\GoRight.wav",
+	soundacross = "Interface\\AddOns\\BigWigsVG\\sounds\\SwitchSides.wav",
 
 	warnleft = "<----  GO LEFT  <---- GO LEFT <----",
 	warnright = "---->  GO RIGHT  ----> GO RIGHT ---->",
@@ -122,7 +122,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.frameArrow:SetWidth(200)  -- Set These to whatever height/width is needed 
 	self.frameArrow:SetHeight(200) -- for your Texture
 	-- Apply Texture
-	self.texArrow:SetTexture("Interface\\AddOns\\BigWigs\\textures\\arrow")	
+	self.texArrow:SetTexture("Interface\\AddOns\\BigWigsVG\\textures\\arrow")	
 	self.texArrow:SetAllPoints(self.frameArrow)
 	self.frameArrow:SetAlpha(0.6)
 	self.frameArrow:Hide()
@@ -134,7 +134,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.framestraightArrow:SetWidth(150)  -- Set These to whatever height/width is needed 
 	self.framestraightArrow:SetHeight(150) -- for your Texture
 	-- Apply Texture
-	self.texstraightArrow:SetTexture("Interface\\AddOns\\BigWigs\\textures\\straightArrow")	
+	self.texstraightArrow:SetTexture("Interface\\AddOns\\BigWigsVG\\textures\\straightArrow")	
 	self.texstraightArrow:SetAllPoints(self.framestraightArrow)
 	self.framestraightArrow:SetAlpha(0.6)
 	self.framestraightArrow:Hide()
@@ -194,7 +194,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.frameShield:SetWidth(350)  -- Set These to whatever height/width is needed 
 	self.frameShield:SetHeight(350) -- for your Texture
 	-- Apply Texture
-	self.texShield:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\sporefung")	
+	self.texShield:SetTexture("Interface\\AddOns\\BigWigsVG\\Textures\\sporefung")	
 	self.texShield:SetAllPoints(self.frameShield)
 	self.frameShield:SetAlpha(0.7)
 	self.frameShield:Hide()
@@ -230,7 +230,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.frameCthunglare:SetWidth(100)  -- Set These to whatever height/width is needed 
 	self.frameCthunglare:SetHeight(100) -- for your Texture
 	-- Apply Texture
-	self.texCthunglare:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\darkglare")	
+	self.texCthunglare:SetTexture("Interface\\AddOns\\BigWigsVG\\Textures\\darkglare")	
 	self.texCthunglare:SetAllPoints(self.frameCthunglare)
 	self.frameCthunglare:SetAlpha(0.4)
 	self.frameCthunglare:Hide()
@@ -266,7 +266,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.frameCthungeyesactive:SetWidth(150)  -- Set These to whatever height/width is needed 
 	self.frameCthungeyesactive:SetHeight(150) -- for your Texture
 	-- Apply Texture
-	self.texCthungeyesactive:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\Eye_Stalk")	
+	self.texCthungeyesactive:SetTexture("Interface\\AddOns\\BigWigsVG\\Textures\\Eye_Stalk")	
 	self.texCthungeyesactive:SetAllPoints(self.frameCthungeyesactive)
 	self.frameCthungeyesactive:SetAlpha(0.9)
 	self.frameCthungeyesactive:Hide()
@@ -398,7 +398,7 @@ function BigWigsThaddiusArrows:OnRegister()
 	self.frameFroasty:SetWidth(100)  -- Set These to whatever height/width is needed 
 	self.frameFroasty:SetHeight(100) -- for your Texture
 	-- Apply Texture
-	self.texFroasty:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\froasty")	
+	self.texFroasty:SetTexture("Interface\\AddOns\\BigWigsVG\\Textures\\froasty")	
 	self.texFroasty:SetAllPoints(self.frameFroasty)
 	self.frameFroasty:SetAlpha(1.0)
 	self.frameFroasty:Hide()

@@ -9,11 +9,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
 --~~ local dewdrop = DewdropLib:GetInstance("1.0")
 
 local sounds = {
-	Long = "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3",
-	Info = "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3",
-	Alert = "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3",
-	Alarm = "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3",
-	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3",
+	Long = "Interface\\AddOns\\BigWigsVG\\Sounds\\Long.mp3",
+	Info = "Interface\\AddOns\\BigWigsVG\\Sounds\\Info.mp3",
+	Alert = "Interface\\AddOns\\BigWigsVG\\Sounds\\Alert.mp3",
+	Alarm = "Interface\\AddOns\\BigWigsVG\\Sounds\\Alarm.mp3",
+	Victory = "Interface\\AddOns\\BigWigsVG\\Sounds\\Victory.mp3",
 }
 
 

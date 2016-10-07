@@ -154,7 +154,7 @@ BigWigsOptions.name = "FuBar - BigWigs"
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
 BigWigsOptions.hasNoColor = true
-BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
+BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigsVG\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
 BigWigsOptions.hideWithoutStandby = true
@@ -183,9 +183,9 @@ end
 
 function BigWigsOptions:CoreState()
 	if BigWigs:IsActive() then
-		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-enabled")
+		self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-enabled")
 	else
-		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-disabled")
+		self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-disabled")
 	end
 
 	self:UpdateTooltip()
