@@ -14,6 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "FACE THE WRATH OF THE SOULFLAYER!",
 	drain_trigger = "^Hakkar suffers (.+) from (.+) Blood Siphon",
 	mindcontrol_trigger = "(.*) (.*) afflicted by Cause Insanity",
+	mindcontrol_trigger_vg = "(.*) (.*) afflicted by Will of Hakkar",
 
 	you = "You",
 	are = "are",
@@ -22,6 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	-- Warnings and bar texts
 	start_message = "Hakkar engaged - 90sec to drain - 10min to enrage!",
+	start_message_vg = "Hakkar engaged - 10min to enrage!",
 	drain_warning = "%d sec to Life Drain!",
 	drain_message = "Life Drain - 90sec to next!",
 
@@ -70,6 +72,11 @@ function BigWigsHakkar:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
 
 	self:RegisterEvent("BigWigs_Message")
 end
@@ -77,12 +84,13 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
+-- corr blood initial 25, 30 after
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["engage_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["start_message"], "Important")
+		self:TriggerEvent("BigWigs_Message", L["start_message_vg"], "Important")
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
-		self:BeginTimers(true)
+		--commented out till the fight is blizzlike
+		--self:BeginTimers(true)
 	elseif string.find(msg, L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	end
@@ -91,7 +99,24 @@ end
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if not self.prior and string.find(msg, L["drain_trigger"]) then
 		self.prior = true
-		self:BeginTimers()
+		--commented out till the fight is blizzlike
+		--self:BeginTimers()
+	end
+end
+
+function BigWigsHakkar:PeriodicEvent(msg)
+	local _,_, mcplayer, mctype = string.find(msg, L["mindcontrol_trigger_vg"])
+	if mcplayer then
+		if mcplayer == L["you"] then
+			mcplayer = UnitName("player")
+		end
+		if self.db.profile.mc then
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
+		end
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
+		end
 	end
 end
 
