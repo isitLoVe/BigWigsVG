@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["High Priest Venoxis"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local prior
 
 ----------------------------
 --      Localization      --
@@ -19,12 +20,34 @@ L:RegisterTranslations("enUS", function() return {
 	phase_cmd = "phase",
 	phase_name = "Phase 2 Alert",
 	phase_desc = "Warn for Phase 2",
+	
+	poisonyou_cmd = "poisonyou",
+	poisonyou_name = "Poison Cloud on You Alert",
+	poisonyou_desc = "Warn if you are standing in a poison cloud",
 
+	poisonother_cmd = "poisonother",
+	poisonother_name = "Poison Cloud on Others Alert",
+	poisonother_desc = "Warn if others are standing in a poison cloud",
+	
 	renew_trigger = "High Priest Venoxis gains Renew.",
 	phase2_trigger = "Let the coils of hate unfurl!",
 
 	renew_message = "Renew!",
 	phase2_message = "Incoming phase 2 - poison clouds spawning!",
+	
+	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poison Cloud%.$",
+	poison_trigger_gone = "Toxin",
+	
+	poison_bar = "Poison Cloud",
+	poison_message = "Poison Cloud",
+
+	poison_other_warn = " is in a poison cloud!",
+	poison_you_warn = "You are in the poison cloud!",
+	runwarn = "Run from Poison Cloud!",
+	
+	you 		= "You",
+	are 		= "are",
+	
 } end )
 
 ----------------------------------
@@ -34,8 +57,8 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsVenoxis = BigWigs:NewModule(boss)
 BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsVenoxis.enabletrigger = boss
-BigWigsVenoxis.toggleoptions = {"renew", "phase", "bosskill"}
-BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsVenoxis.toggleoptions = {"renew", "phase", "poisonyou", "poisonother", "bosskill"}
+BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -45,6 +68,12 @@ function BigWigsVenoxis:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 end
 
 ------------------------------
@@ -63,3 +92,26 @@ function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
+function BigWigsVenoxis:PeriodicEvent( msg )
+	if string.find(arg1, L["poison_trigger"]) then
+		local _,_, pl, ty = string.find(arg1, L["poison_trigger"])
+		if (pl and ty) then
+			if self.db.profile.poisonyou and pl == L["you"] and ty == L["are"] then
+				BigWigsThaddiusArrows:Direction("Run")
+				self:TriggerEvent("BigWigs_Message", L["poison_you_warn"], "Personal", true, "Alarm")
+				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["poison_other_warn"], "Important", nil, nil, true)
+				self:TriggerEvent("BigWigs_StartBar", self, L["poison_bar"], 15, "Interface\\Icons\\Spell_Nature_NatureTouchDecay")
+			elseif self.db.profile.poisonother then
+				self:TriggerEvent("BigWigs_Message", pl .. L["poison_other_warn"], "Important")
+				self:TriggerEvent("BigWigs_SendTell", pl, L["poison_you_warn"])
+				self:TriggerEvent("BigWigs_StartBar", self, L["poison_bar"], 15, "Interface\\Icons\\Spell_Nature_NatureTouchDecay")
+			end
+		end
+	end
+end
+
+function BigWigsVenoxis:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if string.find(msg, L["poison_trigger_gone"]) then
+		BigWigsThaddiusArrows:Runstop()
+	end
+end
