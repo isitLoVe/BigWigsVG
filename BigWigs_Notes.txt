@@ -1,0 +1,25 @@
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
+	
+	
+	
+	function AceEvent:ScheduleEvent(event, delay, a1, a2, a3, a4, a5)
+	
+	BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+	
+	self:ScheduleEvent("BigWigs_Message", 20, L["punch_message"], "Urgent", true, "Alert")
+	
+	
+	
+	self:TriggerEvent("BigWigs_StartBar", self, L["punch_bar"], 25, "Interface\\Icons\\Ability_WarStomp")
+	
+	
+	important = "ff0000", -- Red
+	personal = "ff0000", -- Red
+	urgent = "ff7f00", -- Orange
+	attention = "ffff00", -- Yellow
+	positive = "00ff00", -- Green
+	bosskill = "00ff00", -- Green
+	core = "00ffff", -- Cyan
