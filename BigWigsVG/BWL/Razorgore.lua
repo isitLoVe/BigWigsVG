@@ -24,9 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 	
 
 	mc_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion%.$",
-	mc_bar = "Mind Exhaustion: ",
-	mcyou = "You",
-	mcare = "are",
+	mc_bar = "Mind Exhaustion: %s",
+	you = "You",
+	are = "are",
 		
 	egg_trigger = "Destroy Egg",
 	egg_message = "%d/30 eggs destroyed!",
@@ -45,6 +45,15 @@ L:RegisterTranslations("enUS", function() return {
 	phase_cmd = "phase",
 	phase_name = "Phases",
 	phase_desc = "Alert on phase 1 and 2",
+	
+	conflag_cmd = "conflag",
+	conflag_name = "Conflagration",
+	conflag_desc = "Alert for Conflagration",
+	
+	conflag_trigger = "^([^%s]+) ([^%s]+) afflicted by Conflagration%.$",
+	conflag_bar = "Conflagration on %s",
+	conflag_warn = "Conflagration on %s",
+	
 } end)
 
 ------------------------------
@@ -54,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsRazorgore = BigWigs:NewModule(boss)
 BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsRazorgore.enabletrigger = { boss, controller }
-BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "bosskill" }
+BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "conflag", "bosskill" }
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
@@ -80,11 +89,23 @@ end
 --      Event Handlers      --
 ------------------------------
 function BigWigsRazorgore:MC(msg)
-	local _,_, pplayer, ptype = string.find(msg, L["mc_trigger"])
-	if pplayer then
-		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, L["mc_bar"] .. pplayer, 180, "Interface\\Icons\\Spell_Shadow_Teleport")
+	if string.find(msg, L["mc_trigger"]) and self.db.profile.mc then
+		local _,_, pplayer, ptype = string.find(msg, L["mc_trigger"])
+		if pplayer and ptype then
+			if pplayer == L["you"] and ptype == L["are"] then
+				pplayer = UnitName("player")
+			end
 		end
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mc_bar"], pplayer), 180, "Interface\\Icons\\Spell_Shadow_Teleport")
+	elseif string.find(msg, L["conflag_trigger"]) and self.db.profile.conflag then
+		local _,_, pplayer, ptype = string.find(msg, L["conflag_trigger"])
+		if pplayer and ptype then
+			if pplayer == L["you"] and ptype == L["are"] then
+				pplayer = UnitName("player")
+			end
+		end
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["conflag_bar"], pplayer), 10, "Interface\\Icons\\Spell_Fire_Incinerate")
+		self:TriggerEvent("BigWigs_Message", string.format(L["conflag_warn"], pplayer), "Urgent", nil, "Alert")
 	end
 end
 
