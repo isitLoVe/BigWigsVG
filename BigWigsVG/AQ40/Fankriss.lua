@@ -22,11 +22,22 @@ L:RegisterTranslations("enUS", function() return {
 	entangle_name = "Entangle Alert",
 	entangle_desc = "Warn for entangled players",
 	
+	mortal_cmd = "mortal",
+	mortal_name = "Mortal Wound Alert",
+	mortal_desc = "Warn for Mortal Wound",
+	
 	entangletrigger = "(.*) (.*) afflicted by Entangle.",
 	entanglebar = "%s entangled",
 	
+	mortal_trigger = "^([^%s]+) ([^%s]+) afflicted by Mortal Wound",
+	mortal_trigger_num = "(%d+)",
+	mortal_warn = "Mortal Wound on %s",
+	mortal_warn_num = "Mortal Wound (%d) on %s",
+	mortal_bar = "Mortal Wound on %s",
+	mortal_bar_num = "Mortal Wound (%d) on %s",
+	
 	you = "You",
-	are = "are",
+	are = "are",	
 	
 	-- not working because no combatlog messages when a worm spawns on VG
 	wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
@@ -41,8 +52,8 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsFankriss = BigWigs:NewModule(boss)
 BigWigsFankriss.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsFankriss.enabletrigger = boss
-BigWigsFankriss.toggleoptions = {"worm", "entangle", "bosskill"}
-BigWigsFankriss.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsFankriss.toggleoptions = {"worm", "entangle", "mortal", "bosskill"}
+BigWigsFankriss.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -80,6 +91,27 @@ function BigWigsFankriss:SprayEvent( msg )
 			if ( not times[wplayer] ) or ( times[wplayer] and ( times[wplayer] + 10 ) < t) then
 				self:TriggerEvent("BigWigs_SendSync", "FankrissEntangle "..wplayer)
 			end
+		end
+	elseif self.db.profile.mortal and string.find(msg, L["mortal_trigger"]) then
+		local _,_,wplayer,wtype = string.find(msg, L["mortal_trigger"])
+		local _,_,wnum = string.find(msg, L["mortal_trigger_num"])
+		
+		if wplayer and wtype and wnum then
+			if wplayer == L["you"] and wtype == L["are"] then
+				wplayer = UnitName("player")
+			end
+			
+			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["mortal_bar_num"],wnum-1, wplayer))
+			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["mortal_bar"], wplayer, wplayer))
+			
+			self:TriggerEvent("BigWigs_Message", string.format(L["mortal_warn_num"],wnum, wplayer), "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar_num"],wnum, wplayer), 15, "Interface\\Icons\\INV_Misc_Dust_02")
+		elseif wplayer and wtype then
+			if wplayer == L["you"] and wtype == L["are"] then
+				wplayer = UnitName("player")
+			end
+			self:TriggerEvent("BigWigs_Message", string.format(L["mortal_warn"], wplayer), "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar"], wplayer), 15, "Interface\\Icons\\INV_Misc_Dust_02")
 		end
 	end
 end
