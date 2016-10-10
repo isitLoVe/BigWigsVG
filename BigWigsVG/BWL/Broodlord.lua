@@ -21,9 +21,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 = "Mortal Strike on you!",
 	warn2 = "Mortal Strike on %s!",
-        warn3 = "Blast Wave in 3sec!",
+	warn3 = "Blast Wave in 3sec!",
 
-        wavebartext = "Blast Wave",
+	wavebartext = "Blast Wave",
 
 	youms_cmd = "youms",
 	youms_name = "Mortal strike on you alert",
@@ -46,25 +46,40 @@ BigWigsBroodlord = BigWigs:NewModule(boss)
 BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsBroodlord.enabletrigger = boss
 BigWigsBroodlord.toggleoptions = {"youms", "elsems", "wavebar", "bosskill"}
-BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 19008 $", 12, -3))
+BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsBroodlord:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+function BigWigsBroodlord:BigWigs_RecvSync( sync, rest, nick )
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
+		if klhtm.isloaded and klhtm.isenabled then
+			if klhtm.net.checkpermission() then
+				klhtm.net.sendmessage("target " ..boss)
+				klhtm:ResetRaidThreat()
+			end
+		end
+	end
+end
 
 function BigWigsBroodlord:Event(msg)
 	if string.find(msg, L["triggerms"]) then
