@@ -15,6 +15,9 @@
 	
 	self:TriggerEvent("BigWigs_StartBar", self, L["punch_bar"], 25, "Interface\\Icons\\Ability_WarStomp")
 	
+	conflag_trigger = "^([^%s]+) ([^%s]+) afflicted by Conflagration%.$",
+
+	
 	
 	important = "ff0000", -- Red
 	personal = "ff0000", -- Red
@@ -23,3 +26,19 @@
 	positive = "00ff00", -- Green
 	bosskill = "00ff00", -- Green
 	core = "00ffff", -- Cyan
+
+
+klhtm.net.sendmessage("target " .. UnitName("target"))
+
+
+klhtm.net.checkpermission()
+Returns: non-nil if you are allowed to send special commands (raid assistant / party leader, etc)
+]]
+
+if klhtm.isloaded and klhtm.isenabled then
+	if klhtm.net.checkpermission() then
+		klhtm.net.sendmessage("target " ..boss)
+		klhtm:ResetRaidThreat()
+	end
+end
+
