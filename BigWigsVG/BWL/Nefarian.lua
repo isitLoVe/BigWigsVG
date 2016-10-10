@@ -147,6 +147,7 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 					self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
 					self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 					self:TriggerEvent("BigWigs_StartBar", self, L["shadowflame_bar_next"], 12, "Interface\\Icons\\Spell_Fire_Incinerate")
+					self:BigWigs_KTM()
 				elseif self.db.profile.otherwarn and string.find(msg, L["zerg_trigger"]) then 
 					self:TriggerEvent("BigWigs_Message", v[1], "Important", true, "Long")
 				end
@@ -176,3 +177,11 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 	end
 end
 
+function BigWigsNefarian:BigWigs_KTM()
+	if klhtm.isloaded and klhtm.isenabled then
+		if klhtm.net.checkpermission() then
+			klhtm.net.sendmessage("target " ..boss)
+			klhtm:ResetRaidThreat()
+		end
+	end
+end
