@@ -186,11 +186,27 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	elseif sync ~= "ChromaggusBreath" or not spellId or not self.db.profile.breath then return end
 	local spellName = L:HasTranslation("breath"..spellId) and L["breath"..spellId] or nil
 	if not spellName then return end
-
-	self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2 )
+	
+	if L["breath"..spellId] == L["breath1"] then --Time Lapse
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon1"])
+		if klhtm.isloaded and klhtm.isenabled then
+			klhtm:ResetRaidThreat()
+		end
+	elseif L["breath"..spellId] == L["breath2"] then --Corrosive Acid
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon2"])
+	elseif L["breath"..spellId] == L["breath3"] then --Ignite Flesh
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon3"])
+	elseif L["breath"..spellId] == L["breath4"] then --Incinerate
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon4"])
+	elseif L["breath"..spellId] == L["breath5"] then --Frost Burn
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon5"])
+	end
+	
+	
 	self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
 	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 55, string.format(L["breath_warning"], spellName), "Important", true, "Alarm")
 	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId])
+	
 	
     if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") or (UnitClass("player") == "Mage") or (UnitClass("player") == "Warlock") or (UnitClass("player") == "Paladin") then
 		self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 27) 
