@@ -644,3 +644,37 @@ end
 function BigWigs:Hide()
         Powa_Frames[5]:Hide();
 end
+
+function BigWigs:CheckYourPrivilege( playername )
+	local name
+	local rank
+
+	if GetNumRaidMembers() > 0 then
+		for i = 1, 40 do
+			name, rank = GetRaidRosterInfo(i)
+			if name == playername then
+				if rank > 0 then
+					return true
+				else
+					return nil
+				end
+			end
+		end
+	elseif GetNumPartyMembers() > 0 then
+		if UnitIsPartyLeader("player") == 1 and playername == UnitName("player") then
+			return true
+		else
+			for i = 1, 4 do
+				if UnitName("party" .. i) == playername then
+					if UnitIsPartyLeader("party" .. i) == 1 then
+						return true
+					else
+						return nil
+					end
+				end
+			end
+		end
+	else
+		return true -- single player = officer
+	end
+end

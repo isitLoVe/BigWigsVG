@@ -72,9 +72,9 @@ function BigWigsBroodlord:BigWigs_RecvSync( sync, rest, nick )
 	if sync == self:GetEngageSync() and rest and rest == boss and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
-		if klhtm.isloaded and klhtm.isenabled then
-			if klhtm.net.checkpermission() then
-				klhtm.net.sendmessage("target " ..boss)
+		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm.net.sendmessage("targetbw " ..boss)
 				klhtm:ResetRaidThreat()
 			end
 		end

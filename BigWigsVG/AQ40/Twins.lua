@@ -149,11 +149,15 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsTwins:Telebar()
-                klhtm:ResetRaidThreat()
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
-		self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn10"], "Urgent")
-		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30.1, "Interface\\Icons\\Spell_Arcane_Blink")
+	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		if klhtm.isloaded and klhtm.isenabled then
+			klhtm:ResetRaidThreat()
+		end
+	end
+	self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
+	self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn10"], "Urgent")
+	self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Urgent")
+	self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30.1, "Interface\\Icons\\Spell_Arcane_Blink")
 end	
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)

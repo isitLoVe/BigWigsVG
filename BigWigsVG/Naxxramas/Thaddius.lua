@@ -200,7 +200,12 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 				self:TriggerEvent("BigWigs_StopBar", self, L["powersurgebar"])
 				self:TriggerEvent("BigWigs_StopBar", self, L["warstomp_bar_stalagg"])
 				self:TriggerEvent("BigWigs_StopBar", self, L["warstomp_bar_feugen"])
-				klhtm:ResetRaidThreat()
+				if BigWigs:CheckYourPrivilege(UnitName("player")) then
+					if klhtm.isloaded and klhtm.isenabled then
+						klhtm:ResetRaidThreat()
+						klhtm.net.sendmessage("targetbw " ..boss)
+					end
+				end
 			if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["addsdownwarn"], "Attention") end
 		end
 	end

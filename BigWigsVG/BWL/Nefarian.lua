@@ -178,9 +178,9 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 end
 
 function BigWigsNefarian:BigWigs_KTM()
-	if klhtm.isloaded and klhtm.isenabled then
-		if klhtm.net.checkpermission() then
-			klhtm.net.sendmessage("target " ..boss)
+	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		if klhtm.isloaded and klhtm.isenabled then
+			klhtm.net.sendmessage("targetbw " ..boss)
 			klhtm:ResetRaidThreat()
 		end
 	end
