@@ -189,8 +189,10 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	
 	if L["breath"..spellId] == L["breath1"] then --Time Lapse
 		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon1"])
-		if klhtm.isloaded and klhtm.isenabled then
-			klhtm:ResetRaidThreat()
+		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm:ResetRaidThreat()
+			end
 		end
 	elseif L["breath"..spellId] == L["breath2"] then --Corrosive Acid
 		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon2"])
