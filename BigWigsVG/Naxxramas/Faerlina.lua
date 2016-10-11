@@ -224,11 +224,11 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L["silencewarn5sec"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["silencebar"], self.silencetime, "Interface\\Icons\\Spell_Holy_Silence")
 		end
-		if self.enraged then
+		if self.enraged == true then
 			--VG Enrage Bar 60sec after silence when enraged
 			self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.enragetimewhilesilenced - 15, L["enragewarn15sec"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.enragetimewhilesilenced, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-		else
+		elseif self.enraged == nil then
 			--VG Enrage Bar 30sec after silence when not enraged
 			self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L["enragewarn15sec"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
