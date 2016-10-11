@@ -54,16 +54,24 @@ Revision 19010
 - [x] Shazzrah
 - [x] Sulfuron Harbinger
 - [x] Golemagg the Incinerator
-- [ ] Majordomo Executus
+- [x] Majordomo Executus
 - [ ] Ragnaros
 
+## Ruins of Ahn'Qiraj
+- [x] Kurinnaxx
+- [ ] General Rajaxx
+- [ ] Moam
+- [ ] Buru the Gorger
+- [ ] Ayamiss the Hunter
+- [ ] Ossirian the Unscarred
+
 ## Zul'Gurub
-- [ ] High Priestess Jeklik
-- [ ] High Priest Venoxis
-- [ ] High Priestess Mar'li
+- [x] High Priestess Jeklik
+- [x] High Priest Venoxis
+- [x] High Priestess Mar'li
 - [x] Bloodlord Mandokir
-- [ ] High Priestess Arlokk
-- [ ] High Priest Thekal
+- [x] High Priestess Arlokk
+- [x] High Priest Thekal
 - [x] Jin'do the Hexxer
 - [ ] Hakkar
 
