@@ -1,3 +1,4 @@
+--special thx to Microbion for testing the new code
 
 assert(BigWigs, "BigWigs not found!")
 
@@ -8,11 +9,13 @@ assert(BigWigs, "BigWigs not found!")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsTranq")
 
 L:RegisterTranslations("enUS", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
+	--CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
+	--CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
+	CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF = "Your Tranquilizing Shot missed (.+).",
 
 	["Tranq - %s"] = true,
 	["%s's Tranq failed!"] = true,
+	["Tranq failed - %s"] = true,
 	["Tranq"] = true,
 	["Options for the tranq module."] = true,
 	["Toggle tranq bars on or off."] = true,
@@ -24,8 +27,11 @@ L:RegisterTranslations("enUS", function() return {
 ----------------------------------
 
 BigWigsTranq = BigWigs:NewModule(L["Tranq"])
-BigWigsTranq.revision = tonumber(string.sub("$Revision: 11446 $", 12, -3))
+BigWigsTranq.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 BigWigsTranq.defaults = {
+	bars = true,
+}
+BigWigsTranq.defaultDB = {
 	bars = true,
 }
 BigWigsTranq.external = true
@@ -52,19 +58,22 @@ BigWigsTranq.consoleOptions = {
 ------------------------------
 
 function BigWigsTranq:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+	--self:RegisterEvent("CHAT_MSG_SPELL_SELF_BUFF")
+	--self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:RegisterEvent("BigWigs_TranqFired", 5)
-	self:RegisterEvent("BigWigs_TranqFail", 5)
+	--self:RegisterEvent("BigWigs_TranqFired", 5)
+	--self:RegisterEvent("BigWigs_TranqFail", 5)
+	self:RegisterEvent("BigWigs_TranqFailVG", 5)
+	
 end
 
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
+--[[
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
@@ -72,7 +81,17 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
 	end
 end
+]]
 
+function BigWigsTranq:CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF(msg)
+	if not msg then
+		self:Debug("CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF: msg is nil")
+	elseif string.find(msg, L["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"]) then
+		self:TriggerEvent("BigWigs_SendSync", "TranqShotFailVG "..UnitName("player"))
+	end
+end
+
+--[[
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
@@ -80,21 +99,35 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
 end
+]]
 
 function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
-	if sync == "TranqShotFired" then self:TriggerEvent("BigWigs_TranqFired", details)
-	elseif sync == "TranqShotFail" then self:TriggerEvent("BigWigs_TranqFail", details) end
+	if sync == "TranqShotFailVG" then self:TriggerEvent("BigWigs_TranqFailVG", details)
+	--elseif sync == "TranqShotFired" then self:TriggerEvent("BigWigs_TranqFired", details)
+	--elseif sync == "TranqShotFail" then self:TriggerEvent("BigWigs_TranqFail", details)
+	end
 end
 
+--[[
 function BigWigsTranq:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["Tranq - %s"], unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 	end
 end
+]]
 
+--[[
 function BigWigsTranq:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
 		self:SetCandyBarColor(string.format(L["Tranq - %s"], unitname), "Red")
+		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
+	end
+end
+]]
+
+function BigWigsTranq:BigWigs_TranqFailVG(unitname)
+	if self.db.profile.bars then
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["Tranq failed - %s"], unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
 	end
 end
