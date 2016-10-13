@@ -90,7 +90,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"])
-BigWigsCustomBar.revision = tonumber(string.sub("$Revision: 15072 $", 12, -3))
+BigWigsCustomBar.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 BigWigsCustomBar.external = true
 BigWigsCustomBar.consoleCmd = L["custombar"]
 BigWigsCustomBar.consoleOptions = {
@@ -160,12 +160,16 @@ end
 ------------------------------
 
 function BigWigsCustomBar:StartBar(bar, nick, localOnly)
-	local _, _, seconds, barText = string.find(bar, "(%d+) (.*)")
+	DEFAULT_CHAT_FRAME:AddMessage(tostring(bar))
+	local _, _, seconds, barText = string.find(bar, "(%d*%.?%d+) (.*)")
+	DEFAULT_CHAT_FRAME:AddMessage(tostring(seconds))
+	DEFAULT_CHAT_FRAME:AddMessage(tostring(barText))
 	if not seconds or not barText then return end
 	seconds = tonumber(seconds)
 	if seconds == nil then return end
 
 	if not nick then nick = L["Local"] end
+
 	self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
 	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 end
