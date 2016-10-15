@@ -51,13 +51,14 @@ BigWigsFlamegor = BigWigs:NewModule(boss)
 BigWigsFlamegor.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsFlamegor.enabletrigger = boss
 BigWigsFlamegor.toggleoptions = {"wingbuffet", "shadowflame", "frenzy", "bosskill"}
-BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 19004 $", 12, -3))
+BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsFlamegor:OnEnable()
+	started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
