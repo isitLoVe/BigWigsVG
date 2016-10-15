@@ -59,7 +59,7 @@ Revision 19010
 
 ## Ruins of Ahn'Qiraj
 - [x] Kurinnaxx
-- [ ] General Rajaxx
+- [x] General Rajaxx
 - [ ] Moam
 - [ ] Buru the Gorger
 - [ ] Ayamiss the Hunter
@@ -73,7 +73,7 @@ Revision 19010
 - [x] High Priestess Arlokk
 - [x] High Priest Thekal
 - [x] Jin'do the Hexxer
-- [ ] Hakkar
+- [x] Hakkar
 
 
 http://vanillagaming.org/
