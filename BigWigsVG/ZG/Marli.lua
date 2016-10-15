@@ -57,6 +57,8 @@ BigWigsMarli.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 ------------------------------
 
 function BigWigsMarli:OnEnable()
+	started = nil
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	--self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -64,6 +66,10 @@ function BigWigsMarli:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
+	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -86,8 +92,22 @@ function BigWigsMarli:PeriodicEvent( msg )
 			if wplayer == L["you"] and wtype == L["are"] then
 				wplayer = UnitName("player")
 			end
-			self:TriggerEvent("BigWigs_Message", string.format(L["web_message"], wplayer), "Urgent" ) 
+			--self:TriggerEvent("BigWigs_Message", string.format(L["web_message"], wplayer), "Urgent" ) 
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["web_bar"], wplayer), 8, "Interface\\Icons\\Spell_Nature_EarthBind")
+		end
+	end
+end
+
+function BigWigsMarli:BigWigs_RecvSync(sync, rest)	
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm.net.sendmessage("targetbw " ..boss)
+			end
 		end
 	end
 end
