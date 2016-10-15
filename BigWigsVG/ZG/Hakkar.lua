@@ -29,6 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	mindcontrol_message = "%s is mindcontrolled!",
 	mindcontrol_bar = "MC: %s",
+	
+	blood_trigger = "(.*) (.*) afflicted by Corrupted Blood",
+	blood_message = "Corrupted Blood in ~5sec",
+	blood_bar = "Corrupted Blood",
 
 	["Enrage"] = true,
 	["Life Drain"] = true,
@@ -46,6 +50,10 @@ L:RegisterTranslations("enUS", function() return {
 	mc_cmd = "mc",
 	mc_name = "Mind Control",
 	mc_desc = "Alert when someone is mind controlled.",
+	
+	blood_cmd = "blood",
+	blood_name = "Corrupted Blood Alerts",
+	blood_desc = "Alert when Corrupted Blood is casted.",
 
 	icon_cmd = "icon",
 	icon_name = "Place Icon",
@@ -59,8 +67,8 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "bosskill" }
-BigWigsHakkar.revision = tonumber(string.sub("$Revision: 17555 $", 12, -3))
+BigWigsHakkar.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "blood", "bosskill" }
+BigWigsHakkar.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -68,39 +76,38 @@ BigWigsHakkar.revision = tonumber(string.sub("$Revision: 17555 $", 12, -3))
 
 function BigWigsHakkar:OnEnable()
 	self.prior = nil
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "PeriodicEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PeriodicEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE", "PeriodicEvent")
 
-	self:RegisterEvent("BigWigs_Message")
+	--self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "HakkarBlood", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HakkarMC", 5)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
--- corr blood initial 25, 30 after
+
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["engage_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["start_message_vg"], "Important")
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
+		if self.db.profile.blood then
+			self:TriggerEvent("BigWigs_StartBar", self, L["blood_bar"], 25, "Interface\\Icons\\Spell_Shadow_LifeDrain")
+			self:ScheduleEvent("BigWigs_Message", 20, L["blood_message"], "Urgent")
+			end
 		--commented out till the fight is blizzlike
 		--self:BeginTimers(true)
 	elseif string.find(msg, L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
-	end
-end
-
-function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if not self.prior and string.find(msg, L["drain_trigger"]) then
-		self.prior = true
-		--commented out till the fight is blizzlike
-		--self:BeginTimers()
 	end
 end
 
@@ -110,29 +117,36 @@ function BigWigsHakkar:PeriodicEvent(msg)
 		if mcplayer == L["you"] then
 			mcplayer = UnitName("player")
 		end
+		self:TriggerEvent("BigWigs_SendSync", "HakkarMC "..mcplayer)
+	end
+	
+	if string.find(msg, L["blood_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "HakkarBlood")
+	end
+end
+
+function BigWigsHakkar:BigWigs_RecvSync(sync, rest)
+	if sync == "HakkarBlood" then
+		if self.db.profile.blood then
+			self:ScheduleEvent("BigWigs_Message", 20, L["blood_message"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["blood_bar"], 25, "Interface\\Icons\\Spell_Shadow_LifeDrain")
+		end
+	elseif sync == "HakkarMC" then
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
-			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], rest), "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], rest), 25, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
+			self:TriggerEvent("BigWigs_SetRaidIcon", rest)
 		end
 	end
 end
 
-function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
-	local _,_, mcplayer, mctype = string.find(msg, L["mindcontrol_trigger"])
-	if mcplayer then
-		if mcplayer == L["you"] then
-			mcplayer = UnitName("player")
-		end
-		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
-			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
-		end
-		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
-		end
+--[[commented out till the fight is blizzlike
+function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
+	if not self.prior and string.find(msg, L["drain_trigger"]) then
+		self.prior = true
+		self:BeginTimers()
 	end
 end
 
@@ -151,5 +165,5 @@ function BigWigsHakkar:BeginTimers(first)
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 	end
 end
-
+]]
 
