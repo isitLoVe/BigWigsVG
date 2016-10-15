@@ -78,6 +78,8 @@ function BigWigsJeklik:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikSilence", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "JeklikFear", 5)
 end
 
 ------------------------------
@@ -92,7 +94,7 @@ end
 
 function BigWigsJeklik:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and string.find(msg, L["heal_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent", "Alert")
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent", nil, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["heal_message"], 4, "Interface\\Icons\\Spell_Holy_GreaterHeal")
 	--elseif self.db.profile.swarm and string.find(msg, L["swarm_trigger"]) then
 	--	self:TriggerEvent("BigWigs_Message", L["swarm_message"], "Urgent")
@@ -102,12 +104,10 @@ end
 
 function BigWigsJeklik:AbilityEvent(msg)
 	if self.db.profile.silence and string.find(msg, L["silence_trigger"]) then
-		self:ScheduleEvent("BigWigs_Message", 15, L["silence_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["silence_bar"], 20, "Interface\\Icons\\Spell_Shadow_Teleport")
+		self:TriggerEvent("BigWigs_SendSync", "JeklikSilence")
 	end
 	if self.db.profile.fear and string.find(msg, L["fear_trigger"]) then
-		self:ScheduleEvent("BigWigs_Message", 15, L["fear_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 20, "Interface\\Icons\\Racial_Troll_Berserk")
+		self:TriggerEvent("BigWigs_SendSync", "JeklikFear")
 	end
 end
 
@@ -125,5 +125,12 @@ function BigWigsJeklik:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("BigWigs_Message", 8, L["fear_message"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 13, "Interface\\Icons\\Racial_Troll_Berserk")
 		end
+		
+	elseif sync == "JeklikFear" then
+		self:ScheduleEvent("BigWigs_Message", 15, L["fear_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 20, "Interface\\Icons\\Racial_Troll_Berserk")
+	elseif sync == "JeklikSilence" then
+		self:ScheduleEvent("BigWigs_Message", 15, L["silence_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["silence_bar"], 20, "Interface\\Icons\\Spell_Shadow_Teleport")
 	end
 end
