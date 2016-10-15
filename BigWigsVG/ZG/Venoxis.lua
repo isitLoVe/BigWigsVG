@@ -65,6 +65,7 @@ BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 ------------------------------
 
 function BigWigsVenoxis:OnEnable()
+	started = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -74,6 +75,10 @@ function BigWigsVenoxis:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -98,11 +103,11 @@ function BigWigsVenoxis:PeriodicEvent( msg )
 		if (pl and ty) then
 			if self.db.profile.poisonyou and pl == L["you"] and ty == L["are"] then
 				BigWigsThaddiusArrows:Direction("Run")
-				self:TriggerEvent("BigWigs_Message", L["poison_you_warn"], "Personal", true, "Alarm")
-				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["poison_other_warn"], "Important", nil, nil, true)
+				--self:TriggerEvent("BigWigs_Message", L["poison_you_warn"], "Personal", true, "Alarm")
+				--self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["poison_other_warn"], "Important", nil, nil, true)
 				self:TriggerEvent("BigWigs_StartBar", self, L["poison_bar"], 15, "Interface\\Icons\\Spell_Nature_NatureTouchDecay")
 			elseif self.db.profile.poisonother then
-				self:TriggerEvent("BigWigs_Message", pl .. L["poison_other_warn"], "Important")
+				--self:TriggerEvent("BigWigs_Message", pl .. L["poison_other_warn"], "Important")
 				self:TriggerEvent("BigWigs_SendTell", pl, L["poison_you_warn"])
 				self:TriggerEvent("BigWigs_StartBar", self, L["poison_bar"], 15, "Interface\\Icons\\Spell_Nature_NatureTouchDecay")
 			end
@@ -113,5 +118,19 @@ end
 function BigWigsVenoxis:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["poison_trigger_gone"]) then
 		BigWigsThaddiusArrows:Runstop()
+	end
+end
+
+function BigWigsVenoxis:BigWigs_RecvSync(sync, rest)	
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm.net.sendmessage("targetbw " ..boss)
+			end
+		end
 	end
 end
