@@ -132,7 +132,6 @@ end
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["disabletrigger"]) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
-                --BigWigs:Flawless()
 		self.core:ToggleModuleActive(self, false)
 	end
 end

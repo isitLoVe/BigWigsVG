@@ -17,6 +17,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
 	sacrificewarn = " is being Sacrificed!",
+	sacrificebar = " is being Sacrificed!",
+	larva = "Hive'Zara Larva",
+	
 	you = "You",
 	are = "are",	
 } end )
@@ -29,7 +32,7 @@ BigWigsAyamiss = BigWigs:NewModule(boss)
 BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsAyamiss.enabletrigger = boss
 BigWigsAyamiss.toggleoptions = {"sacrifice", "bosskill"}
-BigWigsAyamiss.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsAyamiss.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -48,7 +51,10 @@ function BigWigsAyamiss:CheckSacrifice( msg )
 		if (player == L["you"] and type == L["are"]) then
 			player = UnitName("player")
 		end
-		if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Important", "Alarm") end
+		if self.db.profile.sacrifice then
+			self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Important", "Alarm")
+			self:TriggerEvent("BigWigs_StartBar", self, player .. L["sacrificebar"], 6, "Interface\\Icons\\Ability_Creature_Poison_05")
+		end
 	end
 end
 
