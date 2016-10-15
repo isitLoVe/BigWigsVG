@@ -67,13 +67,13 @@ function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 		self:TriggerEvent("BigWigs_StartBar", self, L["tigers_bar"], 13, "Interface\\Icons\\INV_Misc_Pelt_04")
 	elseif self.db.profile.heal and msg == L["heal_trigger"] then
 		self:TriggerEvent("BigWigs_StartBar", self, L["healbar"], 4, "Interface\\Icons\\Spell_Holy_Heal")
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent", true, "Alert")
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent", nil, "Alert")
 	end
 end
 
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if self.db.profile.punch and msg == L["punch_trigger"] then
-		self:ScheduleEvent("BigWigs_Message", 20, L["punch_message"], "Urgent", true, "Alert")
+		self:ScheduleEvent("BigWigs_Message", 20, L["punch_message"], "Urgent", nil, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["punch_bar"], 25, "Interface\\Icons\\Ability_WarStomp")
 	end
 end
