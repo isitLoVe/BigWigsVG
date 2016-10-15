@@ -40,7 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 	
 	whirlwind_trigger = "gains Whirlwind",
 	whirlwind_bar = "Whirlwind",
-	
+	whirlwind_warn = "Whirlwind in ~5sec",
+
 	enraged_message = "Ohgan down! Mandokir enraged!",	
 } end )
 
@@ -99,12 +100,12 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 		if n == UnitName("player") and self.db.profile.you then
 	        BigWigsThaddiusArrows:Direction("RunZG")
 			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Attention", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Attention")
 			--self:TriggerEvent("BigWigs_StartBar", self, string.format(L["watched_bar_self"], UnitName("player")), 20, "Interface\\Icons\\Spell_Shadow_Charm")
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["watched_bar_other"], UnitName("player")), 20, "Interface\\Icons\\Spell_Shadow_Charm")
 		elseif self.db.profile.other then
 			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["watched_bar_other"], UnitName("player")), 20, "Interface\\Icons\\Spell_Shadow_Charm")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["watched_bar_other"], n), 20, "Interface\\Icons\\Spell_Shadow_Charm")
 			
 			if self.db.profile.icon then
 				self:TriggerEvent("BigWigs_SendTell", n, L["watched_warning_self"])
@@ -125,8 +126,10 @@ function BigWigsMandokir:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 		if self.db.profile.whirlwind then
 			--check if whirlwind counter is even (VG Whirlwind: 20, ~34, ~26, ~34, ~26, ...)
 			if math.mod(whirlwind_counter, 2) == 0 then
+				self:ScheduleEvent("BigWigs_Message", 21, L["whirlwind_warn"], "Urgent")
 				self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_bar"], 26, "Interface\\Icons\\Ability_Whirlwind")
 			else
+				self:ScheduleEvent("BigWigs_Message", 29, L["whirlwind_warn"], "Urgent")
 				self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_bar"], 34, "Interface\\Icons\\Ability_Whirlwind")
 			end
 		end
