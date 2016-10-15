@@ -67,7 +67,7 @@ BigWigsViscidus = BigWigs:NewModule(boss)
 BigWigsViscidus.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsViscidus.enabletrigger = boss
 BigWigsViscidus.toggleoptions = {"freeze", "volley", "toxinyou", "toxinother", "bosskill"}
-BigWigsViscidus.revision = tonumber(string.sub("$Revision: 19000 $", 12, -3))
+BigWigsViscidus.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -101,11 +101,11 @@ function BigWigsViscidus:CheckVis(arg1)
 		local _,_, pl, ty = string.find(arg1, L["trigger7"])
 		if (pl and ty) then
 			if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
-	                        BigWigsThaddiusArrows:Direction("Fire")
-				self:TriggerEvent("BigWigs_Message", L["warn9"], "Personal", true, "Alarm")
+				BigWigsThaddiusArrows:Direction("Fire")
+				--self:TriggerEvent("BigWigs_Message", L["warn9"], "Personal", true, "Alarm")
 				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn8"], "Important", nil, nil, true)
 			elseif self.db.profile.toxinother then
-				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Important")
+				--self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Important")
 				self:TriggerEvent("BigWigs_SendTell", pl, L["warn9"])
 			end
 		end
