@@ -71,9 +71,9 @@ function BigWigsJindo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	--self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+	--self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	--self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS", "HealingWardEvent")
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES", "HealingWardEvent")
@@ -90,7 +90,7 @@ end
 
 function BigWigsJindo:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["start"]) then
-	    --self:ScheduleRepeatingEvent("bwjindototembar", self.Totembar, 16, self)
+	    self:ScheduleRepeatingEvent("bwjindototembar", self.Totembar, 16, self)
 		if self.db.profile.healing then
 			self:TriggerEvent("BigWigs_StartBar", self, L["warnhealing"], 16, "Interface\\Icons\\Spell_Nature_MagicImmunity")
 		end
@@ -119,7 +119,9 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
+--[[ commented out till fight is blizzlike
 function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
+
 	if sync ~= "JindoCurse" or not rest then return end
 	local player = rest
 
@@ -136,6 +138,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
+
 function BigWigsJindo:Event(msg)
 	local _, _, baPlayer = string.find(msg, L["triggercurse_vg"])
 	if baPlayer then
@@ -145,5 +148,4 @@ function BigWigsJindo:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "JindoCurse "..baPlayer)
 	end
 end
-
-
+]]
