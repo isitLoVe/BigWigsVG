@@ -60,9 +60,9 @@ Revision 19010
 ## Ruins of Ahn'Qiraj
 - [x] Kurinnaxx
 - [x] General Rajaxx
-- [ ] Moam
+- [x] Moam
 - [ ] Buru the Gorger
-- [ ] Ayamiss the Hunter
+- [x] Ayamiss the Hunter
 - [ ] Ossirian the Unscarred
 
 ## Zul'Gurub
