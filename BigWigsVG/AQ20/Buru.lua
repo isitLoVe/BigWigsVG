@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Buru the Gorger"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local burueggs
 
 ----------------------------
 --      Localization      --
@@ -23,11 +24,24 @@ L:RegisterTranslations("enUS", function() return {
 	icon_cmd = "icon",
 	icon_name = "Place icon",
 	icon_desc = "Place raid icon on watched person (requires promoted or higher)",
+	
+	eggs_cmd = "egg",
+	eggs_name = "Alert for eggs",
+	eggs_desc = "Counts eggs and shows if dmg has been done to Buru",
 
 	watchtrigger = "sets eyes on (.+)!",
 	watchwarn = " is being watched!",
 	watchwarnyou = "You are being watched!",
 	you = "You",
+	
+	eggsdead_trigger = "Buru Egg dies",
+	
+	eggsdead_message = "%d/10 eggs destroyed!",
+	alleggsdead_message = "All eggs destroyed, NUKE IT!",
+	
+	eggsdmg_trigger = "Buru Egg Trigger",
+	eggsdmg_message = "Buru lost 7% HP", --43832
+	
 } end )
 
 ----------------------------------
@@ -37,16 +51,57 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsBuru = BigWigs:NewModule(boss)
 BigWigsBuru.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsBuru.enabletrigger = boss
-BigWigsBuru.toggleoptions = {"you", "other", "icon", "bosskill"}
-BigWigsBuru.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsBuru.toggleoptions = {"you", "other", "icon", "eggs", "bosskill"}
+BigWigsBuru.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsBuru:OnEnable()
+	burueggs = 0
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS")
+	
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "BuruEggDead", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BuruEggDmg", 1)
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function BigWigsBuru:BigWigs_RecvSync(sync, rest)
+	if sync == "BuruEggDmg" then
+		self:TriggerEvent("BigWigs_Message", L["eggsdmg_message"], "Positive")
+	elseif sync ~= "BuruEggDead" or not rest then return end
+	rest = tonumber(rest)
+
+	if rest == (burueggs + 1) then
+		burueggs = burueggs + 1
+
+		if burueggs > 9 and self.db.profile.eggs then
+			self:TriggerEvent("BigWigs_Message", L["alleggsdead_message"], "Urgent")
+		elseif self.db.profile.eggs then
+			self:TriggerEvent("BigWigs_Message", string.format(L["eggsdead_message"], burueggs), "Positive")
+		end
+	end
+end
+
+function BigWigsBuru:GenericBossDeath( msg )
+	if string.find(msg, L["eggsdead_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "BuruEggDead "..tostring(burueggs + 1))
+	end
+end
+
+
+function BigWigsBuru:CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS( msg )
+	if string.find(msg, L["eggsdmg_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "BuruEggDmg")
+	end
 end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
@@ -69,5 +124,3 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 		end
 	end
 end
-
-
