@@ -4,7 +4,17 @@
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PeriodicEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE", "PeriodicEvent")
 
-	
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS", "WhiteHitEvent")
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES", "WhiteHitEvent")
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "WhiteHitEvent")
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES", "WhiteHitEvent")
+
+
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "SpellEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "SpellEvent")
+
+
+
 	
 	
 	function AceEvent:ScheduleEvent(event, delay, a1, a2, a3, a4, a5)

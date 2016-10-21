@@ -65,6 +65,7 @@ ZG\Hakkar.lua
 ZG\Mandokir.lua
 ZG\Jindo.lua
 ZG\Thekal.lua
+ZG\Gahzranka.lua
 
 AQ20\Kurinnaxx.lua
 AQ20\Ayamiss.lua
