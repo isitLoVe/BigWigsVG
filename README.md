@@ -55,7 +55,7 @@ Revision 19011
 - [x] Sulfuron Harbinger
 - [x] Golemagg the Incinerator
 - [x] Majordomo Executus
-- [ ] Ragnaros
+- [x] Ragnaros
 
 ## Ruins of Ahn'Qiraj
 - [x] Kurinnaxx
