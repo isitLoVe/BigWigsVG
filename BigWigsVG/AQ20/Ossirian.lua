@@ -65,7 +65,7 @@ BigWigsOssirian = BigWigs:NewModule(boss)
 BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsOssirian.enabletrigger = boss
 BigWigsOssirian.toggleoptions = {"supreme", "debuff", "bosskill"}
-BigWigsOssirian.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsOssirian.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

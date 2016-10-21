@@ -45,7 +45,7 @@ BigWigsThekal = BigWigs:NewModule(boss)
 BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsThekal.enabletrigger = boss
 BigWigsThekal.toggleoptions = {"heal", "tiger", "punch", "bosskill"}
-BigWigsThekal.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsThekal.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

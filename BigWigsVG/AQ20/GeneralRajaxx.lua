@@ -67,7 +67,7 @@ BigWigsGeneralRajaxx = BigWigs:NewModule(boss)
 BigWigsGeneralRajaxx.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsGeneralRajaxx.enabletrigger = andorov
 BigWigsGeneralRajaxx.toggleoptions = {"wave", "thunder", "bosskill"}
-BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

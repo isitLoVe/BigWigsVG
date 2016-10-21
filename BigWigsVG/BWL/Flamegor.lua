@@ -51,7 +51,7 @@ BigWigsFlamegor = BigWigs:NewModule(boss)
 BigWigsFlamegor.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsFlamegor.enabletrigger = boss
 BigWigsFlamegor.toggleoptions = {"wingbuffet", "shadowflame", "frenzy", "bosskill"}
-BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsFlamegor.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

@@ -39,7 +39,7 @@ BigWigsGahzranka = BigWigs:NewModule(boss)
 BigWigsGahzranka.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsGahzranka.enabletrigger = boss
 BigWigsGahzranka.toggleoptions = {"slam", "frost", "bosskill"}
-BigWigsGahzranka.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsGahzranka.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

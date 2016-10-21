@@ -59,7 +59,7 @@ BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJindo.enabletrigger = boss
 BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
-BigWigsJindo.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsJindo.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

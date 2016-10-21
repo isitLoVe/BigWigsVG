@@ -32,7 +32,7 @@ BigWigsAyamiss = BigWigs:NewModule(boss)
 BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsAyamiss.enabletrigger = boss
 BigWigsAyamiss.toggleoptions = {"sacrifice", "bosskill"}
-BigWigsAyamiss.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsAyamiss.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

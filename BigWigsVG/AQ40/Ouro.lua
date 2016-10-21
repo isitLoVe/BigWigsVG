@@ -85,7 +85,7 @@ BigWigsOuro = BigWigs:NewModule(boss)
 BigWigsOuro.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsOuro.enabletrigger = boss
 BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
-BigWigsOuro.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsOuro.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

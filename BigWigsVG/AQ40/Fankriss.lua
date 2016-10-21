@@ -53,7 +53,7 @@ BigWigsFankriss = BigWigs:NewModule(boss)
 BigWigsFankriss.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsFankriss.enabletrigger = boss
 BigWigsFankriss.toggleoptions = {"worm", "entangle", "mortal", "bosskill"}
-BigWigsFankriss.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsFankriss.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

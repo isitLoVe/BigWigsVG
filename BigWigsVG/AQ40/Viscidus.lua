@@ -67,7 +67,7 @@ BigWigsViscidus = BigWigs:NewModule(boss)
 BigWigsViscidus.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsViscidus.enabletrigger = boss
 BigWigsViscidus.toggleoptions = {"freeze", "volley", "toxinyou", "toxinother", "bosskill"}
-BigWigsViscidus.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsViscidus.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

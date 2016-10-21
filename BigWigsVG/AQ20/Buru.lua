@@ -52,7 +52,7 @@ BigWigsBuru = BigWigs:NewModule(boss)
 BigWigsBuru.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsBuru.enabletrigger = boss
 BigWigsBuru.toggleoptions = {"you", "other", "icon", "eggs", "bosskill"}
-BigWigsBuru.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsBuru.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

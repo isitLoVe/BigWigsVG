@@ -43,7 +43,7 @@ BigWigsKurinnaxx = BigWigs:NewModule(boss)
 BigWigsKurinnaxx.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsKurinnaxx.enabletrigger = boss
 BigWigsKurinnaxx.toggleoptions = {"sand", "mortal", "bosskill"}
-BigWigsKurinnaxx.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsKurinnaxx.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

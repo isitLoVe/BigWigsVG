@@ -45,7 +45,7 @@ BigWigsArlokk = BigWigs:NewModule(boss)
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsArlokk.enabletrigger = boss
 BigWigsArlokk.toggleoptions = {"youmark", "othermark", "icon", "bosskill"}
-BigWigsArlokk.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsArlokk.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

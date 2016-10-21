@@ -68,7 +68,7 @@ BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsHakkar.enabletrigger = boss
 BigWigsHakkar.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "blood", "bosskill" }
-BigWigsHakkar.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsHakkar.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

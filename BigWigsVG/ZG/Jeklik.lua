@@ -57,7 +57,7 @@ BigWigsJeklik = BigWigs:NewModule(boss)
 BigWigsJeklik.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJeklik.enabletrigger = boss
 BigWigsJeklik.toggleoptions = {"swarm", "heal", "bomb", "fear", "silence", "bosskill"}
-BigWigsJeklik.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsJeklik.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

@@ -84,7 +84,7 @@ BigWigsChromaggus = BigWigs:NewModule(boss)
 BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsChromaggus.enabletrigger = boss
 BigWigsChromaggus.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
-BigWigsChromaggus.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsChromaggus.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

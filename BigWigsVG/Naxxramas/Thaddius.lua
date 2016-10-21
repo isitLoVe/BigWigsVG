@@ -114,7 +114,7 @@ BigWigsThaddius = BigWigs:NewModule(boss)
 BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
 BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "warstomp", "phase", "bosskill"}
-BigWigsThaddius.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsThaddius.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

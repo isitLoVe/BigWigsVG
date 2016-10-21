@@ -54,7 +54,7 @@ BigWigsMoam = BigWigs:NewModule(boss)
 BigWigsMoam.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsMoam.enabletrigger = boss
 BigWigsMoam.toggleoptions = {"adds", "paralyze", "bosskill"}
-BigWigsMoam.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsMoam.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

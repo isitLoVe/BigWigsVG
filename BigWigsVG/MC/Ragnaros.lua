@@ -224,7 +224,7 @@ BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsRagnaros.enabletrigger = boss
 BigWigsRagnaros.wipemobs = { L["sonofflame"] }
 BigWigsRagnaros.toggleoptions = { "sondeath", "submerge", "emerge", "aoeknock", "bosskill" }
-BigWigsRagnaros.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsRagnaros.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

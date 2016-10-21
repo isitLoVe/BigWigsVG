@@ -63,7 +63,7 @@ BigWigsGuardians = BigWigs:NewModule(boss)
 BigWigsGuardians.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsGuardians.enabletrigger = boss
 BigWigsGuardians.toggleoptions = {"summon", "explode", "enrage", -1, "plagueyou", "plagueother", "icon", "bosskill"}
-BigWigsGuardians.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsGuardians.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

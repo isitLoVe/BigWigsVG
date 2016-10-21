@@ -90,7 +90,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"])
-BigWigsCustomBar.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsCustomBar.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 BigWigsCustomBar.external = true
 BigWigsCustomBar.consoleCmd = L["custombar"]
 BigWigsCustomBar.consoleOptions = {

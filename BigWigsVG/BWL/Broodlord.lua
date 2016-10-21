@@ -46,7 +46,7 @@ BigWigsBroodlord = BigWigs:NewModule(boss)
 BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsBroodlord.enabletrigger = boss
 BigWigsBroodlord.toggleoptions = {"youms", "elsems", "wavebar", "bosskill"}
-BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsBroodlord.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

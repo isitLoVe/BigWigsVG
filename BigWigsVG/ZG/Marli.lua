@@ -50,7 +50,7 @@ BigWigsMarli = BigWigs:NewModule(boss)
 BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMarli.enabletrigger = boss
 BigWigsMarli.toggleoptions = {"spider", "drain", "bosskill"}
-BigWigsMarli.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsMarli.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

@@ -53,7 +53,7 @@ BigWigsMandokir = BigWigs:NewModule(boss)
 BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMandokir.enabletrigger = boss
 BigWigsMandokir.toggleoptions = {"you", "other", "icon", "whirlwind", "bosskill"}
-BigWigsMandokir.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsMandokir.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

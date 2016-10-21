@@ -58,7 +58,7 @@ BigWigsVenoxis = BigWigs:NewModule(boss)
 BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsVenoxis.enabletrigger = boss
 BigWigsVenoxis.toggleoptions = {"renew", "phase", "poisonyou", "poisonother", "bosskill"}
-BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsVenoxis.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --

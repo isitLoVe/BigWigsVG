@@ -72,7 +72,7 @@ BigWigsHeigan.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsHeigan.enabletrigger = boss
 BigWigsHeigan.wipemobs = { L["Eye Stalk"], L["Rotting Maggot"] }
 BigWigsHeigan.toggleoptions = {"engage", "teleport", "disease", "splash", "bosskill"}
-BigWigsHeigan.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
+BigWigsHeigan.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
