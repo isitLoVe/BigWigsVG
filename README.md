@@ -61,9 +61,9 @@ Revision 19010
 - [x] Kurinnaxx
 - [x] General Rajaxx
 - [x] Moam
-- [ ] Buru the Gorger
+- [x] Buru the Gorger
 - [x] Ayamiss the Hunter
-- [ ] Ossirian the Unscarred
+- [x] Ossirian the Unscarred
 
 ## Zul'Gurub
 - [x] High Priestess Jeklik
