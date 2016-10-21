@@ -37,6 +37,12 @@ L:RegisterTranslations("enUS", function() return {
 	debuffwarnN = "Ossirian now weak to Nature!",
 	debuffwarnA = "Ossirian now weak to Arcane!",
 
+	barwarnS = "Weak to Shadow!",
+	barwarnF = "Weak to Fire!",
+	barwarnFR = "Weak to Frost!",
+	barwarnN = "Weak to Nature!",
+	barwarnA = "Weak to Arcane!",
+	
 	bartext = "Supreme",
 	expose = "Expose",
 	windtrigger = "Enveloping Winds",
@@ -59,7 +65,7 @@ BigWigsOssirian = BigWigs:NewModule(boss)
 BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsOssirian.enabletrigger = boss
 BigWigsOssirian.toggleoptions = {"supreme", "debuff", "bosskill"}
-BigWigsOssirian.revision = tonumber(string.sub("$Revision: 16639 $", 12, -3))
+BigWigsOssirian.revision = tonumber(string.sub("$Revision: 19010 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -112,63 +118,69 @@ end
 
 function BigWigsOssirian:BigWigs_RecvSync(sync)
 	if sync == "Boom" then
-			self:TriggerEvent("BigWigs_StartBar", self, L["boomtrigger"], 30, "Interface\\Icons\\Ability_BullRush")
-		        self:ScheduleEvent("BigWigs_Message", 25, L["boom_inc"], "Important", true, "Alarm")
-            if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") then
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 25) end
+		self:TriggerEvent("BigWigs_StartBar", self, L["boomtrigger"], 30, "Interface\\Icons\\Ability_BullRush")
+		self:ScheduleEvent("BigWigs_Message", 25, L["boom_inc"], "Important", true, "Alarm")
+		
+		if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") then
+		self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 25) end
 	elseif sync == "Wind" then
-		        self:TriggerEvent("BigWigs_Message", L["tankwind"], "Attention", true, "Alert")
-			self:TriggerEvent("BigWigs_StartBar", self, L["windtrigger"], 20, "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:TriggerEvent("BigWigs_Message", L["tankwind"], "Attention", true, "Alert")
+		self:TriggerEvent("BigWigs_StartBar", self, L["windtrigger"], 20, "Interface\\Icons\\Spell_Nature_Cyclone")
 	elseif sync == "WeakS" then
 		self:TriggerEvent("BigWigs_Message", L["debuffwarnS"], "Positive")
-	        self:CancelScheduledEvent("bwossiriansupreme1")
-	        self:CancelScheduledEvent("bwossiriansupreme2")
-	        self:CancelScheduledEvent("bwossiriansupreme3")
-	        self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		--self:CancelScheduledEvent("bwossiriansupreme1")
+		self:CancelScheduledEvent("bwossiriansupreme2")
+		--self:CancelScheduledEvent("bwossiriansupreme3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
+		--self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
+		--self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:TriggerEvent("BigWigs_StartBar", self, L["barwarnS"], 45, "Interface\\Icons\\INV_Misc_QirajiCrystal_05")
 	elseif sync == "WeakF" then
 		self:TriggerEvent("BigWigs_Message", L["debuffwarnF"], "Positive")
-	        self:CancelScheduledEvent("bwossiriansupreme1")
-	        self:CancelScheduledEvent("bwossiriansupreme2")
-	        self:CancelScheduledEvent("bwossiriansupreme3")
-	        self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		--self:CancelScheduledEvent("bwossiriansupreme1")
+		self:CancelScheduledEvent("bwossiriansupreme2")
+		--self:CancelScheduledEvent("bwossiriansupreme3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
+		--self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
+		--self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:TriggerEvent("BigWigs_StartBar", self, L["barwarnF"], 45, "Interface\\Icons\\INV_Misc_QirajiCrystal_02")
 	elseif sync == "WeakFR" then
 		self:TriggerEvent("BigWigs_Message", L["debuffwarnFR"], "Positive")
-	        self:CancelScheduledEvent("bwossiriansupreme1")
-	        self:CancelScheduledEvent("bwossiriansupreme2")
-	        self:CancelScheduledEvent("bwossiriansupreme3")
-	        self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		--self:CancelScheduledEvent("bwossiriansupreme1")
+		self:CancelScheduledEvent("bwossiriansupreme2")
+		--self:CancelScheduledEvent("bwossiriansupreme3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
+		--self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
+		--self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:TriggerEvent("BigWigs_StartBar", self, L["barwarnFR"], 45, "Interface\\Icons\\INV_Misc_QirajiCrystal_04")
 	elseif sync == "WeakN" then
 		self:TriggerEvent("BigWigs_Message", L["debuffwarnN"], "Positive")
-	        self:CancelScheduledEvent("bwossiriansupreme1")
-	        self:CancelScheduledEvent("bwossiriansupreme2")
-	        self:CancelScheduledEvent("bwossiriansupreme3")
-	        self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		--self:CancelScheduledEvent("bwossiriansupreme1")
+		self:CancelScheduledEvent("bwossiriansupreme2")
+		--self:CancelScheduledEvent("bwossiriansupreme3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
+		--self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
+		--self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:TriggerEvent("BigWigs_StartBar", self, L["barwarnN"], 45, "Interface\\Icons\\INV_Misc_QirajiCrystal_03")
 	elseif sync == "WeakA" then
 		self:TriggerEvent("BigWigs_Message", L["debuffwarnA"], "Positive")
-	        self:CancelScheduledEvent("bwossiriansupreme1")
-	        self:CancelScheduledEvent("bwossiriansupreme2")
-	        self:CancelScheduledEvent("bwossiriansupreme3")
-	        self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		--self:CancelScheduledEvent("bwossiriansupreme1")
+		self:CancelScheduledEvent("bwossiriansupreme2")
+		--self:CancelScheduledEvent("bwossiriansupreme3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
+		--self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
+		--self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:TriggerEvent("BigWigs_StartBar", self, L["barwarnA"], 45, "Interface\\Icons\\INV_Misc_QirajiCrystal_01")
 	end
 end
 
