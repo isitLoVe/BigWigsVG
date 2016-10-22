@@ -160,10 +160,7 @@ end
 ------------------------------
 
 function BigWigsCustomBar:StartBar(bar, nick, localOnly)
-	DEFAULT_CHAT_FRAME:AddMessage(tostring(bar))
 	local _, _, seconds, barText = string.find(bar, "(%d*%.?%d+) (.*)")
-	DEFAULT_CHAT_FRAME:AddMessage(tostring(seconds))
-	DEFAULT_CHAT_FRAME:AddMessage(tostring(barText))
 	if not seconds or not barText then return end
 	seconds = tonumber(seconds)
 	if seconds == nil then return end
