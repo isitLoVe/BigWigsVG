@@ -56,7 +56,7 @@ BigWigsGluth = BigWigs:NewModule(boss)
 BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGluth.enabletrigger = boss
 BigWigsGluth.toggleoptions = {"frenzy", "fear", "decimate", "bosskill"}
-BigWigsGluth.revision = tonumber(string.sub("$Revision: 19004 $", 12, -3))
+BigWigsGluth.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -96,7 +96,7 @@ function BigWigsGluth:Frenzy( msg )
 	if self.db.profile.frenzy and msg == L["trigger1"] then
 		self:Tranq()
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true, "Alert")
-		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 10, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
+		self:TriggerEvent("BigWigs_StartBar", self, L["frenzy_bar"], 8, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
 	end
 end
 
