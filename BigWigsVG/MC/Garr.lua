@@ -13,6 +13,7 @@ local prior
 
 L:RegisterTranslations("enUS", function() return {
 	triggerdead = "Firesworn dies",
+	triggerbossdead = "Garr dies",
 	
 	banish_trigger = "Banish fades from Firesworn",
 
@@ -35,7 +36,7 @@ BigWigsGarr = BigWigs:NewModule(boss)
 BigWigsGarr.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGarr.enabletrigger = boss
 BigWigsGarr.toggleoptions = {"adds", "bosskill"}
-BigWigsGarr.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsGarr.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -58,6 +59,9 @@ end
 function BigWigsGarr:GenericBossDeath(msg)
 	if string.find(msg, L["triggerdead"]) then
 		self:TriggerEvent("BigWigs_SendSync", "GarrAddDead "..tostring(self.adddead + 1) )
+	elseif string.find(msg, L["triggerbossdead"]) then
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
 	end
 end
 
