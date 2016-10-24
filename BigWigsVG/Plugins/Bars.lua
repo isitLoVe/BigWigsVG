@@ -325,6 +325,12 @@ end
 function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	if not text or not time then return end
 	local id = "BigWigsBar "..text
+	
+	--needed for banish bar to remove old bar when new banish is casted
+	if c1 then 
+		id = tostring(c1)
+	end
+	
 	local u = self.db.profile.growup
 
 	-- yes we try and register every time, we also set the point every time since people can change their mind midbar.
