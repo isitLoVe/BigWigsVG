@@ -3,7 +3,7 @@
 ## Title: Big Wigs |cff02bf02VG|r
 ## Notes: Boss Mods. Made by |cff1fff1f Sulfuras|r, Updates by Soge and Shyva, Modified by |cff02bf02Luise|r & |cff02bf02Flier|r for VanillaGaming
 ## Contributing Authors: Sulfuras, Soge, Shyva, Luise
-## Version: 19011
+## Version: 19012
 ## X-Website: http://www.vanillagaming.org
 ## X-Email: flierrgaming@gmail.com
 ## X-Category: Raid
@@ -55,6 +55,7 @@ Plugins\Test.lua
 
 Extras\CustomBar.lua
 Extras\Tranq.lua
+Extras\Banish.lua
 Extras\BigWigs_ThaddiusArrows.lua
 
 ZG\Arlokk.lua
