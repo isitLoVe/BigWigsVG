@@ -12,8 +12,8 @@ local started = nil
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	trigger1 = "afflicted by Lucifron",
-	trigger2 = "afflicted by Impending Doom",
+	curse_trigger = "afflicted by Lucifron",
+	doom_trigger = "afflicted by Impending Doom",
 
 	lucicurse_warn = "5 seconds until Lucifron's Curse!",
 	lucicurse = "Lucifron's Curse - 15 seconds until next!",
@@ -42,7 +42,7 @@ BigWigsLucifron = BigWigs:NewModule(boss)
 BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsLucifron.enabletrigger = boss
 BigWigsLucifron.toggleoptions = {"curse", "doom", "bosskill"}
-BigWigsLucifron.revision = tonumber(string.sub("$Revision: 19008 $", 12, -3))
+BigWigsLucifron.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -56,6 +56,9 @@ function BigWigsLucifron:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "LuciDoom", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LuciCurse", 2)
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
@@ -81,18 +84,22 @@ function BigWigsLucifron:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("BigWigs_Message", 5, L["lucidoom_warn"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["lucidoom_bar"], 10, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		end
+	elseif sync == "LuciDoom" and self.db.profile.doom then
+		self:TriggerEvent("BigWigs_Message", L["lucidoom"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 15, L["lucidoom_warn"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["lucidoom_bar"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+	elseif sync == "LuciCurse" and self.db.profile.curse then
+		self:TriggerEvent("BigWigs_Message", L["lucicurse"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 10, L["lucicurse_warn"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["lucicurse_bar"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 	end
 end
 		
 		
 function BigWigsLucifron:Event(msg)
-	if (string.find(msg, L["trigger1"]) and self.db.profile.curse) then
-		self:TriggerEvent("BigWigs_Message", L["lucicurse"], "Important")
-		self:ScheduleEvent("BigWigs_Message", 10, L["lucicurse_warn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lucicurse_bar"], 15, "Interface\\Icons\\Spell_Shadow_BlackPlague")
-	elseif (string.find(msg, L["trigger2"]) and self.db.profile.doom) then
-		self:TriggerEvent("BigWigs_Message", L["lucidoom"], "Important")
-		self:ScheduleEvent("BigWigs_Message", 15, L["lucidoom_warn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lucidoom_bar"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+	if string.find(msg, L["curse_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "LuciCurse")
+	elseif string.find(msg, L["doom_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "LuciDoom")
 	end
 end
