@@ -65,7 +65,7 @@ BigWigsTwins = BigWigs:NewModule(boss)
 BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsTwins.enabletrigger = {veklor, veknilash}
 BigWigsTwins.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
-BigWigsTwins.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsTwins.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -91,6 +91,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
+		BigWigsThaddiusArrows:Blizzardstop()
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
