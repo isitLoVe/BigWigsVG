@@ -45,7 +45,7 @@ BigWigsGehennas = BigWigs:NewModule(boss)
 BigWigsGehennas.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsGehennas.enabletrigger = boss
 BigWigsGehennas.toggleoptions = {"shadowbolt", "curse", "bosskill"}
-BigWigsGehennas.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsGehennas.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -60,7 +60,9 @@ function BigWigsGehennas:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
 	self:RegisterEvent("BigWigs_RecvSync")
+	
 	
 	self:TriggerEvent("BigWigs_ThrottleSync", "GehennasCurse", 5)
 	
@@ -79,6 +81,7 @@ function BigWigsGehennas:Event(msg)
 	elseif string.find(msg, L["trigger3"]) then
 		self:CancelScheduledEvent("bwgehennasfire")
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Personal", true, "Alarm")
+		BigWigsThaddiusArrows:Direction("Fire")
 	end
 end
 
@@ -103,6 +106,7 @@ end
 
 function BigWigsGehennas:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["trigger"]) then
+		BigWigsThaddiusArrows:Firestop()
 	end
 end
 
