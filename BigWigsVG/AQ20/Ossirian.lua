@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	windtrigger = "Enveloping Winds",
 	boomtrigger = "War Stomp",
 	tankwind = "Tank switched!",
-	boom_inc = "War Stomp in 5sec!",
+	boom_inc = "War Stomp in ~5sec!",
 
 	["Shadow"] = true,
 	["Fire"] = true,
@@ -65,7 +65,7 @@ BigWigsOssirian = BigWigs:NewModule(boss)
 BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsOssirian.enabletrigger = boss
 BigWigsOssirian.toggleoptions = {"supreme", "debuff", "bosskill"}
-BigWigsOssirian.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsOssirian.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -118,11 +118,11 @@ end
 
 function BigWigsOssirian:BigWigs_RecvSync(sync)
 	if sync == "Boom" then
-		self:TriggerEvent("BigWigs_StartBar", self, L["boomtrigger"], 30, "Interface\\Icons\\Ability_BullRush")
-		self:ScheduleEvent("BigWigs_Message", 25, L["boom_inc"], "Important", true, "Alarm")
+		self:TriggerEvent("BigWigs_StartBar", self, L["boomtrigger"], 10, "Interface\\Icons\\Ability_BullRush")
+		self:ScheduleEvent("BigWigs_Message", 5, L["boom_inc"], "Important", true, "Alarm")
 		
-		if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") then
-		self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 25) end
+		--if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") then
+		--self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 25) end
 	elseif sync == "Wind" then
 		self:TriggerEvent("BigWigs_Message", L["tankwind"], "Attention", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["windtrigger"], 20, "Interface\\Icons\\Spell_Nature_Cyclone")
