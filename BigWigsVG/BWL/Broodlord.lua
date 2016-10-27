@@ -75,7 +75,7 @@ function BigWigsBroodlord:BigWigs_RecvSync( sync, rest, nick )
 		if BigWigs:CheckYourPrivilege(UnitName("player")) then
 			if klhtm.isloaded and klhtm.isenabled then
 				klhtm.net.sendmessage("targetbw " ..boss)
-				klhtm:ResetRaidThreat()
+				klhtm:clearraidthreat()
 			end
 		end
 	end
