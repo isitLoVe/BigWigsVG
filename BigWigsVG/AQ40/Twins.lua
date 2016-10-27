@@ -152,7 +152,7 @@ end
 function BigWigsTwins:Telebar()
 	if BigWigs:CheckYourPrivilege(UnitName("player")) then
 		if klhtm.isloaded and klhtm.isenabled then
-			klhtm:clearraidthreat()
+			klhtm.net.clearraidthreat()
 		end
 	end
 	self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
