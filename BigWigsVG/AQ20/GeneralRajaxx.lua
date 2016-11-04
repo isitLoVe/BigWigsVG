@@ -67,7 +67,7 @@ BigWigsGeneralRajaxx = BigWigs:NewModule(boss)
 BigWigsGeneralRajaxx.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsGeneralRajaxx.enabletrigger = andorov
 BigWigsGeneralRajaxx.toggleoptions = {"wave", "thunder", "bosskill"}
-BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -93,7 +93,6 @@ function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
 		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Urgent")
 	end
 	if self.db.profile.thunder and string.find(msg, L["trigger8"]) then
-		DEFUALT_CHAT_FRAME:AddMessage(msg)
 		self:ScheduleEvent("BigWigs_Message", 20, L["thunder_warn"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["thunder_bar"], 25, "Interface\\Icons\\Spell_Nature_ThunderClap")
 	end
