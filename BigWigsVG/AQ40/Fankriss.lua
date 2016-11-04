@@ -53,7 +53,7 @@ BigWigsFankriss = BigWigs:NewModule(boss)
 BigWigsFankriss.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsFankriss.enabletrigger = boss
 BigWigsFankriss.toggleoptions = {"worm", "entangle", "mortal", "bosskill"}
-BigWigsFankriss.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsFankriss.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -105,13 +105,13 @@ function BigWigsFankriss:SprayEvent( msg )
 			self:TriggerEvent("BigWigs_StopBar", self, string.format(L["mortal_bar"], wplayer, wplayer))
 			
 			self:TriggerEvent("BigWigs_Message", string.format(L["mortal_warn_num"],wnum, wplayer), "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar_num"],wnum, wplayer), 15, "Interface\\Icons\\INV_Misc_Dust_02")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar_num"],wnum, wplayer), 15, "Interface\\Icons\\Ability_Warrior_SavageBlow")
 		elseif wplayer and wtype then
 			if wplayer == L["you"] and wtype == L["are"] then
 				wplayer = UnitName("player")
 			end
 			self:TriggerEvent("BigWigs_Message", string.format(L["mortal_warn"], wplayer), "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar"], wplayer), 15, "Interface\\Icons\\INV_Misc_Dust_02")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mortal_bar"], wplayer), 15, "Interface\\Icons\\Ability_Warrior_SavageBlow")
 		end
 	end
 end
