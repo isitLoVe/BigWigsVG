@@ -22,10 +22,14 @@ L:RegisterTranslations("enUS", function() return {
 	["anchor"] = true,
 	["scale"] = true,
 	["up"] = true,
+	["textsize"] = true,
+	["width"] = true,
 
 	["Options for the timer bars."] = true,
 	["Show the bar anchor frame."] = true,
 	["Set the bar scale."] = true,
+	["Bar text size"] = true,
+	["Set the bar text size."] = true,
 	["Group upwards"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = true,
 
@@ -34,7 +38,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Grow bars upwards"] = true,
 	["Scale"] = true,
 	["Bar scale"] = true,
-
+	["Bar width"] = true,
+	["Set the bar width."] = true,
+	
 	["Bars now grow %2$s"] = true,
 	["Scale is set to %2$s"] = true,
 
@@ -245,10 +251,12 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsBars = BigWigs:NewModule(L["Bars"])
-BigWigsBars.revision = tonumber(string.sub("$Revision: 13134 $", 12, -3))
+BigWigsBars.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,
+	textsize = 11,
+	width = 200,
 	texture = L["default"],
 }
 BigWigsBars.consoleCmd = L["bars"]
@@ -282,6 +290,26 @@ BigWigsBars.consoleOptions = {
 			step = 0.1,
 			get = function() return BigWigsBars.db.profile.scale end,
 			set = function(v) BigWigsBars.db.profile.scale = v end,
+		},
+		[L["textsize"]] = {
+			type = "range",
+			name = L["Bar text size"],
+			desc = L["Set the bar text size."],
+			min = 6,
+			max = 24,
+			step = 1,
+			get = function() return BigWigsBars.db.profile.textsize end,
+			set = function(v) BigWigsBars.db.profile.textsize = v end,
+		},
+		[L["width"]] = {
+			type = "range",
+			name = L["Bar width"],
+			desc = L["Set the bar width."],
+			min = 160,
+			max = 300,
+			step = 10,
+			get = function() return BigWigsBars.db.profile.width end,
+			set = function(v) BigWigsBars.db.profile.width = v end,
 		},
 		[L["Texture"]] = {
 			type = "text",
@@ -352,6 +380,8 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	if txtc then module:SetCandyBarTextColor(id, txtc) end
 
 	module:SetCandyBarScale(id, self.db.profile.scale or 1)
+	module:SetCandyBarFontSize(id, self.db.profile.textsize or 12)
+	module:SetCandyBarWidth(id, self.db.profile.width or 200)
 	module:SetCandyBarFade(id, .5)
 	module:StartCandyBar(id, true)
 end
