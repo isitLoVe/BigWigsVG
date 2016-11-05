@@ -49,7 +49,7 @@ function BigWigsGarr:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GarrAddDead", .2)
 end
 
 ------------------------------
