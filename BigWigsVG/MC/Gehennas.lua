@@ -35,6 +35,8 @@ L:RegisterTranslations("enUS", function() return {
 	curse_cmd = "curse",
 	curse_name = "Gehennas' Curse alert",
 	curse_desc = "Warn for Gehennas' Curse",
+	
+	gehennas_dead = "Gehennas dies",
 } end)
 
 ----------------------------------
@@ -118,5 +120,13 @@ function BigWigsGehennas:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["trigger2"]) and self.db.profile.shadowbolt then
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 0.5, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 10, "Interface\\Icons\\Spell_Shadow_Shadowbolt")
+	end
+end
+
+function BigWigsGehennas:GenericBossDeath( msg )
+	if string.find(msg, L["gehennas_dead"]) then
+		BigWigsThaddiusArrows:Firestop()
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
 	end
 end
