@@ -22,10 +22,15 @@ L:RegisterTranslations("enUS", function() return {
 	opt_desc = "Options for the banish module.",
 	opt_bars = "Bars",
 	
-	arg_bars = "Bars",
-	arg_name = "Bars",
-	arg_desc = "Toggle banish bars on or off.",
+	bars = "Bars",
+	bar_name = "Bars",
+	bar_desc = "Toggle banish bars on or off.",
 	
+	macro = "macro",
+	macro_name = "Create Macros",
+	macro_desc = "Create Banish rank 1 and 2 macroes.",
+	
+	macros_created = "Macros created",
 } end)
 
 ----------------------------------
@@ -47,14 +52,20 @@ BigWigsBanish.consoleOptions = {
 	name = L["opt_name"],
 	desc = L["opt_desc"],
 	args = {
-		[L["arg_bars"]] = {
+		[L["bars"]] = {
 			type = "toggle",
-			name = L["arg_name"],
-			desc = L["arg_desc"],
+			name = L["bar_name"],
+			desc = L["bar_desc"],
 			get = function() return BigWigsBanish.db.profile.bars end,
 			set = function(v)
 				BigWigsBanish.db.profile.bars = v
 			end,
+		},
+		[L["macro"]] = {
+			type = "execute",
+			name = L["macro_name"],
+			desc = L["macro_desc"],
+			func = function() BigWigsBanish:BigWigs_CreateMacros() end,
 		},
 	}
 }
@@ -68,10 +79,7 @@ function BigWigsBanish:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 
-	if UnitClass("player") == "Warlock" then
-		--CreateMacro("Banish R1", 450, "/script BigWigsBanish:Banish1()", nil, 1)
-		--CreateMacro("Banish R2", 450, "/script BigWigsBanish:Banish2()", nil, 1)
-	end	
+
 end
 
 
@@ -85,18 +93,22 @@ function BigWigsBanish:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 		--DEFAULT_CHAT_FRAME:AddMessage("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE: msg is nil")
 	elseif string.find(msg, L["banish_trigger"]) then
 				DEFAULT_CHAT_FRAME:AddMessage("string found")
-		if (t < GetTime() - 1.3) and (t > GetTime() - 1.7) then
-				DEFAULT_CHAT_FRAME:AddMessage("time ok")
-			if rank == 1 then
-				DEFAULT_CHAT_FRAME:AddMessage("rank1")
-				self:TriggerEvent("BigWigs_SendSync", "BanishVG1 "..target)
-				rank = nil
-				target = nil
-			elseif rank == 2 then
-				DEFAULT_CHAT_FRAME:AddMessage("rank2")
-				self:TriggerEvent("BigWigs_SendSync", "BanishVG2 "..target)
-				rank = nil
-				target = nil
+		if t == nil then
+		
+		else
+			if (t < GetTime() - 1.3) and (t > GetTime() - 1.7) then
+					DEFAULT_CHAT_FRAME:AddMessage("time ok")
+				if rank == 1 then
+					DEFAULT_CHAT_FRAME:AddMessage("rank1")
+					self:TriggerEvent("BigWigs_SendSync", "BanishVG1 "..target)
+					rank = nil
+					target = nil
+				elseif rank == 2 then
+					DEFAULT_CHAT_FRAME:AddMessage("rank2")
+					self:TriggerEvent("BigWigs_SendSync", "BanishVG2 "..target)
+					rank = nil
+					target = nil
+				end
 			end
 		end
 	end
@@ -139,4 +151,10 @@ function BigWigsBanish:BigWigs_RecvSync(sync, target, sender)
 	end
 end
 
-
+function BigWigsBanish:BigWigs_CreateMacros()
+	if UnitClass("player") == "Warlock" then
+		CreateMacro("Banish R1", 450, "/script BigWigsBanish:Banish1()", nil, 1)
+		CreateMacro("Banish R2", 450, "/script BigWigsBanish:Banish2()", nil, 1)
+		self:TriggerEvent("BigWigs_Message", L["macros_created"], "Positive", true, "Alert")
+	end	
+end
