@@ -125,8 +125,12 @@ function BigWigsCThun:OnEnable()
 	phase2started = nil
 
 	tentacletime = timeP1Tentacle
-
-
+	
+	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		DEFAULT_CHAT_FRAME:AddMessage("BigWigs VG cannot detect weakened automatically", 255, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("Use the macro    /script BigWigsCThun:ManualWeakend()     to trigger weakened manually", 255, 0, 0)
+		DEFAULT_CHAT_FRAME:AddMessage("You can only use this if you have lead or assist", 255, 0, 0)
+	end
 	-- register events
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
@@ -154,7 +158,9 @@ end
 
 --use macro /script BigWigsCThun:ManualWeakend() to trigger weakened
 function BigWigsCThun:ManualWeakend()
-	self:TriggerEvent("BigWigs_SendSync", "CThunWeakenedVG")
+	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		self:TriggerEvent("BigWigs_SendSync", "CThunWeakenedVG")
+	end
 end
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE( arg1 )
