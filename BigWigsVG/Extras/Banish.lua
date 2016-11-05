@@ -5,6 +5,9 @@ assert(BigWigs, "BigWigs not found!")
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBanish")
+local t
+local rank
+local target
 
 L:RegisterTranslations("enUS", function() return {
 
@@ -64,6 +67,11 @@ function BigWigsBanish:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+
+	if UnitClass("player") == "Warlock" then
+		--CreateMacro("Banish R1", 450, "/script BigWigsBanish:Banish1()", nil, 1)
+		--CreateMacro("Banish R2", 450, "/script BigWigsBanish:Banish2()", nil, 1)
+	end	
 end
 
 
@@ -71,21 +79,64 @@ end
 --      Event Handlers      --
 ------------------------------
 
+
 function BigWigsBanish:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if not msg then
 		--DEFAULT_CHAT_FRAME:AddMessage("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE: msg is nil")
 	elseif string.find(msg, L["banish_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "BanishVG "..UnitName("target"))
+				DEFAULT_CHAT_FRAME:AddMessage("string found")
+		if (t < GetTime() - 1.3) and (t > GetTime() - 1.7) then
+				DEFAULT_CHAT_FRAME:AddMessage("time ok")
+			if rank == 1 then
+				DEFAULT_CHAT_FRAME:AddMessage("rank1")
+				self:TriggerEvent("BigWigs_SendSync", "BanishVG1 "..target)
+				rank = nil
+				target = nil
+			elseif rank == 2 then
+				DEFAULT_CHAT_FRAME:AddMessage("rank2")
+				self:TriggerEvent("BigWigs_SendSync", "BanishVG2 "..target)
+				rank = nil
+				target = nil
+			end
+		end
 	end
 end
 
+function BigWigsBanish:Banish1()
+	if UnitName("target") then
+		CastSpellByName("Banish(Rank 1)")
+		t = GetTime()
+		rank = 1
+		target = UnitName("target")
+	end	
+end
+
+function BigWigsBanish:Banish2()
+	if UnitName("target") then
+		CastSpellByName("Banish(Rank 2)")
+		t = GetTime()
+		rank = 2
+		target = UnitName("target")
+	end
+end
+
+
 function BigWigsBanish:BigWigs_RecvSync(sync, target, sender)
-	if sync == "BanishVG" then
+	if sync == "BanishVG2" then
 		if self.db.profile.bars then
 			self:CancelScheduledEvent("banishmsg"..sender)
 
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["banish_bar"], sender, target), 30, "Interface\\Icons\\Spell_Shadow_Cripple", _, "banishbar"..sender)
 			self:ScheduleEvent("banishmsg"..sender, "BigWigs_Message", 25, string.format(L["banish_message"], sender, target), "Positive")
 		end
+	elseif sync == "BanishVG1" then
+		if self.db.profile.bars then
+			self:CancelScheduledEvent("banishmsg"..sender)
+
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["banish_bar"], sender, target), 20, "Interface\\Icons\\Spell_Shadow_Cripple", _, "banishbar"..sender)
+			self:ScheduleEvent("banishmsg"..sender, "BigWigs_Message", 15, string.format(L["banish_message"], sender, target), "Positive")
+		end
 	end
 end
+
+
