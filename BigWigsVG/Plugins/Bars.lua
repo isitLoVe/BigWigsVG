@@ -24,6 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	["up"] = true,
 	["textsize"] = true,
 	["width"] = true,
+	["height"] = true,
 
 	["Options for the timer bars."] = true,
 	["Show the bar anchor frame."] = true,
@@ -40,6 +41,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Bar scale"] = true,
 	["Bar width"] = true,
 	["Set the bar width."] = true,
+	["Bar height"] = true,
+	["Set the bar height."] = true,
 	
 	["Bars now grow %2$s"] = true,
 	["Scale is set to %2$s"] = true,
@@ -256,6 +259,7 @@ BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,
 	textsize = 11,
+	height = 16,
 	width = 200,
 	texture = L["default"],
 }
@@ -296,7 +300,7 @@ BigWigsBars.consoleOptions = {
 			name = L["Bar text size"],
 			desc = L["Set the bar text size."],
 			min = 6,
-			max = 24,
+			max = 50,
 			step = 1,
 			get = function() return BigWigsBars.db.profile.textsize end,
 			set = function(v) BigWigsBars.db.profile.textsize = v end,
@@ -306,10 +310,20 @@ BigWigsBars.consoleOptions = {
 			name = L["Bar width"],
 			desc = L["Set the bar width."],
 			min = 160,
-			max = 300,
+			max = 800,
 			step = 10,
 			get = function() return BigWigsBars.db.profile.width end,
 			set = function(v) BigWigsBars.db.profile.width = v end,
+		},
+		[L["height"]] = {
+			type = "range",
+			name = L["Bar height"],
+			desc = L["Set the bar height."],
+			min = 8,
+			max = 40,
+			step = 2,
+			get = function() return BigWigsBars.db.profile.height end,
+			set = function(v) BigWigsBars.db.profile.height = v end,
 		},
 		[L["Texture"]] = {
 			type = "text",
@@ -382,6 +396,7 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	module:SetCandyBarScale(id, self.db.profile.scale or 1)
 	module:SetCandyBarFontSize(id, self.db.profile.textsize or 12)
 	module:SetCandyBarWidth(id, self.db.profile.width or 200)
+	module:SetCandyBarHeight(id, self.db.profile.height or 16)
 	module:SetCandyBarFade(id, .5)
 	module:StartCandyBar(id, true)
 end
