@@ -104,7 +104,7 @@ function BigWigsMarli:BigWigs_RecvSync(sync, rest)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		if (IsRaidLeader() or IsRaidOfficer()) then
 			if klhtm.isloaded and klhtm.isenabled then
 				klhtm.net.sendmessage("targetbw " ..boss)
 			end

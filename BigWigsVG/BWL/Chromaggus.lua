@@ -189,7 +189,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	
 	if L["breath"..spellId] == L["breath1"] then --Time Lapse
 		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2, L["icon1"])
-		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		if (IsRaidLeader() or IsRaidOfficer()) then
 			if klhtm.isloaded and klhtm.isenabled then
 				klhtm.net.clearraidthreat()
 			end

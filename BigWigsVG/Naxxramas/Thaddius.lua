@@ -300,8 +300,10 @@ function BigWigsThaddius:Throw()
 	if self.db.profile.throw then
 		self:TriggerEvent("BigWigs_StartBar", self, L["throwbar"], self.throwtime, "Interface\\Icons\\Ability_Druid_Maul")
 		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", self.throwtime - 4, L["throwwarn"], "Urgent")
-		if klhtm.isloaded and klhtm.isenabled then
-			klhtm:ResetRaidThreat()
+		if (IsRaidLeader() or IsRaidOfficer()) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm.net.clearraidthreat()
+			end
 		end
 	end
 end

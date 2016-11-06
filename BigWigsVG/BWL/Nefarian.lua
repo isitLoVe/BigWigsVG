@@ -178,7 +178,7 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 end
 
 function BigWigsNefarian:BigWigs_KTM()
-	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+	if (IsRaidLeader() or IsRaidOfficer()) then
 		if klhtm.isloaded and klhtm.isenabled then
 			klhtm.net.sendmessage("targetbw " ..boss)
 			klhtm.net.clearraidthreat()

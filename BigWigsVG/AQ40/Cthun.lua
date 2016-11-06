@@ -126,7 +126,7 @@ function BigWigsCThun:OnEnable()
 
 	tentacletime = timeP1Tentacle
 	
-	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+	if (IsRaidLeader() or IsRaidOfficer()) then
 		DEFAULT_CHAT_FRAME:AddMessage("BigWigs VG cannot detect weakened automatically", 255, 0, 0)
 		DEFAULT_CHAT_FRAME:AddMessage("Use the macro    /script BigWigsCThun:ManualWeakend()     to trigger weakened manually", 255, 0, 0)
 		DEFAULT_CHAT_FRAME:AddMessage("You can only use this if you have lead or assist", 255, 0, 0)
@@ -158,7 +158,7 @@ end
 
 --use macro /script BigWigsCThun:ManualWeakend() to trigger weakened
 function BigWigsCThun:ManualWeakend()
-	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+	if (IsRaidLeader() or IsRaidOfficer()) then
 		self:TriggerEvent("BigWigs_SendSync", "CThunWeakenedVG")
 	end
 end

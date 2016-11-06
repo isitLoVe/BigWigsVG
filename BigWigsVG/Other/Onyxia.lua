@@ -128,7 +128,7 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL( msg )
 		self:TriggerEvent("BigWigs_Message", L["deepbreathnow_warn"], "Important", true, "Alert")
 		
 	elseif string.find(msg, L["phase1_trigger"]) then
-		if BigWigs:CheckYourPrivilege(UnitName("player")) then
+		if (IsRaidLeader() or IsRaidOfficer()) then
 			if klhtm.isloaded and klhtm.isenabled then
 				klhtm.net.sendmessage("targetbw " ..boss)
 			end

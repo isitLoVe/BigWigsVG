@@ -150,7 +150,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsTwins:Telebar()
-	if BigWigs:CheckYourPrivilege(UnitName("player")) then
+	if (IsRaidLeader() or IsRaidOfficer()) then
 		if klhtm.isloaded and klhtm.isenabled then
 			klhtm.net.clearraidthreat()
 		end
