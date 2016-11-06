@@ -59,30 +59,6 @@ BigWigsOnScreenIcons.consoleOptions = {
 ------------------------------
 
 function BigWigsOnScreenIcons:OnRegister()
-	self.frameArrow = CreateFrame("Frame", nil, UIParent)
-	self.texArrow = self.frameArrow:CreateTexture(nil, "BACKGROUND")
-	-- Create the frame we will be using for the Arrow
-	self.frameArrow:SetFrameStrata("MEDIUM")
-	self.frameArrow:SetWidth(200)  -- Set These to whatever height/width is needed 
-	self.frameArrow:SetHeight(200) -- for your Texture
-	-- Apply Texture
-	self.texArrow:SetTexture("Interface\\AddOns\\BigWigsVG\\textures\\arrow")	
-	self.texArrow:SetAllPoints(self.frameArrow)
-	self.frameArrow:SetAlpha(0.6)
-	self.frameArrow:Hide()
-
-	self.framestraightArrow = CreateFrame("Frame", nil, UIParent)
-	self.texstraightArrow = self.framestraightArrow:CreateTexture(nil, "BACKGROUND")
-	-- Create the frame we will be using for the Arrow
-	self.framestraightArrow:SetFrameStrata("MEDIUM")
-	self.framestraightArrow:SetWidth(150)  -- Set These to whatever height/width is needed 
-	self.framestraightArrow:SetHeight(150) -- for your Texture
-	-- Apply Texture
-	self.texstraightArrow:SetTexture("Interface\\AddOns\\BigWigsVG\\textures\\straightArrow")	
-	self.texstraightArrow:SetAllPoints(self.framestraightArrow)
-	self.framestraightArrow:SetAlpha(0.6)
-	self.framestraightArrow:Hide()
-
 	self.frameBlizzard = CreateFrame("Frame", nil, UIParent)
 	self.texBlizzard = self.frameBlizzard:CreateTexture(nil, "BACKGROUND")
 	-- Create the frame we will be using for the Arrow
@@ -335,18 +311,6 @@ function BigWigsOnScreenIcons:OnRegister()
 	self.frameCoR:SetAlpha(0.6)
 	self.frameCoR:Hide()
 
-	self.frameFroasty = CreateFrame("Frame", nil, UIParent)
-	self.texFroasty = self.frameFroasty:CreateTexture(nil, "BACKGROUND")
-	-- Create the frame we will be using for the Arrow
-	self.frameFroasty:SetFrameStrata("MEDIUM")
-	self.frameFroasty:SetWidth(100)  -- Set These to whatever height/width is needed 
-	self.frameFroasty:SetHeight(100) -- for your Texture
-	-- Apply Texture
-	self.texFroasty:SetTexture("Interface\\AddOns\\BigWigsVG\\Textures\\froasty")	
-	self.texFroasty:SetAllPoints(self.frameFroasty)
-	self.frameFroasty:SetAlpha(1.0)
-	self.frameFroasty:Hide()
-
 	self.frameFirevuln = CreateFrame("Frame", nil, UIParent)
 	self.texFirevuln = self.frameFirevuln:CreateTexture(nil, "BACKGROUND")
 	-- Create the frame we will be using for the Arrow
@@ -434,8 +398,6 @@ function BigWigsOnScreenIcons:OnRegister()
 end
 
 function BigWigsOnScreenIcons:OnDisable()
-	if self.frameArrow then self.frameArrow:Hide() end
-	if self.framestraightArrow then self.framestraightArrow:Hide() end
 	if self.frameBlizzard then self.frameBlizzard:Hide() end
 	if self.frameGeddon then self.frameGeddon:Hide() end
 	if self.frameRun then self.frameRun:Hide() end
@@ -457,7 +419,6 @@ function BigWigsOnScreenIcons:OnDisable()
 	if self.frameCoE then self.frameCoE:Hide() end
 	if self.frameCoS then self.frameCoS:Hide() end
 	if self.frameCoR then self.frameCoR:Hide() end
-	if self.frameFroasty then self.frameFroasty:Hide() end
 	if self.frameFirevuln then self.frameFirevuln:Hide() end
 	if self.frameFFire then self.frameFFire:Hide() end
 	if self.frameResistpot then self.frameResistpot:Hide() end
@@ -472,278 +433,235 @@ end
 ------------------------------
 
 function BigWigsOnScreenIcons:Direction( direction )
-if self.db.profile.icons then
-		if direction == "Left" then -- Left Arrow
-			if self.db.profile.graphic then
-				self.frameArrow.texture = self.texArrow
-				self.texArrow:SetTexCoord(0, 1, 0, 1)
-				self.frameArrow:SetPoint("CENTER", -250, 100)
-				self.frameArrow:Show()
-				self:ScheduleEvent(function() self.frameArrow:Hide() end, 4)
-			end
-			if self.db.profile.text then
-				self:TriggerEvent("BigWigs_Message", L["warnleft"], "Red", true)
-			end
-		elseif direction == "Right" then -- Right Arrow
-			if self.db.profile.graphic then
-				self.frameArrow.texture = self.texArrow
-				self.texArrow:SetTexCoord(1, 0, 0, 1)
-				self.frameArrow:SetPoint("CENTER", 250, 100)
-				self.frameArrow:Show()
-				self:ScheduleEvent(function() self.frameArrow:Hide() end, 4)
-			end
-			if self.db.profile.text then
-				self:TriggerEvent("BigWigs_Message", L["warnright"], "Red", true)
-			end
-		elseif direction == "Across" then -- Switch Sides
-			if self.db.profile.graphic then
-				self.framestraightArrow.texture = self.texstraightArrow
-				self.texstraightArrow:SetTexCoord(0, 1, 0, 1)
-				self.framestraightArrow:SetPoint("CENTER", 0, 200)
-				self.framestraightArrow:Show()
-				self:ScheduleEvent(function() self.framestraightArrow:Hide() end, 4)
-			end
-			if self.db.profile.text then
-				self:TriggerEvent("BigWigs_Message", L["warnacross"], "Red", true)
-			end
-		elseif direction == "Blizzard" then -- Blizzard warning
-			if self.db.profile.graphic then
-				self.frameBlizzard.texture = self.texBlizzard
-				self.texBlizzard:SetTexCoord(0, 1, 0, 1)
-				self.frameBlizzard:SetPoint("CENTER", 0, 250)
-				self.frameBlizzard:Show()
-			end
-		elseif direction == "Geddon" then -- Geddon Bomb
-			if self.db.profile.graphic then
-				self.frameGeddon.texture = self.texGeddon
-				self.texGeddon:SetTexCoord(0, 1, 0, 1)
-				self.frameGeddon:SetPoint("CENTER", 0, 250)
-				self.frameGeddon:Show()
-				self:ScheduleEvent(function() self.frameGeddon:Hide() end, 10)
-			end
-		elseif direction == "Run" then -- Knockback
-			if self.db.profile.graphic then
-				self.frameRun.texture = self.texRun
-				self.texRun:SetTexCoord(0, 1, 0, 1)
-				self.frameRun:SetPoint("CENTER", 0, 250)
-				self.frameRun:Show()
-				self:ScheduleEvent(function() self.frameRun:Hide() end, 5)
-			end
-		elseif direction == "RunZG" then -- Mandokir
-			if self.db.profile.graphic then
-				self.frameRun.texture = self.texRun
-				self.texRun:SetTexCoord(0, 1, 0, 1)
-				self.frameRun:SetPoint("CENTER", 0, 250)
-				self.frameRun:Show()
-				self:ScheduleEvent(function() self.frameRun:Hide() end, 10)
-			end
-		elseif direction == "Hakkar" then -- Hakkar Sons
-			if self.db.profile.graphic then
-				self.frameHakkar.texture = self.texHakkar
-				self.texHakkar:SetTexCoord(0, 1, 0, 1)
-				self.frameHakkar:SetPoint("CENTER", 0, 250)
-				self.frameHakkar:Show()
-				self:ScheduleEvent(function() self.frameHakkar:Hide() end, 5)
-			end
-		elseif direction == "Shield" then -- Power Word: Shield
-			if self.db.profile.graphic then
-				self.frameShield.texture = self.texShield
-				self.texShield:SetTexCoord(0, 1, 0, 1)
-				self.frameShield:SetPoint("CENTER", 0, 25)
-				self.frameShield:Show()
-				self:ScheduleEvent(function() self.frameShield:Hide() end, 2)
-			end
-		elseif direction == "Tranq" then -- Tranqil helper
-			if self.db.profile.graphic then
-				self.frameTranq.texture = self.texTranq
-				self.texTranq:SetTexCoord(0, 1, 0, 1)
-				self.frameTranq:SetPoint("CENTER", 0, 100)
-				self.frameTranq:Show()
-				self:ScheduleEvent(function() self.frameTranq:Hide() end, 8)
-			end
-		elseif direction == "Fire" then -- Rain of Fire
-			if self.db.profile.graphic then
-				self.frameFire.texture = self.texFire
-				self.texFire:SetTexCoord(0, 1, 0, 1)
-				self.frameFire:SetPoint("CENTER", 0, 250)
-				self.frameFire:Show()
-			end
-		elseif direction == "Cthunglare" then -- AQ40 C'Thun dark glare
-			if self.db.profile.graphic then
-				self.frameCthunglare.texture = self.texCthunglare
-				self.texCthunglare:SetTexCoord(0, 1, 0, 1)
-				self.frameCthunglare:SetPoint("CENTER", 0, 250)
-				self.frameCthunglare:Show()
-				self:ScheduleEvent(function() self.frameCthunglare:Hide() end, 5)
-			end
-		elseif direction == "Cthuneyes" then -- AQ40 C'Thun eyes
-			if self.db.profile.graphic then
-				self.frameCthuneyes.texture = self.texCthuneyes
-				self.texCthuneyes:SetTexCoord(0, 1, 0, 1)
-				self.frameCthuneyes:SetPoint("CENTER", 0, 250)
-				self.frameCthuneyes:Show()
-				self:ScheduleEvent(function() self.frameCthuneyes:Hide() end, 5)
-			end
-		elseif direction == "Cthungeyes" then -- AQ40 C'Thun giant eyes
-			if self.db.profile.graphic then
-				self.frameCthungeyes.texture = self.texCthungeyes
-				self.texCthungeyes:SetTexCoord(0, 1, 0, 1)
-				self.frameCthungeyes:SetPoint("CENTER", 0, 250)
-				self.frameCthungeyes:Show()
-				self:ScheduleEvent(function() self.frameCthungeyes:Hide() end, 5)
-			end
-		elseif direction == "Cthungeyesactive" then -- AQ40 C'Thun giant eyes
-			if self.db.profile.graphic then
-				self.frameCthungeyesactive.texture = self.texCthungeyesactive
-				self.texCthungeyesactive:SetTexCoord(0, 1, 0, 1)
-				self.frameCthungeyesactive:SetPoint("CENTER", -150, -20)
-				self.frameCthungeyesactive:Show()
-				self:ScheduleEvent(function() self.frameCthungeyesactive:Hide() end, 59)
-			end
-		elseif direction == "Cthungclaw" then -- AQ40 C'Thun giant claws
-			if self.db.profile.graphic then
-				self.frameCthungclaw.texture = self.texCthungclaw
-				self.texCthungclaw:SetTexCoord(0, 1, 0, 1)
-				self.frameCthungclaw:SetPoint("CENTER", 0, 250)
-				self.frameCthungclaw:Show()
-				self:ScheduleEvent(function() self.frameCthungclaw:Hide() end, 5)
-			end
-		elseif direction == "Noth" then -- Noth's blink
-			if self.db.profile.graphic then
-				self.frameNoth.texture = self.texNoth
-				self.texNoth:SetTexCoord(0, 1, 0, 1)
-				self.frameNoth:SetPoint("CENTER", 0, 250)
-				self.frameNoth:Show()
-				self:ScheduleEvent(function() self.frameNoth:Hide() end, 5)
-			end
-		elseif direction == "Spore" then -- Loatheb's spore
-			if self.db.profile.graphic then
-				self.frameSpore.texture = self.texSpore
-				self.texSpore:SetTexCoord(0, 1, 0, 1)
-				self.frameSpore:SetPoint("CENTER", 0, 250)
-				self.frameSpore:Show()
-				self:ScheduleEvent(function() self.frameSpore:Hide() end, 6)
-			end
-		elseif direction == "GFPP" then -- Fire Prot
-			if self.db.profile.graphic then
-				self.frameGFPP.texture = self.texGFPP
-				self.texGFPP:SetTexCoord(0, 1, 0, 1)
-				self.frameGFPP:SetPoint("CENTER", 175, 0)
-				self.frameGFPP:Show()
-				self:ScheduleEvent(function() self.frameGFPP:Hide() end, 5)
-			end
-		elseif direction == "GNPP" then -- Nature Prot
-			if self.db.profile.graphic then
-				self.frameGNPP.texture = self.texGNPP
-				self.texGNPP:SetTexCoord(0, 1, 0, 1)
-				self.frameGNPP:SetPoint("CENTER", 175, 0)
-				self.frameGNPP:Show()
-				self:ScheduleEvent(function() self.frameGNPP:Hide() end, 5)
-			end
-		elseif direction == "GSPP" then -- Shadow Prot
-			if self.db.profile.graphic then
-				self.frameGSPP.texture = self.texGSPP
-				self.texGSPP:SetTexCoord(0, 1, 0, 1)
-				self.frameGSPP:SetPoint("CENTER", 175, 0)
-				self.frameGSPP:Show()
-				self:ScheduleEvent(function() self.frameGSPP:Hide() end, 5)
-			end
-		elseif direction == "Sunder" then -- Sunder Armor
-			if self.db.profile.graphic then
-				self.frameSunder.texture = self.texSunder
-				self.texSunder:SetTexCoord(0, 1, 0, 1)
-				self.frameSunder:SetPoint("CENTER", -175, 100)
-				self.frameSunder:Show()
-				self:ScheduleEvent(function() self.frameSunder:Hide() end, 20)
-			end
-		elseif direction == "CoE" then -- Curse of Elements
-			if self.db.profile.graphic then
-				self.frameCoE.texture = self.texCoE
-				self.texCoE:SetTexCoord(0, 1, 0, 1)
-				self.frameCoE:SetPoint("CENTER", -175, 100)
-				self.frameCoE:Show()
-				self:ScheduleEvent(function() self.frameCoE:Hide() end, 20)
-			end
-		elseif direction == "CoS" then -- Curse of Shadow
-			if self.db.profile.graphic then
-				self.frameCoS.texture = self.texCoS
-				self.texCoS:SetTexCoord(0, 1, 0, 1)
-				self.frameCoS:SetPoint("CENTER", 175, 100)
-				self.frameCoS:Show()
-				self:ScheduleEvent(function() self.frameCoS:Hide() end, 20)
-			end
-		elseif direction == "CoR" then -- Curse of Recklessness
-			if self.db.profile.graphic then
-				self.frameCoR.texture = self.texCoR
-				self.texCoR:SetTexCoord(0, 1, 0, 1)
-				self.frameCoR:SetPoint("CENTER", -175, 200)
-				self.frameCoR:Show()
-				self:ScheduleEvent(function() self.frameCoR:Hide() end, 20)
-			end
-		elseif direction == "Froasty" then -- Froasty!
-			if self.db.profile.graphic then
-				self.frameFroasty.texture = self.texFroasty
-				self.texFroasty:SetTexCoord(0, 1, 0, 1)
-				self.frameFroasty:SetPoint("CENTER", 350, -200)
-				self.frameFroasty:Show()
-				self:ScheduleEvent(function() self.frameFroasty:Hide() end, 1)
-			end
-		elseif direction == "Firevuln" then -- Fire vulnerability
-			if self.db.profile.graphic then
-				self.frameFirevuln.texture = self.texFirevuln
-				self.texFirevuln:SetTexCoord(0, 1, 0, 1)
-				self.frameFirevuln:SetPoint("CENTER", -175, 100)
-				self.frameFirevuln:Show()
-				self:ScheduleEvent(function() self.frameFirevuln:Hide() end, 20)
-			end
-		elseif direction == "FFire" then -- Faerie Fire
-			if self.db.profile.graphic then
-				self.frameFFire.texture = self.texFFire
-				self.texFFire:SetTexCoord(0, 1, 0, 1)
-				self.frameFFire:SetPoint("CENTER", -175, 100)
-				self.frameFFire:Show()
-				self:ScheduleEvent(function() self.frameFFire:Hide() end, 20)
-			end
-		elseif direction == "Resistpot" then -- Magic Resistance Potion
-			if self.db.profile.graphic then
-				self.frameResistpot.texture = self.texResistpot
-				self.texResistpot:SetTexCoord(0, 1, 0, 1)
-				self.frameResistpot:SetPoint("CENTER", 175, 0)
-				self.frameResistpot:Show()
-				self:ScheduleEvent(function() self.frameResistpot:Hide() end, 7)
-			end
-		elseif direction == "Stoneshield" then -- Greater Stoneshield Potion
-			if self.db.profile.graphic then
-				self.frameStoneshield.texture = self.texStoneshield
-				self.texStoneshield:SetTexCoord(0, 1, 0, 1)
-				self.frameStoneshield:SetPoint("CENTER", 175, 0)
-				self.frameStoneshield:Show()
-				self:ScheduleEvent(function() self.frameStoneshield:Hide() end, 7)
-			end
-		elseif direction == "Light" then -- Seal of Light
-			if self.db.profile.graphic then
-				self.frameLight.texture = self.texLight
-				self.texLight:SetTexCoord(0, 1, 0, 1)
-				self.frameLight:SetPoint("CENTER", 175, 100)
-				self.frameLight:Show()
-				self:ScheduleEvent(function() self.frameLight:Hide() end, 15)
-			end
-		elseif direction == "Wisdom" then -- Seal of Wisdom
-			if self.db.profile.graphic then
-				self.frameWisdom.texture = self.texWisdom
-				self.texWisdom:SetTexCoord(0, 1, 0, 1)
-				self.frameWisdom:SetPoint("CENTER", -175, 100)
-				self.frameWisdom:Show()
-				self:ScheduleEvent(function() self.frameWisdom:Hide() end, 15)
-			end
-		elseif direction == "VoidZone" then -- Void Zone
-			if self.db.profile.graphic then
-				self.frameVoidZone.texture = self.texVoidZone
-				self.texVoidZone:SetTexCoord(0, 1, 0, 1)
-				self.frameVoidZone:SetPoint("CENTER", -175, 100)
-				self.frameVoidZone:Show()
-				self:ScheduleEvent(function() self.frameVoidZone:Hide() end, 15)
-			end
+	if direction == "Blizzard" then -- Blizzard warning
+		if self.db.profile.icons then
+			self.frameBlizzard.texture = self.texBlizzard
+			self.texBlizzard:SetTexCoord(0, 1, 0, 1)
+			self.frameBlizzard:SetPoint("CENTER", 0, 250)
+			self.frameBlizzard:Show()
+		end
+	elseif direction == "Geddon" then -- Geddon Bomb
+		if self.db.profile.icons then
+			self.frameGeddon.texture = self.texGeddon
+			self.texGeddon:SetTexCoord(0, 1, 0, 1)
+			self.frameGeddon:SetPoint("CENTER", 0, 250)
+			self.frameGeddon:Show()
+			self:ScheduleEvent(function() self.frameGeddon:Hide() end, 10)
+		end
+	elseif direction == "Run" then -- Knockback
+		if self.db.profile.icons then
+			self.frameRun.texture = self.texRun
+			self.texRun:SetTexCoord(0, 1, 0, 1)
+			self.frameRun:SetPoint("CENTER", 0, 250)
+			self.frameRun:Show()
+			self:ScheduleEvent(function() self.frameRun:Hide() end, 5)
+		end
+	elseif direction == "RunZG" then -- Mandokir
+		if self.db.profile.icons then
+			self.frameRun.texture = self.texRun
+			self.texRun:SetTexCoord(0, 1, 0, 1)
+			self.frameRun:SetPoint("CENTER", 0, 250)
+			self.frameRun:Show()
+			self:ScheduleEvent(function() self.frameRun:Hide() end, 10)
+		end
+	elseif direction == "Hakkar" then -- Hakkar Sons
+		if self.db.profile.icons then
+			self.frameHakkar.texture = self.texHakkar
+			self.texHakkar:SetTexCoord(0, 1, 0, 1)
+			self.frameHakkar:SetPoint("CENTER", 0, 250)
+			self.frameHakkar:Show()
+			self:ScheduleEvent(function() self.frameHakkar:Hide() end, 5)
+		end
+	elseif direction == "Shield" then -- Power Word: Shield
+		if self.db.profile.icons then
+			self.frameShield.texture = self.texShield
+			self.texShield:SetTexCoord(0, 1, 0, 1)
+			self.frameShield:SetPoint("CENTER", 0, 25)
+			self.frameShield:Show()
+			self:ScheduleEvent(function() self.frameShield:Hide() end, 2)
+		end
+	elseif direction == "Tranq" then -- Tranqil helper
+		if self.db.profile.icons then
+			self.frameTranq.texture = self.texTranq
+			self.texTranq:SetTexCoord(0, 1, 0, 1)
+			self.frameTranq:SetPoint("CENTER", 0, 100)
+			self.frameTranq:Show()
+			self:ScheduleEvent(function() self.frameTranq:Hide() end, 8)
+		end
+	elseif direction == "Fire" then -- Rain of Fire
+		if self.db.profile.icons then
+			self.frameFire.texture = self.texFire
+			self.texFire:SetTexCoord(0, 1, 0, 1)
+			self.frameFire:SetPoint("CENTER", 0, 250)
+			self.frameFire:Show()
+		end
+	elseif direction == "Cthunglare" then -- AQ40 C'Thun dark glare
+		if self.db.profile.icons then
+			self.frameCthunglare.texture = self.texCthunglare
+			self.texCthunglare:SetTexCoord(0, 1, 0, 1)
+			self.frameCthunglare:SetPoint("CENTER", 0, 250)
+			self.frameCthunglare:Show()
+			self:ScheduleEvent(function() self.frameCthunglare:Hide() end, 5)
+		end
+	elseif direction == "Cthuneyes" then -- AQ40 C'Thun eyes
+		if self.db.profile.icons then
+			self.frameCthuneyes.texture = self.texCthuneyes
+			self.texCthuneyes:SetTexCoord(0, 1, 0, 1)
+			self.frameCthuneyes:SetPoint("CENTER", 0, 250)
+			self.frameCthuneyes:Show()
+			self:ScheduleEvent(function() self.frameCthuneyes:Hide() end, 5)
+		end
+	elseif direction == "Cthungeyes" then -- AQ40 C'Thun giant eyes
+		if self.db.profile.icons then
+			self.frameCthungeyes.texture = self.texCthungeyes
+			self.texCthungeyes:SetTexCoord(0, 1, 0, 1)
+			self.frameCthungeyes:SetPoint("CENTER", 0, 250)
+			self.frameCthungeyes:Show()
+			self:ScheduleEvent(function() self.frameCthungeyes:Hide() end, 5)
+		end
+	elseif direction == "Cthungeyesactive" then -- AQ40 C'Thun giant eyes
+		if self.db.profile.icons then
+			self.frameCthungeyesactive.texture = self.texCthungeyesactive
+			self.texCthungeyesactive:SetTexCoord(0, 1, 0, 1)
+			self.frameCthungeyesactive:SetPoint("CENTER", -150, -20)
+			self.frameCthungeyesactive:Show()
+			self:ScheduleEvent(function() self.frameCthungeyesactive:Hide() end, 59)
+		end
+	elseif direction == "Cthungclaw" then -- AQ40 C'Thun giant claws
+		if self.db.profile.icons then
+			self.frameCthungclaw.texture = self.texCthungclaw
+			self.texCthungclaw:SetTexCoord(0, 1, 0, 1)
+			self.frameCthungclaw:SetPoint("CENTER", 0, 250)
+			self.frameCthungclaw:Show()
+			self:ScheduleEvent(function() self.frameCthungclaw:Hide() end, 5)
+		end
+	elseif direction == "Noth" then -- Noth's blink
+		if self.db.profile.icons then
+			self.frameNoth.texture = self.texNoth
+			self.texNoth:SetTexCoord(0, 1, 0, 1)
+			self.frameNoth:SetPoint("CENTER", 0, 250)
+			self.frameNoth:Show()
+			self:ScheduleEvent(function() self.frameNoth:Hide() end, 5)
+		end
+	elseif direction == "Spore" then -- Loatheb's spore
+		if self.db.profile.icons then
+			self.frameSpore.texture = self.texSpore
+			self.texSpore:SetTexCoord(0, 1, 0, 1)
+			self.frameSpore:SetPoint("CENTER", 0, 250)
+			self.frameSpore:Show()
+			self:ScheduleEvent(function() self.frameSpore:Hide() end, 6)
+		end
+	elseif direction == "GFPP" then -- Fire Prot
+		if self.db.profile.icons then
+			self.frameGFPP.texture = self.texGFPP
+			self.texGFPP:SetTexCoord(0, 1, 0, 1)
+			self.frameGFPP:SetPoint("CENTER", 175, 0)
+			self.frameGFPP:Show()
+			self:ScheduleEvent(function() self.frameGFPP:Hide() end, 5)
+		end
+	elseif direction == "GNPP" then -- Nature Prot
+		if self.db.profile.icons then
+			self.frameGNPP.texture = self.texGNPP
+			self.texGNPP:SetTexCoord(0, 1, 0, 1)
+			self.frameGNPP:SetPoint("CENTER", 175, 0)
+			self.frameGNPP:Show()
+			self:ScheduleEvent(function() self.frameGNPP:Hide() end, 5)
+		end
+	elseif direction == "GSPP" then -- Shadow Prot
+		if self.db.profile.icons then
+			self.frameGSPP.texture = self.texGSPP
+			self.texGSPP:SetTexCoord(0, 1, 0, 1)
+			self.frameGSPP:SetPoint("CENTER", 175, 0)
+			self.frameGSPP:Show()
+			self:ScheduleEvent(function() self.frameGSPP:Hide() end, 5)
+		end
+	elseif direction == "Sunder" then -- Sunder Armor
+		if self.db.profile.icons then
+			self.frameSunder.texture = self.texSunder
+			self.texSunder:SetTexCoord(0, 1, 0, 1)
+			self.frameSunder:SetPoint("CENTER", -175, 100)
+			self.frameSunder:Show()
+			self:ScheduleEvent(function() self.frameSunder:Hide() end, 20)
+		end
+	elseif direction == "CoE" then -- Curse of Elements
+		if self.db.profile.icons then
+			self.frameCoE.texture = self.texCoE
+			self.texCoE:SetTexCoord(0, 1, 0, 1)
+			self.frameCoE:SetPoint("CENTER", -175, 100)
+			self.frameCoE:Show()
+			self:ScheduleEvent(function() self.frameCoE:Hide() end, 20)
+		end
+	elseif direction == "CoS" then -- Curse of Shadow
+		if self.db.profile.icons then
+			self.frameCoS.texture = self.texCoS
+			self.texCoS:SetTexCoord(0, 1, 0, 1)
+			self.frameCoS:SetPoint("CENTER", 175, 100)
+			self.frameCoS:Show()
+			self:ScheduleEvent(function() self.frameCoS:Hide() end, 20)
+		end
+	elseif direction == "CoR" then -- Curse of Recklessness
+		if self.db.profile.icons then
+			self.frameCoR.texture = self.texCoR
+			self.texCoR:SetTexCoord(0, 1, 0, 1)
+			self.frameCoR:SetPoint("CENTER", -175, 200)
+			self.frameCoR:Show()
+			self:ScheduleEvent(function() self.frameCoR:Hide() end, 20)
+		end
+	elseif direction == "Firevuln" then -- Fire vulnerability
+		if self.db.profile.icons then
+			self.frameFirevuln.texture = self.texFirevuln
+			self.texFirevuln:SetTexCoord(0, 1, 0, 1)
+			self.frameFirevuln:SetPoint("CENTER", -175, 100)
+			self.frameFirevuln:Show()
+			self:ScheduleEvent(function() self.frameFirevuln:Hide() end, 20)
+		end
+	elseif direction == "FFire" then -- Faerie Fire
+		if self.db.profile.icons then
+			self.frameFFire.texture = self.texFFire
+			self.texFFire:SetTexCoord(0, 1, 0, 1)
+			self.frameFFire:SetPoint("CENTER", -175, 100)
+			self.frameFFire:Show()
+			self:ScheduleEvent(function() self.frameFFire:Hide() end, 20)
+		end
+	elseif direction == "Resistpot" then -- Magic Resistance Potion
+		if self.db.profile.icons then
+			self.frameResistpot.texture = self.texResistpot
+			self.texResistpot:SetTexCoord(0, 1, 0, 1)
+			self.frameResistpot:SetPoint("CENTER", 175, 0)
+			self.frameResistpot:Show()
+			self:ScheduleEvent(function() self.frameResistpot:Hide() end, 7)
+		end
+	elseif direction == "Stoneshield" then -- Greater Stoneshield Potion
+		if self.db.profile.icons then
+			self.frameStoneshield.texture = self.texStoneshield
+			self.texStoneshield:SetTexCoord(0, 1, 0, 1)
+			self.frameStoneshield:SetPoint("CENTER", 175, 0)
+			self.frameStoneshield:Show()
+			self:ScheduleEvent(function() self.frameStoneshield:Hide() end, 7)
+		end
+	elseif direction == "Light" then -- Seal of Light
+		if self.db.profile.icons then
+			self.frameLight.texture = self.texLight
+			self.texLight:SetTexCoord(0, 1, 0, 1)
+			self.frameLight:SetPoint("CENTER", 175, 100)
+			self.frameLight:Show()
+			self:ScheduleEvent(function() self.frameLight:Hide() end, 15)
+		end
+	elseif direction == "Wisdom" then -- Seal of Wisdom
+		if self.db.profile.icons then
+			self.frameWisdom.texture = self.texWisdom
+			self.texWisdom:SetTexCoord(0, 1, 0, 1)
+			self.frameWisdom:SetPoint("CENTER", -175, 100)
+			self.frameWisdom:Show()
+			self:ScheduleEvent(function() self.frameWisdom:Hide() end, 15)
+		end
+	elseif direction == "VoidZone" then -- Void Zone
+		if self.db.profile.icons then
+			self.frameVoidZone.texture = self.texVoidZone
+			self.texVoidZone:SetTexCoord(0, 1, 0, 1)
+			self.frameVoidZone:SetPoint("CENTER", -175, 100)
+			self.frameVoidZone:Show()
+			self:ScheduleEvent(function() self.frameVoidZone:Hide() end, 15)
 		end
 	end
 end
