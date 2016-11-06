@@ -175,6 +175,11 @@ function BigWigsNoth:BigWigs_RecvSync( sync )
 			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 		end
+		if (IsRaidLeader() or IsRaidOfficer()) then
+			if klhtm.isloaded and klhtm.isenabled then
+				klhtm.net.clearraidthreat()
+			end
+		end	
 	end
 end
 
