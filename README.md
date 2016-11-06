@@ -75,6 +75,20 @@ Revision 19012
 - [x] Jin'do the Hexxer
 - [x] Hakkar
 
+## Onyxia's Lair
+- [x] Onyxia
+
+## World Bosses
+- [ ] Azuregos
+- [ ] Lord Kazzak
+
+##  Dragons of Nightmare
+- [ ] Emeriss
+- [ ] Lethon
+- [ ] Taerar
+- [ ] Ysondre
+
+
 
 http://vanillagaming.org/
 
