@@ -120,9 +120,9 @@ end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if string.find(msg, L["GNPPtrigger"]) then
-            BigWigsThaddiusArrows:GNPPstop()
+            BigWigsOnScreenIcons:GNPPstop()
 	elseif string.find(msg, L["GFPPtrigger"]) then
-            BigWigsThaddiusArrows:GFPPstop()
+            BigWigsOnScreenIcons:GFPPstop()
 	end
 end
 
@@ -131,22 +131,22 @@ function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE( msg )
 		self:CancelScheduledEvent("bwfaerlinafire")
 		self:ScheduleEvent("bwfaerlinafire", self.Stopf, 5, self )
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Personal", true, "Alarm")
-		BigWigsThaddiusArrows:Direction("Fire")
+		BigWigsOnScreenIcons:Direction("Fire")
 	end
 end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if string.find(msg, L["roftrigger"]) then
-			BigWigsThaddiusArrows:Firestop()
+			BigWigsOnScreenIcons:Firestop()
 	elseif string.find(msg, L["GNPPtrigger"]) and self.db.profile.buff then
-			BigWigsThaddiusArrows:Direction("GNPP")
+			BigWigsOnScreenIcons:Direction("GNPP")
 	elseif string.find(msg, L["GFPPtrigger"]) and self.db.profile.buff then
-			BigWigsThaddiusArrows:Direction("GFPP")
+			BigWigsOnScreenIcons:Direction("GFPP")
 	end
 end
 
 function BigWigsFaerlina:Stopf()
-	BigWigsThaddiusArrows:Firestop()
+	BigWigsOnScreenIcons:Firestop()
 end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
@@ -237,7 +237,7 @@ end
 
 function BigWigsFaerlina:GenericBossDeath( msg )
 	if string.find(msg, L["fearlina_dead"]) then
-		BigWigsThaddiusArrows:Firestop()
+		BigWigsOnScreenIcons:Firestop()
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end

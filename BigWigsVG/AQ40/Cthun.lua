@@ -169,37 +169,37 @@ end
 
 function BigWigsCThun:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if string.find(msg, L["Sundertrigger"]) then
-	        BigWigsThaddiusArrows:Direction("Sunder")
+	        BigWigsOnScreenIcons:Direction("Sunder")
 	elseif string.find(msg, L["CoEtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("CoE")
+	        BigWigsOnScreenIcons:Direction("CoE")
 	elseif string.find(msg, L["CoStrigger"]) then
-	        BigWigsThaddiusArrows:Direction("CoS")
+	        BigWigsOnScreenIcons:Direction("CoS")
 	elseif string.find(msg, L["CoRtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("CoR")
+	        BigWigsOnScreenIcons:Direction("CoR")
 	end
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["Sundertrigger"]) then
-                BigWigsThaddiusArrows:Sunderstop()
+                BigWigsOnScreenIcons:Sunderstop()
 	elseif string.find(msg, L["CoEtrigger"]) then
-                BigWigsThaddiusArrows:CoEstop()
+                BigWigsOnScreenIcons:CoEstop()
 	elseif string.find(msg, L["CoStrigger"]) then
-                BigWigsThaddiusArrows:CoSstop()
+                BigWigsOnScreenIcons:CoSstop()
 	elseif string.find(msg, L["CoRtrigger"]) then
-                BigWigsThaddiusArrows:CoRstop()
+                BigWigsOnScreenIcons:CoRstop()
 	end
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if string.find(msg, L["GNPPtrigger"]) then
-            BigWigsThaddiusArrows:GNPPstop()
+            BigWigsOnScreenIcons:GNPPstop()
 	end
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if string.find(msg, L["GNPPtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("GNPP")
+	        BigWigsOnScreenIcons:Direction("GNPP")
 	end
 end
 
@@ -235,7 +235,7 @@ function BigWigsCThun:BigWigs_RecvSync(sync, rest)
 		self:CThunWeakenedVG()
 	elseif sync == "CThunGEdownVG" then
 		self:TriggerEvent("BigWigs_Message", L["gedownwarn"], "Positive")
-		BigWigsThaddiusArrows:GEyestop()
+		BigWigsOnScreenIcons:GEyestop()
 	end
 end
 
@@ -250,14 +250,14 @@ function BigWigsCThun:CThunStartVG()
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
 
 		if self.db.profile.tentacle then
-	        --self:ScheduleEvent("bwctea1", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, timeP1TentacleStart)
+	        --self:ScheduleEvent("bwctea1", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, timeP1TentacleStart)
 			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP1TentacleStart, "Interface\\Icons\\Spell_Nature_CallStorm")
 			self:ScheduleEvent("bwcthuntentacle", "BigWigs_Message", timeP1TentacleStart, self.db.profile.rape and L["tentacle"] or L["norape"], "Urgent", true, "Alert")
 			self:ScheduleEvent("bwcthuntentaclesstart", self.StartTentacleRape, timeP1TentacleStart, self )
 		end
 
 		if self.db.profile.glare then
-	        --self:ScheduleEvent("bwctga", function() BigWigsThaddiusArrows:Direction("Cthunglare") end, timeP1GlareStart)
+	        --self:ScheduleEvent("bwctga", function() BigWigsOnScreenIcons:Direction("Cthunglare") end, timeP1GlareStart)
 			self:TriggerEvent("BigWigs_StartBar", self, L["barGlare"], timeP1GlareStart, "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 			self:ScheduleEvent("BigWigs_Message", timeP1GlareStart, L["glare"], "Urgent", true, "Alarm" )
 			self:ScheduleEvent("bwcthundarkglarestart", self.DarkGlare, timeP1GlareStart, self )
@@ -301,8 +301,8 @@ function BigWigsCThun:CThunP2StartVG()
 		self:CancelScheduledEvent("bwctga")
 
 		if self.db.profile.tentacle then
-			--self:ScheduleEvent("bwctea1", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, timeP2Tentacle + timeP2Offset - 5)
-			--self:ScheduleEvent("bwctea2", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, 55 + timeP2Offset)
+			--self:ScheduleEvent("bwctea1", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, timeP2Tentacle + timeP2Offset - 5)
+			--self:ScheduleEvent("bwctea2", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, 55 + timeP2Offset)
 			self:ScheduleEvent("bwcthuntentacle", "BigWigs_Message", timeP2TentacleStart - 5, self.db.profile.rape and L["tentacle"] or L["norape"], "Urgent", true, "Alert")
 			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP2TentacleStart, "Interface\\Icons\\Spell_Nature_CallStorm")
 			--self:ScheduleEvent("BigWigs_StartBar", 41, self, L["barTentacle"], 30, "Interface\\Icons\\Spell_Nature_CallStorm")
@@ -312,9 +312,9 @@ function BigWigsCThun:CThunP2StartVG()
 		end
 
 		if self.db.profile.giant then
-			--self:ScheduleEvent("bwctgca", function() BigWigsThaddiusArrows:Direction("Cthungclaw") end, 21)
-			--self:ScheduleEvent("bwctgea", function() BigWigsThaddiusArrows:Direction("Cthungeyes") end, 51)
-			--self:ScheduleEvent("bwctgeas", function() BigWigsThaddiusArrows:Direction("Cthungeyesactive") end, 56)
+			--self:ScheduleEvent("bwctgca", function() BigWigsOnScreenIcons:Direction("Cthungclaw") end, 21)
+			--self:ScheduleEvent("bwctgea", function() BigWigsOnScreenIcons:Direction("Cthungeyes") end, 51)
+			--self:ScheduleEvent("bwctgeas", function() BigWigsOnScreenIcons:Direction("Cthungeyesactive") end, 56)
 			self:TriggerEvent("BigWigs_StartBar", self, L["barGiantE"], timeP2GiantEyeStart, "Interface\\Icons\\Ability_EyeOfTheOwl")
 			self:TriggerEvent("BigWigs_StartBar", self, L["barGiantC"], timeP2GiantClawStart, "Interface\\Icons\\Spell_Nature_Earthquake")
 			
@@ -351,11 +351,11 @@ function BigWigsCThun:CThunWeakenedVG()
 	self:TriggerEvent("BigWigs_StopBar", self, L["barGiantC"])
 
 	self:CancelScheduledEvent("bwcthuntentacles")
-	--self:ScheduleEvent("bwctea1", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, 45)
-	--self:ScheduleEvent("bwctgca", function() BigWigsThaddiusArrows:Direction("Cthungclaw") end, 50)
-	--self:ScheduleEvent("bwctea2", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, 75)
-	--self:ScheduleEvent("bwctgea", function() BigWigsThaddiusArrows:Direction("Cthungeyes") end, 80)
-	--self:ScheduleEvent("bwctgeas", function() BigWigsThaddiusArrows:Direction("Cthungeyesactive") end, 85)
+	--self:ScheduleEvent("bwctea1", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, 45)
+	--self:ScheduleEvent("bwctgca", function() BigWigsOnScreenIcons:Direction("Cthungclaw") end, 50)
+	--self:ScheduleEvent("bwctea2", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, 75)
+	--self:ScheduleEvent("bwctgea", function() BigWigsOnScreenIcons:Direction("Cthungeyes") end, 80)
+	--self:ScheduleEvent("bwctgeas", function() BigWigsOnScreenIcons:Direction("Cthungeyesactive") end, 85)
 	--self:ScheduleEvent("BigWigs_StartBar", 45, self, L["barTentacle"], 5, "Interface\\Icons\\Spell_Nature_CallStorm")
 	--self:ScheduleEvent("BigWigs_StartBar", 45, self, L["barGiantC"], 10, "Interface\\Icons\\Spell_Nature_Earthquake")
 	--self:ScheduleEvent("BigWigs_StartBar", 45, self, L["barGiantE"], 40, "Interface\\Icons\\Ability_EyeOfTheOwl")
@@ -410,7 +410,7 @@ end
 
 function BigWigsCThun:TentacleRape()
 	if self.db.profile.tentacle then
-		--self:ScheduleEvent("bwctea1", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, tentacletime - 5)
+		--self:ScheduleEvent("bwctea1", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, tentacletime - 5)
 		self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], tentacletime, "Interface\\Icons\\Spell_Nature_CallStorm")
 		self:ScheduleEvent("bwcthuntentacle", "BigWigs_Message", tentacletime - 5, self.db.profile.rape and L["tentacle"] or L["norape"], "Urgent", true, "Alert")
 		timeTentacleRape = GetTime()
@@ -421,7 +421,7 @@ end
 function BigWigsCThun:GiantEyeRape()
 	if phase2started then
 		if self.db.profile.giant then
-			--self:ScheduleEvent("bwctgca", function() BigWigsThaddiusArrows:Direction("Cthungclaw") end, 25)
+			--self:ScheduleEvent("bwctgca", function() BigWigsOnScreenIcons:Direction("Cthungclaw") end, 25)
 			self:TriggerEvent("BigWigs_StartBar", self, L["barGiantE"], timeP2GiantEye, "Interface\\Icons\\Ability_EyeOfTheOwl")
 			timeGiantEyeRape = GetTime()
 			--DEFAULT_CHAT_FRAME:AddMessage("Got Time timeGiantEyeRape " ..timeGiantEyeRape)
@@ -432,8 +432,8 @@ end
 function BigWigsCThun:GiantClawRape()
 	if phase2started then
 		if self.db.profile.giant then
-			--self:ScheduleEvent("bwctgea", function() BigWigsThaddiusArrows:Direction("Cthungeyes") end, 25)
-			--self:ScheduleEvent("bwctgeas", function() BigWigsThaddiusArrows:Direction("Cthungeyesactive") end, 30)
+			--self:ScheduleEvent("bwctgea", function() BigWigsOnScreenIcons:Direction("Cthungeyes") end, 25)
+			--self:ScheduleEvent("bwctgeas", function() BigWigsOnScreenIcons:Direction("Cthungeyesactive") end, 30)
 			self:TriggerEvent("BigWigs_StartBar", self, L["barGiantC"], timeP2GiantClaw, "Interface\\Icons\\Spell_Nature_Earthquake")
 			timeGiantClawRape = GetTime()
 			--DEFAULT_CHAT_FRAME:AddMessage("Got Time timeGiantClawRape " ..timeGiantClawRape)
@@ -499,8 +499,8 @@ end
 
 function BigWigsCThun:DarkGlare()
 	if self.db.profile.glare then
-	        --self:ScheduleEvent("bwctga", function() BigWigsThaddiusArrows:Direction("Cthunglare") end, 75)
-	        --self:ScheduleEvent("bwctea2", function() BigWigsThaddiusArrows:Direction("Cthuneyes") end, 25)
+	        --self:ScheduleEvent("bwctga", function() BigWigsOnScreenIcons:Direction("Cthunglare") end, 75)
+	        --self:ScheduleEvent("bwctea2", function() BigWigsOnScreenIcons:Direction("Cthuneyes") end, 25)
 		self:TriggerEvent("BigWigs_StartBar", self, L["barDarkGlareCasting"], timeP1GlareDuration, "Interface\\Icons\\Spell_Nature_CallStorm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["barGlare"], timeP1Glare, "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 		self:ScheduleEvent("bwcthunglare", "BigWigs_Message", timeP1Glare - .1, L["glare"], "Urgent", true, "Alarm")

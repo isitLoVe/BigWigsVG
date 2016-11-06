@@ -157,7 +157,7 @@ end
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
 		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Attention") end
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Hakkar") end, 60)
+	        self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Hakkar") end, 60)
 		self:ScheduleEvent("bwhakkarld60", "BigWigs_Message", 30, string.format(L["drain_warning"], 60), "Attention")
 		self:ScheduleEvent("bwhakkarld45", "BigWigs_Message", 55, string.format(L["drain_warning"], 45), "Attention", true, "Alert")
 		self:ScheduleEvent("bwhakkarld30", "BigWigs_Message", 60, string.format(L["drain_warning"], 30), "Urgent", true, "Alert")

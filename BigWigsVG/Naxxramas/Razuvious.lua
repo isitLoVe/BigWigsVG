@@ -99,7 +99,7 @@ end
 function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 	        if (UnitClass("player") == "Warrior") then
-				BigWigsThaddiusArrows:Direction("Sunder")
+				BigWigsOnScreenIcons:Direction("Sunder")
 	        end
 		if self.db.profile.shout then
 			self:ScheduleRepeatingEvent("bwreazuviousshoutvg", self.RazuviousShoutVG, 25, self)
@@ -183,24 +183,24 @@ end
 
 function BigWigsRazuvious:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if string.find(msg, L["Sundertrigger1"]) then
-	        BigWigsThaddiusArrows:Direction("Sunder")
+	        BigWigsOnScreenIcons:Direction("Sunder")
 	end
 end
 
 function BigWigsRazuvious:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["Sundertrigger2"]) and (UnitClass("player") == "Warrior") then
-                BigWigsThaddiusArrows:Sunderstop()
+                BigWigsOnScreenIcons:Sunderstop()
 	end
 end
 
 function BigWigsRazuvious:Run1()
             if (UnitClass("player") == "Mage") or (UnitClass("player") == "Warlock") or (UnitClass("player") == "Hunter") then
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 22)
+	        self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Run") end, 22)
 	end
 end
 
 function BigWigsRazuvious:Run2()
             if (UnitClass("player") == "Mage") or (UnitClass("player") == "Warlock") or (UnitClass("player") == "Hunter") then
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 17)
+	        self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Run") end, 17)
 	end
 end

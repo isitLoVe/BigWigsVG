@@ -102,7 +102,7 @@ function BigWigsVenoxis:PeriodicEvent( msg )
 		local _,_, pl, ty = string.find(arg1, L["poison_trigger"])
 		if (pl and ty) then
 			if self.db.profile.poisonyou and pl == L["you"] and ty == L["are"] then
-				BigWigsThaddiusArrows:Direction("Run")
+				BigWigsOnScreenIcons:Direction("Run")
 				--self:TriggerEvent("BigWigs_Message", L["poison_you_warn"], "Personal", true, "Alarm")
 				--self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["poison_other_warn"], "Important", nil, nil, true)
 				self:TriggerEvent("BigWigs_StartBar", self, L["poison_bar"], 15, "Interface\\Icons\\Spell_Nature_NatureTouchDecay")
@@ -117,7 +117,7 @@ end
 
 function BigWigsVenoxis:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["poison_trigger_gone"]) then
-		BigWigsThaddiusArrows:Runstop()
+		BigWigsOnScreenIcons:Runstop()
 	end
 end
 

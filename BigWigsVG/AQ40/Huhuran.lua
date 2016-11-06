@@ -164,12 +164,12 @@ end
 
 function BigWigsHuhuran:Tranq()
             if (UnitClass("player") == "Hunter") then
-                BigWigsThaddiusArrows:Direction("Tranq")
+                BigWigsOnScreenIcons:Direction("Tranq")
 	end
 end
 
 function BigWigsHuhuran:Tranqoff()
             if (UnitClass("player") == "Hunter") then
-            BigWigsThaddiusArrows:Tranqstop()
+            BigWigsOnScreenIcons:Tranqstop()
 	end
 end

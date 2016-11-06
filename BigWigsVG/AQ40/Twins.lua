@@ -91,7 +91,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
-		BigWigsThaddiusArrows:Blizzardstop()
+		BigWigsOnScreenIcons:Blizzardstop()
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
@@ -102,18 +102,18 @@ function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 		self:CancelScheduledEvent("bwtwinsfire")
 		self:ScheduleEvent("bwtwinsfire", self.Stopb, 10, self )
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Personal", true, "Alarm")
-	        BigWigsThaddiusArrows:Direction("Blizzard")
+	        BigWigsOnScreenIcons:Direction("Blizzard")
 	end
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["trigger"]) then
-            BigWigsThaddiusArrows:Blizzardstop()
+            BigWigsOnScreenIcons:Blizzardstop()
 	end
 end
 
 function BigWigsTwins:Stopb()
-            BigWigsThaddiusArrows:Blizzardstop()
+            BigWigsOnScreenIcons:Blizzardstop()
 end
 
 function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
@@ -123,7 +123,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.teleport then
-	                self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
+	                self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Noth") end, 25)
 			self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn10"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
@@ -155,7 +155,7 @@ function BigWigsTwins:Telebar()
 			klhtm.net.clearraidthreat()
 		end
 	end
-	self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
+	self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Noth") end, 25)
 	self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn10"], "Urgent")
 	self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Urgent")
 	self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30.1, "Interface\\Icons\\Spell_Arcane_Blink")

@@ -98,7 +98,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 	local _,_, n = string.find(msg, L["watch_trigger_vg"])
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
-	        BigWigsThaddiusArrows:Direction("RunZG")
+	        BigWigsOnScreenIcons:Direction("RunZG")
 			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")
 			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Attention")
 			--self:TriggerEvent("BigWigs_StartBar", self, string.format(L["watched_bar_self"], UnitName("player")), 20, "Interface\\Icons\\Spell_Shadow_Charm")

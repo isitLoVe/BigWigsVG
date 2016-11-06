@@ -211,7 +211,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	
 	
     if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") or (UnitClass("player") == "Mage") or (UnitClass("player") == "Warlock") or (UnitClass("player") == "Paladin") then
-		self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 27) 
+		self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Run") end, 27) 
 	end
 	
 end
@@ -246,12 +246,12 @@ end
 
 function BigWigsChromaggus:Tranq()
             if (UnitClass("player") == "Hunter") then
-                BigWigsThaddiusArrows:Direction("Tranq")
+                BigWigsOnScreenIcons:Direction("Tranq")
 	end
 end
 
 function BigWigsChromaggus:Tranqoff()
             if (UnitClass("player") == "Hunter") then
-            BigWigsThaddiusArrows:Tranqstop()
+            BigWigsOnScreenIcons:Tranqstop()
 	end
 end

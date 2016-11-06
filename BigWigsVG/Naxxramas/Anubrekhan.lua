@@ -83,7 +83,7 @@ end
 function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GNPPtrigger"]) then
-				BigWigsThaddiusArrows:GNPPstop()
+				BigWigsOnScreenIcons:GNPPstop()
 		end
 	end
 end
@@ -91,7 +91,7 @@ end
 function BigWigsAnubrekhan:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GNPPtrigger"]) then
-				BigWigsThaddiusArrows:Direction("GNPP")
+				BigWigsOnScreenIcons:Direction("GNPP")
 		end
 	end
 end
@@ -134,7 +134,7 @@ end
 
 function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
 	if sync == "AnubLocustInc" then
-	        BigWigsThaddiusArrows:Direction("Run")
+	        BigWigsOnScreenIcons:Direction("Run")
 		self:ScheduleEvent("bwanublocustinc", self.TriggerEvent, 3.25, self, "BigWigs_SendSync", "AnubLocustSwarm")
 		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["impalebar"], 15))
 		if self.db.profile.locust then

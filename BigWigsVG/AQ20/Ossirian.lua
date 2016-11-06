@@ -122,7 +122,7 @@ function BigWigsOssirian:BigWigs_RecvSync(sync)
 		self:ScheduleEvent("BigWigs_Message", 5, L["boom_inc"], "Important", true, "Alarm")
 		
 		--if (UnitClass("player") == "Warrior") or (UnitClass("player") == "Rogue") then
-		--self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Run") end, 25) end
+		--self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Run") end, 25) end
 	elseif sync == "Wind" then
 		self:TriggerEvent("BigWigs_Message", L["tankwind"], "Attention", true, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["windtrigger"], 20, "Interface\\Icons\\Spell_Nature_Cyclone")

@@ -72,33 +72,33 @@ end
 
 function BigWigsPatchwerk:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if string.find(msg, L["Sundertrigger"]) and (UnitClass("player") == "Warrior") then
-	        BigWigsThaddiusArrows:Direction("Sunder")
+	        BigWigsOnScreenIcons:Direction("Sunder")
 	elseif string.find(msg, L["CoEtrigger"]) and (UnitClass("player") == "Warlock") then
-	        BigWigsThaddiusArrows:Direction("CoE")
+	        BigWigsOnScreenIcons:Direction("CoE")
 	elseif string.find(msg, L["CoStrigger"]) and (UnitClass("player") == "Warlock") then
-	        BigWigsThaddiusArrows:Direction("CoS")
+	        BigWigsOnScreenIcons:Direction("CoS")
 	elseif string.find(msg, L["CoRtrigger"]) and (UnitClass("player") == "Warlock") then
-	        BigWigsThaddiusArrows:Direction("CoR")
+	        BigWigsOnScreenIcons:Direction("CoR")
 	elseif string.find(msg, L["Firevulntrigger"]) and (UnitClass("player") == "Mage") then
-	        BigWigsThaddiusArrows:Direction("Firevuln")
+	        BigWigsOnScreenIcons:Direction("Firevuln")
 	elseif string.find(msg, L["FFiretrigger"]) and (UnitClass("player") == "Druid") then
-	        BigWigsThaddiusArrows:Direction("FFire")
+	        BigWigsOnScreenIcons:Direction("FFire")
 	end
 end
 
 function BigWigsPatchwerk:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["Sundertrigger"]) then
-                BigWigsThaddiusArrows:Sunderstop()
+                BigWigsOnScreenIcons:Sunderstop()
 	elseif string.find(msg, L["CoEtrigger"]) then
-                BigWigsThaddiusArrows:CoEstop()
+                BigWigsOnScreenIcons:CoEstop()
 	elseif string.find(msg, L["CoStrigger"]) then
-                BigWigsThaddiusArrows:CoSstop()
+                BigWigsOnScreenIcons:CoSstop()
 	elseif string.find(msg, L["CoRtrigger"]) then
-                BigWigsThaddiusArrows:CoRstop()
+                BigWigsOnScreenIcons:CoRstop()
 	elseif string.find(msg, L["Firevulntrigger"]) then
-                BigWigsThaddiusArrows:Firevulnstop()
+                BigWigsOnScreenIcons:Firevulnstop()
 	elseif string.find(msg, L["FFiretrigger"]) then
-                BigWigsThaddiusArrows:FFirestop()
+                BigWigsOnScreenIcons:FFirestop()
 	end
 end
 
@@ -134,19 +134,19 @@ end
 function BigWigsPatchwerk:Start()
 	if self.db.profile.debuff then
 		if (UnitClass("player") == "Warrior")  then
-				BigWigsThaddiusArrows:Direction("Sunder")
+				BigWigsOnScreenIcons:Direction("Sunder")
 				if UnitHealth("player") >= 7000 then
-				BigWigsThaddiusArrows:Direction("Stoneshield")
+				BigWigsOnScreenIcons:Direction("Stoneshield")
 				self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 				self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")end
 		elseif (UnitClass("player") == "Warlock")  then
-				BigWigsThaddiusArrows:Direction("CoE")
-				BigWigsThaddiusArrows:Direction("CoS")
-				BigWigsThaddiusArrows:Direction("CoR")
+				BigWigsOnScreenIcons:Direction("CoE")
+				BigWigsOnScreenIcons:Direction("CoS")
+				BigWigsOnScreenIcons:Direction("CoR")
 		elseif (UnitClass("player") == "Mage")  then
-				BigWigsThaddiusArrows:Direction("Firevuln")
+				BigWigsOnScreenIcons:Direction("Firevuln")
 		elseif (UnitClass("player") == "Druid")  then
-				BigWigsThaddiusArrows:Direction("FFire")
+				BigWigsOnScreenIcons:Direction("FFire")
 		end
 	end
 end
@@ -154,7 +154,7 @@ end
 function BigWigsPatchwerk:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if self.db.profile.buff then
 	if string.find(msg, L["Stoneshieldtrigger"]) then
-            BigWigsThaddiusArrows:Stoneshieldstop()
+            BigWigsOnScreenIcons:Stoneshieldstop()
 		end
 	end
 end
@@ -162,7 +162,7 @@ end
 function BigWigsPatchwerk:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["Stoneshieldtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("Stoneshield")
+	        BigWigsOnScreenIcons:Direction("Stoneshield")
 		end
 	end
 end

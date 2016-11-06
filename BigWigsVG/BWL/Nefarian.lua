@@ -132,7 +132,7 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 					self:TriggerEvent("BigWigs_StartBar", self, L["classcall_bar"], 30, "Interface\\Icons\\Spell_Shadow_Charm")
 				end
 				if v[1] == L["warnpriest"] and UnitClass("player") == "Priest" then
-					BigWigsThaddiusArrows:Direction("CorrHeal")
+					BigWigsOnScreenIcons:Direction("CorrHeal")
 				end
 
 			else

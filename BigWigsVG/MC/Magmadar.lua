@@ -133,13 +133,13 @@ end
 
 function BigWigsMagmadar:Tranq()
             if (UnitClass("player") == "Hunter") then
-                BigWigsThaddiusArrows:Direction("Tranq")
+                BigWigsOnScreenIcons:Direction("Tranq")
 	end
 end
 
 function BigWigsMagmadar:Tranqoff()
             if (UnitClass("player") == "Hunter") then
-            BigWigsThaddiusArrows:Tranqstop()
+            BigWigsOnScreenIcons:Tranqstop()
 	end
 end
 

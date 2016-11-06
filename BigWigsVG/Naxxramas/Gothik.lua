@@ -120,7 +120,7 @@ end
 function BigWigsGothik:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GSPPtrigger"]) then
-            BigWigsThaddiusArrows:GSPPstop()
+            BigWigsOnScreenIcons:GSPPstop()
 		end
 	end
 end
@@ -128,7 +128,7 @@ end
 function BigWigsGothik:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GSPPtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("GSPP")
+	        BigWigsOnScreenIcons:Direction("GSPP")
 		end
 	end
 end

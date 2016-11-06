@@ -160,12 +160,12 @@ end
 function BigWigsGluth:Tranq()
             if (UnitClass("player") == "Hunter") then
 		self:TriggerEvent("BigWigs_StartBar", self, L["nextfrenzy"], 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-                BigWigsThaddiusArrows:Direction("Tranq")
+                BigWigsOnScreenIcons:Direction("Tranq")
 	end
 end
 
 function BigWigsGluth:Tranqoff()
             if (UnitClass("player") == "Hunter") then
-            BigWigsThaddiusArrows:Tranqstop()
+            BigWigsOnScreenIcons:Tranqstop()
 	end
 end

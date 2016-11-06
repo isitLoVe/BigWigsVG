@@ -149,7 +149,7 @@ function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
 		local player = rest
 		
 		if player == UnitName("player") and self.db.profile.youbomb then
-                        BigWigsThaddiusArrows:Direction("Geddon")
+                        BigWigsOnScreenIcons:Direction("Geddon")
 
 			self:TriggerEvent("BigWigs_Message", L["bomb_message_you"], "Personal", true, "Alarm")
 			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention", nil, nil, true )

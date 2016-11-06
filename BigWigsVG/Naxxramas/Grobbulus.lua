@@ -133,7 +133,7 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "GrobbulusInject" and rest then
 		local player = rest
 		if self.db.profile.youinjected and player == UnitName("player") then
-                        BigWigsThaddiusArrows:Direction("Geddon")
+                        BigWigsOnScreenIcons:Direction("Geddon")
 
 			self:TriggerEvent("BigWigs_Message", L["bomb_message_you"], "Personal", true, "Alarm")
 			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention", nil, nil, true)

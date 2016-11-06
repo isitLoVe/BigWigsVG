@@ -101,7 +101,7 @@ function BigWigsViscidus:CheckVis(arg1)
 		local _,_, pl, ty = string.find(arg1, L["trigger7"])
 		if (pl and ty) then
 			if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
-				BigWigsThaddiusArrows:Direction("Fire")
+				BigWigsOnScreenIcons:Direction("Fire")
 				--self:TriggerEvent("BigWigs_Message", L["warn9"], "Personal", true, "Alarm")
 				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn8"], "Important", nil, nil, true)
 			elseif self.db.profile.toxinother then
@@ -121,15 +121,15 @@ end
 
 function BigWigsViscidus:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if string.find(msg, L["GNPPtrigger"]) then
-            BigWigsThaddiusArrows:GNPPstop()
+            BigWigsOnScreenIcons:GNPPstop()
 	end
 end
 
 function BigWigsViscidus:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["trigger"]) then
-            BigWigsThaddiusArrows:Firestop()
+            BigWigsOnScreenIcons:Firestop()
 	elseif string.find(msg, L["GNPPtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("GNPP")
+	        BigWigsOnScreenIcons:Direction("GNPP")
 	end
 end
 

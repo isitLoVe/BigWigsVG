@@ -118,7 +118,7 @@ end
 function BigWigsNoth:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GSPPtrigger"]) then
-            BigWigsThaddiusArrows:GSPPstop()
+            BigWigsOnScreenIcons:GSPPstop()
 		end
 	end
 end
@@ -126,7 +126,7 @@ end
 function BigWigsNoth:CHAT_MSG_SPELL_AURA_GONE_SELF( msg )
 	if self.db.profile.buff then
 		if string.find(msg, L["GSPPtrigger"]) then
-	        BigWigsThaddiusArrows:Direction("GSPP")
+	        BigWigsOnScreenIcons:Direction("GSPP")
 		end
 	end
 end
@@ -170,7 +170,7 @@ function BigWigsNoth:BigWigs_RecvSync( sync )
 		end
 	elseif sync == "NothBlink" then
 		if self.db.profile.blink then
-	        self:ScheduleEvent(function() BigWigsThaddiusArrows:Direction("Noth") end, 25)
+	        self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Noth") end, 25)
 			self:TriggerEvent("BigWigs_Message", L["blinkwarn"], "Important")
 			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink")

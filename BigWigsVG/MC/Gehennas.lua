@@ -83,7 +83,7 @@ function BigWigsGehennas:Event(msg)
 	elseif string.find(msg, L["trigger3"]) then
 		self:CancelScheduledEvent("bwgehennasfire")
 		self:TriggerEvent("BigWigs_Message", L["firewarn"], "Personal", true, "Alarm")
-		BigWigsThaddiusArrows:Direction("Fire")
+		BigWigsOnScreenIcons:Direction("Fire")
 	end
 end
 
@@ -108,7 +108,7 @@ end
 
 function BigWigsGehennas:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if string.find(msg, L["trigger"]) then
-		BigWigsThaddiusArrows:Firestop()
+		BigWigsOnScreenIcons:Firestop()
 	end
 end
 
@@ -125,7 +125,7 @@ end
 
 function BigWigsGehennas:GenericBossDeath( msg )
 	if string.find(msg, L["gehennas_dead"]) then
-		BigWigsThaddiusArrows:Firestop()
+		BigWigsOnScreenIcons:Firestop()
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
