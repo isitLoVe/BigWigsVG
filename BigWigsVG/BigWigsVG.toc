@@ -56,7 +56,7 @@ Plugins\Test.lua
 Extras\CustomBar.lua
 Extras\Tranq.lua
 Extras\Banish.lua
-Extras\BigWigs_ThaddiusArrows.lua
+Extras\OnScreenIcons.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
