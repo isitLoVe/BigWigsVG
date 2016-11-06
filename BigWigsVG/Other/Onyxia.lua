@@ -90,6 +90,7 @@ function BigWigsOnyxia:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "OnyxiaKnockAway", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OnyxiaFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OnyxiaWing", 5)
+	starttime = nil
 end
 
 ------------------------------
@@ -133,7 +134,7 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL( msg )
 				klhtm.net.sendmessage("targetbw " ..boss)
 			end
 		end
-		
+		starttime = GetTime()
 		if self.db.profile.wing then
 			self:TriggerEvent("BigWigs_StartBar", self, L["wing_bar"], 12, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		end

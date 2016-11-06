@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Target monitoring disabled"] = true,
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
-
+	["%s has been defeated in %s"] = true,
 	-- AceConsole strings
 	["boss"] = true,
 	["Bosses"] = true,
@@ -207,15 +207,24 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
+		endtime = GetTime()
+		if starttime and endtime then
+			duration = BigWigs:SecondsToClock(endtime - starttime)
+		end
+		
+		if self.db.profile.bosskill and duration then
+			self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated in %s"], self:ToString(), duration ), "Bosskill", nil, "Victory")
+		elseif self.db.profile.bosskill then
+			self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
+		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.core:IsDebugging() then
 			self.core:LevelDebug(1, "Boss dead, disabling module ["..self:ToString().."].")
 		end
+		endtime = nil
 		self.core:ToggleModuleActive(self, false)
 	end
 end
-
 
 function BigWigs.modulePrototype:Scan()
 	local t = self.enabletrigger
@@ -643,4 +652,17 @@ end
 
 function BigWigs:Hide()
         Powa_Frames[5]:Hide();
+end
+
+function BigWigs:SecondsToClock(seconds)
+	local seconds = tonumber(seconds)
+	if seconds <= 0 then
+		return "00:00:00";
+	else
+		hours = string.format("%02.f", math.floor(seconds/3600));
+		mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+		secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+		--return hours..":"..mins..":"..secs
+		return mins..":"..secs
+	end
 end
