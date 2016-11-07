@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwindoffwarn = "Whirlwind faded!",
 	whirlwindbartext = "Whirlwind",
 	whirlwindnextbartext = "next Whirlwind",
-	whirlwindinctext = "Whirlwind inc",
+	whirlwindinctext = "Whirlwind in ~5 sec",
 } end )
 
 ----------------------------------
@@ -42,13 +42,14 @@ BigWigsSartura = BigWigs:NewModule(boss)
 BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSartura.enabletrigger = boss
 BigWigsSartura.toggleoptions = {"enrage", "whirlwind", "bosskill"}
-BigWigsSartura.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsSartura.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsSartura:OnEnable()
+	starttime = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -66,8 +67,8 @@ function BigWigsSartura:BigWigs_RecvSync(sync)
 	if sync == "SarturaWhirlwind" and self.db.profile.whirlwind then
 		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindbartext"], 15, "Interface\\Icons\\Ability_Whirlwind")
-		self:ScheduleEvent("BigWigs_Message", 42, L["whirlwindinctext"], "Attention", true, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindnextbartext"], 45, "Interface\\Icons\\Ability_UpgradeMoonGlaive")
+		self:ScheduleEvent("BigWigs_Message", 38, L["whirlwindinctext"], "Attention", true, "Alarm")
+		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindnextbartext"], 43, "Interface\\Icons\\Ability_UpgradeMoonGlaive")
 	end
 end
 
@@ -79,6 +80,7 @@ end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and string.find(msg, L["starttrigger"]) then
+		starttime = GetTime()
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 		self:ScheduleEvent("BigWigs_Message", 540, L["warn1"], "Urgent")

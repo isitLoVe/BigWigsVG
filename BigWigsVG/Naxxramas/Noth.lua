@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	blinktrigger = "Noth the Plaguebringer gains Blink.",
 	blinkwarn = "Blink!",
-	blinkwarn2 = "Blink in 5 seconds!",
+	blinkwarn2 = "Blink in ~5 seconds!",
 	blinkbar = "Blink",
 
 	teleportwarn = "Teleport! He's on the balcony!",
@@ -78,7 +78,7 @@ BigWigsNoth = BigWigs:NewModule(boss)
 BigWigsNoth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsNoth.enabletrigger = boss
 BigWigsNoth.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
-BigWigsNoth.revision = tonumber(string.sub("$Revision: 19006 $", 12, -3))
+BigWigsNoth.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -89,9 +89,10 @@ function BigWigsNoth:OnEnable()
 	self.timebalcony = 70
 	self.cursetime = 28
 	self.wave1time = 1
-	self.wave2time = 40
+	self.wave2time = 36
 	self.wave3time = 0
 	self.prior = nil
+	starttime = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -135,6 +136,7 @@ function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["addtrigger"] and (onbalcony == false) then
 		self:TriggerEvent("BigWigs_StartBar", self, L["addbar"], 30, "Interface\\Icons\\Spell_Shadow_Darksummoning")
 	elseif msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+		starttime = GetTime()
 		self.timeroom = 90
 		self.timebalcony = 70
 
@@ -170,7 +172,7 @@ function BigWigsNoth:BigWigs_RecvSync( sync )
 		end
 	elseif sync == "NothBlink" then
 		if self.db.profile.blink then
-	        self:ScheduleEvent(function() BigWigsOnScreenIcons:Direction("Noth") end, 25)
+	        self:ScheduleEvent("bwnothblinkosd", function() BigWigsOnScreenIcons:Direction("Noth") end, 25)
 			self:TriggerEvent("BigWigs_Message", L["blinkwarn"], "Important")
 			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
@@ -193,6 +195,7 @@ function BigWigsNoth:teleportToBalcony()
 	onbalcony = true
 	
 	self:CancelScheduledEvent("bwnothblink")
+	self:CancelScheduledEvent("bwnothblinkosd")
 	self:CancelScheduledEvent("bwnothcurse")
 	self:TriggerEvent("BigWigs_StopBar", self, L["blinkbar"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["addbar"])
@@ -210,13 +213,13 @@ function BigWigsNoth:teleportToBalcony()
 		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", self.wave2time - 5, L["wave2_message"], "Urgent")
 	end
 	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
-	self.wave2time = self.wave2time +5
+	self.wave2time = self.wave2time + 10
 end
 
 function BigWigsNoth:teleportToRoom()
 	if self.timebalcony == 70 then
-		self.timebalcony = 92
-	elseif self.timebalcony == 92 then
+		self.timebalcony = 90
+	elseif self.timebalcony == 90 then
 		self.timebalcony = 120
 	end
 
