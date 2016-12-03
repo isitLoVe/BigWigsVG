@@ -200,7 +200,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 				self:TriggerEvent("BigWigs_StopBar", self, L["powersurgebar"])
 				self:TriggerEvent("BigWigs_StopBar", self, L["warstomp_bar_stalagg"])
 				self:TriggerEvent("BigWigs_StopBar", self, L["warstomp_bar_feugen"])
-				if BigWigs:CheckYourPrivilege(UnitName("player")) then
+				if (IsRaidLeader() or IsRaidOfficer()) then
 					if klhtm.isloaded and klhtm.isenabled then
 						klhtm.net.clearraidthreat()
 						klhtm.net.sendmessage("targetbw " ..boss)
