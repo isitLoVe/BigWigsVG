@@ -90,21 +90,17 @@ end
 
 function BigWigsBanish:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if not msg then
-		--DEFAULT_CHAT_FRAME:AddMessage("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE: msg is nil")
+
 	elseif string.find(msg, L["banish_trigger"]) then
-				DEFAULT_CHAT_FRAME:AddMessage("string found")
 		if t == nil then
 		
 		else
 			if (t < GetTime() - 1.3) and (t > GetTime() - 1.7) then
-					DEFAULT_CHAT_FRAME:AddMessage("time ok")
 				if rank == 1 then
-					DEFAULT_CHAT_FRAME:AddMessage("rank1")
 					self:TriggerEvent("BigWigs_SendSync", "BanishVG1 "..target)
 					rank = nil
 					target = nil
 				elseif rank == 2 then
-					DEFAULT_CHAT_FRAME:AddMessage("rank2")
 					self:TriggerEvent("BigWigs_SendSync", "BanishVG2 "..target)
 					rank = nil
 					target = nil
