@@ -207,14 +207,14 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		endtime = GetTime()
-		if starttime and endtime then
-			duration = BigWigs:SecondsToClock(endtime - starttime)
-		end
+		--endtime = GetTime()
+		--if starttime and endtime then
+		--	duration = BigWigs:SecondsToClock(endtime - starttime)
+		--end
 		
-		if self.db.profile.bosskill and duration then
-			self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated in %s"], self:ToString(), duration ), "Bosskill", nil, "Victory")
-		elseif self.db.profile.bosskill then
+		--if self.db.profile.bosskill and duration then
+		--	self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated in %s"], self:ToString(), duration ), "Bosskill", nil, "Victory")
+		if self.db.profile.bosskill then
 			self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory")
 		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
