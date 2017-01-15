@@ -59,7 +59,7 @@ BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsRazuvious.enabletrigger = { boss }
 BigWigsRazuvious.wipemobs = { understudy }
 BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "unbalance", "bosskill"}
-BigWigsRazuvious.revision = tonumber(string.sub("$Revision: 19004 $", 12, -3))
+BigWigsRazuvious.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -124,13 +124,14 @@ function BigWigsRazuvious:Shieldwall( msg )
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShieldwall")
 	end
 end
---[[
+
 function BigWigsRazuvious:Shout( msg )
 	if string.find(msg, L["shouttrigger"]) and not self.prior then
-		self:TriggerEvent("BigWigs_SendSync", "RazuviousShout")
-	end
+		DEFAULT_CHAT_FRAME:AddMessage("asdf")
+		self:TriggerEvent("BigWigs_Message", L["shoutwarn"], "Urgent", nil, "Alarm")
+	 end
 end
-
+--[[
 function BigWigsRazuvious:noShout()	
 	self:CancelScheduledEvent("bwrazuviousnoshout")
 	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
