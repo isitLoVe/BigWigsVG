@@ -236,9 +236,9 @@ end
 
 function BigWigsThaddius:PhaseTwoStart()
 	if self.db.profile.strategy then
-		self:TriggerEvent("BigWigs_Message", L["redleftblueright"], _, _,"Warn")
+		self:TriggerEvent("BigWigs_Message", L["redleftblueright"], nil, nil, "Warn")
 	else
-		self:TriggerEvent("BigWigs_Message", L["blueleftredright"], _, _,"Warn")
+		self:TriggerEvent("BigWigs_Message", L["blueleftredright"], nil, nil, "Warn")
 	end
 	
 	self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 301, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
@@ -338,10 +338,10 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 		self:ScheduleEvent("bwthaddiuswarstompfeugenwarn", "BigWigs_Message", 7, L["warstomp_warn_feugen"], "Urgent")
 	elseif sync == "ThaddiusStrategyRedLeftBlueRight" then
 		self.db.profile.strategy = true
-		self:TriggerEvent("BigWigs_Message", L["redleftblueright"], _, _,"Warn")
+		self:TriggerEvent("BigWigs_Message", L["redleftblueright"], nil, nil, "Warn")
 	elseif sync == "ThaddiusStrategyBlueLeftRedRight" then
 		self.db.profile.strategy = false
-		self:TriggerEvent("BigWigs_Message", L["blueleftredright"], _, _,"Warn")
+		self:TriggerEvent("BigWigs_Message", L["blueleftredright"], nil, nil, "Warn")
 	end
 end
 
