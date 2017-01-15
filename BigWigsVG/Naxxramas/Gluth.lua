@@ -142,6 +142,12 @@ function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 			--enrage = wipe
 			self:ScheduleEvent("BigWigs_Message", 305, L["enragesoon"], "Urgent", true, "Alarm")
 			self:ScheduleEvent("BigWigs_StartBar", 300, self, L["enragebartext"], 11, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			
+			if (IsRaidLeader() or IsRaidOfficer()) then
+				if klhtm.isloaded and klhtm.isenabled then
+					klhtm.net.sendmessage("targetbw " ..boss)
+				end
+			end
 		end
 	end
 end
