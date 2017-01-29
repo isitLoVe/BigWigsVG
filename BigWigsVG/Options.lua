@@ -187,16 +187,16 @@ function BigWigsOptions:CoreState()
 	if BigWigs:IsActive() then
 		if guildName == "De Profundis" then
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-enabled")
-		elseif guildName == "Chaos" then
-			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-enabled")
+		--elseif guildName == "Chaos" then
+		--	self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-enabled")
 		else
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-enabled")
 		end
 	else
 		if guildName == "De Profundis" then
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-disabled")
-		elseif guildName == "Chaos" then
-			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-disabled")
+		--elseif guildName == "Chaos" then
+		---	self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-disabled")
 		else
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-disabled")
 		end
