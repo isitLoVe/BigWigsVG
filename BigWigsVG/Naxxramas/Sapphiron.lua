@@ -59,7 +59,7 @@ BigWigsSapphiron = BigWigs:NewModule(boss)
 BigWigsSapphiron.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsSapphiron.enabletrigger = boss
 BigWigsSapphiron.toggleoptions = { "berserk", "lifedrain", "deepbreath", "bosskill" }
-BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 17540 $", 12, -3))
+BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -122,7 +122,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 			-- Lets start a repeated event after 5 seconds of combat so that
 			-- we're sure that the entire raid is in fact in combat when we
 			-- start it.
-			self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 5, self)
+			--self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 5, self)
 		end
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
@@ -138,7 +138,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
 		lastTarget = nil
 		cachedUnitId = nil
-		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
+		--self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
 	end
 end
 
@@ -167,6 +167,7 @@ end
 ------------------------------
 --      Target Scanning     --
 ------------------------------
+--1:30? on VG
 
 function BigWigsSapphiron:StartTargetScanner()
 	if self:IsEventScheduled("bwsapphtargetscanner") or not started then return end
