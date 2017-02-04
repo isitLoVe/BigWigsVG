@@ -25,8 +25,6 @@ local timeP2GiantEye = 60	   --Giant Eye timer for phase 2
 local timeP2GiantClaw = 60	   --Giant Claw timer for phase 2
 
 
---local timeReschedule = 50      -- delay from the moment of weakening for timers to restart
---local timeTarget = 10          -- delay for target change checking on Eye of C'Thun
 local timeWeakened = 45        -- duration of a weaken
 
 local cthunstarted = nil
@@ -115,7 +113,7 @@ BigWigsCThun = BigWigs:NewModule(cthun)
 BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
 BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
-BigWigsCThun.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsCThun.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 function BigWigsCThun:OnEnable()
 	target = nil
@@ -127,9 +125,9 @@ function BigWigsCThun:OnEnable()
 	tentacletime = timeP1Tentacle
 	
 	if (IsRaidLeader() or IsRaidOfficer()) then
-		DEFAULT_CHAT_FRAME:AddMessage("BigWigs VG cannot detect weakened automatically", 255, 0, 0)
-		DEFAULT_CHAT_FRAME:AddMessage("Use the macro    /script BigWigsCThun:ManualWeakend()     to trigger weakened manually", 255, 0, 0)
-		DEFAULT_CHAT_FRAME:AddMessage("You can only use this if you have lead or assist", 255, 0, 0)
+		--DEFAULT_CHAT_FRAME:AddMessage("BigWigs VG cannot detect weakened automatically", 255, 0, 0)
+		--DEFAULT_CHAT_FRAME:AddMessage("Use the macro    /script BigWigsCThun:ManualWeakend()     to trigger weakened manually", 255, 0, 0)
+		--DEFAULT_CHAT_FRAME:AddMessage("You can only use this if you have lead or assist", 255, 0, 0)
 	end
 	-- register events
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
@@ -164,7 +162,9 @@ function BigWigsCThun:ManualWeakend()
 end
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE( arg1 )
-	if arg1 == L["weakenedtrigger"] then self:TriggerEvent("BigWigs_SendSync", "CThunWeakenedVG") end
+	if string.find (arg1, L["weakenedtrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "CThunWeakenedVG")
+	end
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
