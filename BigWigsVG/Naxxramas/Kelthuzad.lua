@@ -109,7 +109,7 @@ BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsKelThuzad.enabletrigger = boss
 BigWigsKelThuzad.toggleoptions = { "frostbolt", "frostboltbar", -1, "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", -1, "phase", "bosskill" }
-BigWigsKelThuzad.revision = tonumber(string.sub("$Revision: 17275 $", 12, -3))
+BigWigsKelThuzad.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -171,7 +171,7 @@ end
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320 )
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 		self:ScheduleEvent("phase1_warn", "BigWigs_Message", 300, L["phase1_warn"], "Important")
 		self:ScheduleEvent("phase2_start", self.PhaseTwoStart, 320, self)
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
@@ -188,9 +188,9 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsKelThuzad:PhaseTwoStart()
-	self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 19)
-	self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 39)
-	self:TriggerEvent("BigWigs_StartBar", self, L["mcfrostblast_bar"], 49)
+	--self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 19)
+	self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 39, "Interface\\Icons\\Spell_Nature_WispSplode")
+	self:TriggerEvent("BigWigs_StartBar", self, L["mcfrostblast_bar"], 49, "Interface\\Icons\\Spell_Frost_FreezingBreath")
 	self:ScheduleEvent("P2warn", "BigWigs_Message", 19, L["phase2_warning"], "Important")
 	self:ScheduleEvent("P2Warn1", "BigWigs_Message", 34, L["phase2_detonate_warning"], "Important")
 	self:ScheduleEvent("P2Warn2", "BigWigs_Message", 44, L["phase2_mcfrostblast_warning"], "Important")
