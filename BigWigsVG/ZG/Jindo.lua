@@ -59,7 +59,7 @@ BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJindo.enabletrigger = boss
 BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
-BigWigsJindo.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsJindo.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -80,8 +80,8 @@ function BigWigsJindo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "HealingWardEvent")
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES", "HealingWardEvent")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "JindoCurse", 5)
+	--self:RegisterEvent("BigWigs_RecvSync")
+	--self:TriggerEvent("BigWigs_ThrottleSync", "JindoCurse", 5)
 end
 
 ------------------------------
