@@ -24,17 +24,19 @@ Revision 19012
 - [x] Instructor Razuvious
 - [x] Gothik the Harvester
 - [x] The Four Horsemen
+- [x] Sapphiron
+- [ ] Kel'Thuzad
 
 ## Temple of Ahn'Qiraj
 - [x] The Prophet Skeram
 - [x] The Bug Family
 - [x] Battleguard Sartura
 - [x] Fankriss the Unyielding
-- [ ] Viscidus
+- [x] Viscidus
 - [x] Princess Huhuran
 - [x] The Twin Emperors
 - [x] Ouro
-- [ ] C'Thun 
+- [x] C'Thun (needs testing)
 
 ## Blackwing Lair
 - [x] Razorgore the Untamed
