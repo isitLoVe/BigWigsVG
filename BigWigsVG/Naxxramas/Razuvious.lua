@@ -127,7 +127,6 @@ end
 
 function BigWigsRazuvious:Shout( msg )
 	if string.find(msg, L["shouttrigger"]) and not self.prior then
-		DEFAULT_CHAT_FRAME:AddMessage("asdf")
 		self:TriggerEvent("BigWigs_Message", L["shoutwarn"], "Urgent", nil, "Alarm")
 	 end
 end
