@@ -738,3 +738,44 @@ end
 function BigWigsOnScreenIcons:VoidZonestop()
 	self.frameVoidZone:Hide()
 end
+
+function BigWigsOnScreenIcons:Nothstop()
+	self.frameNoth:Hide()
+end
+
+function BigWigsOnScreenIcons:Geddonstop()
+	self.frameGeddon:Hide()
+end
+
+function BigWigsOnScreenIcons:Runstop()
+	self.frameRun:Hide()
+end
+
+function BigWigsOnScreenIcons:Hakkarstop()
+	self.frameHakkar:Hide()
+end
+
+function BigWigsOnScreenIcons:Shieldstop()
+	self.frameShield:Hide()
+end
+
+function BigWigsOnScreenIcons:Cthunglarestop()
+	self.frameCthunglare:Hide()
+end
+
+function BigWigsOnScreenIcons:Cthuneyesstop()
+	self.frameCthuneyes:Hide()
+end
+
+function BigWigsOnScreenIcons:Cthungeyesstop()
+	self.frameCthungeyes:Hide()
+end
+
+function BigWigsOnScreenIcons:Cthungclawstop()
+	self.frameCthungclaw:Hide()
+end
+
+function BigWigsOnScreenIcons:Sporestop()
+	self.frameSpore:Hide()
+end
+
