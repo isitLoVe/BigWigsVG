@@ -81,7 +81,7 @@ BigWigsLoatheb = BigWigs:NewModule(boss)
 BigWigsLoatheb.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsLoatheb.enabletrigger = boss
 BigWigsLoatheb.toggleoptions = {"doom", "spore", "curse", "debuff", "bosskill"}
-BigWigsLoatheb.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsLoatheb.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -337,5 +337,5 @@ function BigWigsLoatheb:SporeRotationVisual2b()
 end
 
 function BigWigsLoatheb:Chatmsgpost()
-	SendChatMessage("<<< KILL THE SP0RE!!! >>>", "PARTY")
+	--SendChatMessage("<<< KILL THE SP0RE!!! >>>", "PARTY")
 end

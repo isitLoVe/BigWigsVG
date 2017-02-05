@@ -196,7 +196,7 @@ function BigWigsOptions:CoreState()
 		if guildName == "De Profundis" then
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-disabled")
 		--elseif guildName == "Chaos" then
-		---	self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-disabled")
+		--	self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\Chaos-disabled")
 		else
 			self:SetIcon("Interface\\AddOns\\BigWigsVG\\Icons\\core-disabled")
 		end
@@ -258,7 +258,28 @@ function BigWigsOptions:OnClick()
 					deuce.core:BigWigs_RebootModule(module)
 				end
 			end
+			--remove OnScreenIcons
+			BigWigsOnScreenIcons:Tranqstop()
+			BigWigsOnScreenIcons:Firestop()
+			BigWigsOnScreenIcons:Blizzardstop()
+			BigWigsOnScreenIcons:GEyestop()
+			BigWigsOnScreenIcons:GFPPstop()
+			BigWigsOnScreenIcons:GNPPstop()
+			BigWigsOnScreenIcons:GSPPstop()
+			BigWigsOnScreenIcons:Sunderstop()
+			BigWigsOnScreenIcons:CoEstop()
+			BigWigsOnScreenIcons:CoSstop()
+			BigWigsOnScreenIcons:CoRstop()
+			BigWigsOnScreenIcons:Firevulnstop()
+			BigWigsOnScreenIcons:FFirestop()
+			BigWigsOnScreenIcons:Resistpotstop()
+			BigWigsOnScreenIcons:Stoneshieldstop()
+			BigWigsOnScreenIcons:Lightstop()
+			BigWigsOnScreenIcons:Wisdomstop()
+			BigWigsOnScreenIcons:VoidZonestop()
+			
 			self:Print(L["All running modules have been reset."])
+			
 		end
 	else
 		BigWigs:ToggleActive(true)
