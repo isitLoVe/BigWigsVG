@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_message = "Sapphiron engaged! Berserk in 15min!",
 
-	lifedrain_message = "Life Drain! Possibly new one ~24sec!",
+	lifedrain_message = "Life Drain!",
 	lifedrain_warn1 = "Life Drain in 5sec!",
 	lifedrain_bar = "Life Drain",
 
@@ -50,9 +50,13 @@ L:RegisterTranslations("enUS", function() return {
 	deepbreath_incoming_message = "Ice Bomb casting in ~23sec!",
 	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
 	deepbreath_incoming_bar = "Ice Bomb Cast",
-	deepbreath_trigger = "%s takes in a deep breath...",
+	deepbreath_trigger = "%s takes a deep breath...",
 	deepbreath_warning = "Ice Bomb Incoming!",
 	deepbreath_bar = "Ice Bomb Lands!",
+	chill_trigger = "Chill",
+	chill_warn = "Run from BLIZZARD!",
+	sapphiron_dead = "Sapphiron dies",
+	
 } end )
 
 ----------------------------------
@@ -70,9 +74,7 @@ BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
 ------------------------------
 
 function BigWigsSapphiron:OnEnable()
-	time = nil
 	started = nil
-	currenttry = 0
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -87,7 +89,6 @@ function BigWigsSapphiron:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironLifeDrain", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironFlight", 5)
 end
 
 ------------------------------
@@ -97,7 +98,6 @@ end
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	if sync == self:GetEngageSync() and rest and rest == boss and not started then
 		started = true
-		currenttry = currenttry + 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.berserk then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
@@ -109,30 +109,32 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("bwsapphberserk5", "BigWigs_Message", 890, string.format(L["berserk_warn_rest"], 10), "Important")
 			self:ScheduleEvent("bwsapphberserk6", "BigWigs_Message", 895, string.format(L["berserk_warn_rest"], 5), "Important")
 		end
+		--VG initial flight timer
 		if self.db.profile.flight then
-			--VG initial flight timer
-			if currenttry > 1 then
-				self:TriggerEvent("BigWigs_StartBar", self, L["flight_bar"], 91, "Interface\\Icons\\Spell_Frost_Wizardmark")
-			else
-				self:TriggerEvent("BigWigs_StartBar", self, L["flight_bar"], 96, "Interface\\Icons\\Spell_Frost_Wizardmark")
-			end
+			self:TriggerEvent("BigWigs_StartBar", self, L["flight_bar"], 50, "Interface\\Icons\\Spell_Frost_Wizardmark")
+			self:ScheduleEvent("bwsapphirondeepbreathbar", "BigWigs_StartBar", 50, self, L["deepbreath_incoming_bar"], 26, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
 		end
+		--VG initial drain life timer
+		if self.db.profile.lifedrain then
+			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+		end
+		self:ScheduleEvent("cancellifedrainbar", "BigWigs_StopBar", 50, self, L["lifedrain_bar"])
 		
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-	elseif sync == "SapphironFlight" and self.db.profile.deepbreath and started then
-		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
 	end
 end
 
 function BigWigsSapphiron:LifeDrain(msg)
 	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
-		if not time or (time + 2) < GetTime() then
-			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
-			time = GetTime()
-		end
+		self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
+	end
+	if string.find(msg, L["chill_trigger"]) then
+		self:CancelScheduledEvent("bwsapphironchill")
+		self:ScheduleEvent("bwsapphironchill", self.Stopb, 3, self )
+		self:TriggerEvent("BigWigs_Message", L["chill_warn"], "Personal", true, "Alarm")
+		BigWigsOnScreenIcons:Direction("Blizzard")
 	end
 end
 
@@ -142,13 +144,29 @@ function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
 			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock")
 		end
-		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
+
 		if self.db.profile.lifedrain then
-			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 14, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 		end
-		--flight timer
+		self:ScheduleEvent("cancellifedrainbar", "BigWigs_StopBar", 69, self, L["lifedrain_bar"])
+
+		--VG flight timer
 		if self.db.profile.flight then
-			self:TriggerEvent("BigWigs_StartBar", self, L["flight_bar"], 98, "Interface\\Icons\\Spell_Frost_Wizardmark")
+			self:TriggerEvent("BigWigs_StartBar", self, L["flight_bar"], 69, "Interface\\Icons\\Spell_Frost_Wizardmark")
+			self:ScheduleEvent("bwsapphirondeepbreathbar", "BigWigs_StartBar", 69, self, L["deepbreath_incoming_bar"], 26, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
 		end
 	end
 end
+
+function BigWigsSapphiron:Stopb()
+	BigWigsOnScreenIcons:Blizzardstop()
+end
+
+function BigWigsSapphiron:GenericBossDeath( msg )
+	if string.find(msg, L["sapphiron_dead"]) then
+		BigWigsOnScreenIcons:Blizzardstop()
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
+	end
+end
+
