@@ -63,7 +63,7 @@ BigWigsGuardians = BigWigs:NewModule(boss)
 BigWigsGuardians.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsGuardians.enabletrigger = boss
 BigWigsGuardians.toggleoptions = {"summon", "explode", "enrage", -1, "plagueyou", "plagueother", "icon", "bosskill"}
-BigWigsGuardians.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsGuardians.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -139,11 +139,11 @@ function BigWigsGuardians:CheckPlague( msg )
 		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
 			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Personal", true)
 			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true )
-			self:TriggerEvent("BigWigs_StartBar", self, L["plaguebar"] .. pplayer, 40, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+			self:TriggerEvent("BigWigs_StartBar", self, L["plaguebar"] .. player, 40, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 		elseif self.db.profile.plagueother then
 			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
-			self:TriggerEvent("BigWigs_StartBar", self, L["plaguebar"] .. pplayer, 40, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+			self:TriggerEvent("BigWigs_StartBar", self, L["plaguebar"] .. player, 40, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 		end
 
 		if self.db.profile.icon then
