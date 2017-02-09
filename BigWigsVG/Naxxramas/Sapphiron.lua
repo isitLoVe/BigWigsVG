@@ -67,7 +67,7 @@ BigWigsSapphiron = BigWigs:NewModule(boss)
 BigWigsSapphiron.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsSapphiron.enabletrigger = boss
 BigWigsSapphiron.toggleoptions = { "berserk", "lifedrain", "deepbreath", "flight", "bosskill" }
-BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
+BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -130,6 +130,9 @@ function BigWigsSapphiron:LifeDrain(msg)
 	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
 		self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
 	end
+end
+
+function BigWigsSapphiron:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if string.find(msg, L["chill_trigger"]) then
 		self:CancelScheduledEvent("bwsapphironchill")
 		self:ScheduleEvent("bwsapphironchill", self.Stopb, 3, self )
