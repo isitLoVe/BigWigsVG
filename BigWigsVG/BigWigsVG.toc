@@ -57,6 +57,7 @@ Extras\CustomBar.lua
 Extras\Tranq.lua
 Extras\Banish.lua
 Extras\OnScreenIcons.lua
+Extras\CThunGroups.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
