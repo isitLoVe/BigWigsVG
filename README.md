@@ -8,7 +8,7 @@ This is a repository for the maintenance and upkeep of BigWigs VG Edition, initi
 
 VG edit by Flier & Luise (De Profundis)
 
-Revision 19012
+Revision 19013
 
 ## Naxxramas:
 - [x] Anub'Rekhan
