@@ -79,7 +79,7 @@ BigWigsHorsemen = BigWigs:NewModule(boss)
 BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
 BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", "buff", -1, "meteor", "void", "wrath", "bosskill"}
-BigWigsHorsemen.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
+BigWigsHorsemen.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -130,7 +130,11 @@ function BigWigsHorsemen:SkillEvent(msg)
 end
 
 function BigWigsHorsemen:VoidSkillEvent(msg)
-	if string.find(msg, L["voidtrigger"]) or string.find(msg, L["voidtrigger2"]) then
+	if string.find(msg, L["voidtrigger"]) then
+		--stolen from GGC / KASA Addon
+		SendChatMessage("Void Zone on " .. UnitName("player") .. " !", "SAY")
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid3")
+	elseif string.find(msg, L["voidtrigger2"]) then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid3")
 	end
 end
