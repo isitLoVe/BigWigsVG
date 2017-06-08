@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "Ouro submerge",
 
-	scarabdespawn = "Scarabs despawn in 10 Seconds",
+	scarabdespawn = "Scarabs despawn in 5 Seconds",
 	scarabbar = "Scarabs despawn",
 
 	--submergetrigger = "Ouro casts Summon Ouro Mounds.",
@@ -85,7 +85,7 @@ BigWigsOuro = BigWigs:NewModule(boss)
 BigWigsOuro.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsOuro.enabletrigger = boss
 BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
-BigWigsOuro.revision = tonumber(string.sub("$Revision: 19011 $", 12, -3))
+BigWigsOuro.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
