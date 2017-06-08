@@ -25,7 +25,7 @@ Revision 19013
 - [x] Gothik the Harvester
 - [x] The Four Horsemen
 - [x] Sapphiron
-- [ ] Kel'Thuzad
+- [x] Kel'Thuzad
 
 ## Temple of Ahn'Qiraj
 - [x] The Prophet Skeram
@@ -36,7 +36,7 @@ Revision 19013
 - [x] Princess Huhuran
 - [x] The Twin Emperors
 - [x] Ouro
-- [x] C'Thun (needs testing)
+- [x] C'Thun  
 
 ## Blackwing Lair
 - [x] Razorgore the Untamed
