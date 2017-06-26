@@ -8,6 +8,11 @@ This is a repository for the maintenance and upkeep of BigWigs VG Edition, initi
 
 VG edit by Flier & Luise (De Profundis)
 
+## How to install
+
+Delete all other BigWigs folders you have in Interface/Addons and copy BigWigsVG into it.
+If you are playing on other servers do not delete anything just disable BigWigsVG and enable your BigWigs version.
+
 Revision 19013
 
 ## Naxxramas:
