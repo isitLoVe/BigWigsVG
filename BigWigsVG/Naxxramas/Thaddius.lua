@@ -119,7 +119,7 @@ BigWigsThaddius = BigWigs:NewModule(boss)
 BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
 BigWigsThaddius.toggleoptions = {"enrage", "charge", "strategy", "polarity", -1, "power", "throw", "warstomp", "phase", "bosskill"}
-BigWigsThaddius.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
+BigWigsThaddius.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 
 ------------------------------
@@ -132,7 +132,7 @@ function BigWigsThaddius:OnEnable()
 	self.teslawarn = nil
 	self.stage1warn = nil
 	self.previousCharge = ""
-	self.throwtime_initial = 22
+	self.throwtime_initial = 21
 	self.throwtime = 21
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -152,8 +152,8 @@ function BigWigsThaddius:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "StalaggPower", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "StalaggWarStomp", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FeugenWarStomp", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusStrategyRedLeftBlueRight", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusStrategyBlueLeftRedRight", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusStrategyRedLeftBlueRight1", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusStrategyBlueLeftRedRight1", 2)
 end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
@@ -192,11 +192,11 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwthaddiuswarstompfeugenwarn", "BigWigs_Message", 7, L["warstomp_warn_feugen"], "Urgent")
 		end
 
-		if (IsRaidLeader() or IsRaidOfficer()) then
+		if IsRaidLeader() then
 			if self.db.profile.strategy then
-				self:TriggerEvent("BigWigs_SendSync", "ThaddiusStrategyRedLeftBlueRight")
+				self:TriggerEvent("BigWigs_SendSync", "ThaddiusStrategyRedLeftBlueRight1")
 			else
-				self:TriggerEvent("BigWigs_SendSync", "ThaddiusStrategyBlueLeftRedRight")
+				self:TriggerEvent("BigWigs_SendSync", "ThaddiusStrategyBlueLeftRedRight1")
 			end
 		end
 		
@@ -336,10 +336,10 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 	elseif sync == "FeugenWarStomp" and self.db.profile.warstomp then
 		self:TriggerEvent("BigWigs_StartBar", self, L["warstomp_bar_feugen"], 9, "Interface\\Icons\\Ability_Druid_Maul")
 		self:ScheduleEvent("bwthaddiuswarstompfeugenwarn", "BigWigs_Message", 7, L["warstomp_warn_feugen"], "Urgent")
-	elseif sync == "ThaddiusStrategyRedLeftBlueRight" then
+	elseif sync == "ThaddiusStrategyRedLeftBlueRight1" then
 		self.db.profile.strategy = true
 		self:TriggerEvent("BigWigs_Message", L["redleftblueright"], nil, nil, "Warn")
-	elseif sync == "ThaddiusStrategyBlueLeftRedRight" then
+	elseif sync == "ThaddiusStrategyBlueLeftRedRight1" then
 		self.db.profile.strategy = false
 		self:TriggerEvent("BigWigs_Message", L["blueleftredright"], nil, nil, "Warn")
 	end
