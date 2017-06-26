@@ -57,6 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 	mc_trigger2 = "There will be no escape!",
 	mc_warning = "Mind Control!",
 	mc_bar = "Possible Mind Control!",
+	mc_triggervg = "^([^%s]+) ([^%s]+) afflicted by Chains of Kel'Thuzad",
 
 	start_trigger = "Minions, servants, soldiers of the cold dark, obey the call of Kel'Thuzad!",
 	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
@@ -109,7 +110,7 @@ BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsKelThuzad.enabletrigger = boss
 BigWigsKelThuzad.toggleoptions = { "frostbolt", "frostboltbar", -1, "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", -1, "phase", "bosskill" }
-BigWigsKelThuzad.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
+BigWigsKelThuzad.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -246,6 +247,11 @@ function BigWigsKelThuzad:Affliction( msg )
 		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "KelFrostBlast")
 			frostBlastTime = GetTime()
+		end
+	elseif string.find(msg, L["mc_triggervg"]) then
+		if not mcTime or (mcTime + 2) < GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
+			mcTime = GetTime()
 		end
 	end
 end
