@@ -14,6 +14,9 @@ local started
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
+	
+	SAPPHIRONLOCALIZEDLOLHAX = "Sapphiron's Lair",
+
 
 	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Deep Breath alert",
@@ -73,6 +76,10 @@ BigWigsSapphiron.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
 --      Initialization      --
 ------------------------------
 
+function BigWigsSapphiron:OnRegister()
+	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+end
+
 function BigWigsSapphiron:OnEnable()
 	started = nil
 
@@ -94,6 +101,13 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsSapphiron:MINIMAP_ZONE_CHANGED(msg)
+	if GetMinimapZoneText() ~= L["SAPPHIRONLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
+	-- Activate the Kel'Thuzad mod!
+	self.core:EnableModule(boss)
+end
+
 
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	if sync == self:GetEngageSync() and rest and rest == boss and not started then
