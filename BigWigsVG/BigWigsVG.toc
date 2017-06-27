@@ -3,7 +3,7 @@
 ## Title: Big Wigs |cff02bf02VG|r
 ## Notes: Boss Mods. Made by |cff1fff1f Sulfuras|r, Updates by Soge and Shyva, Modified by |cff02bf02Luise|r & |cff02bf02Flier|r for VanillaGaming
 ## Contributing Authors: Sulfuras, Soge, Shyva, Luise
-## Version: 19013
+## Version: 19014
 ## X-Website: http://www.vanillagaming.org
 ## X-Email: flierrgaming@gmail.com
 ## X-Category: Raid
@@ -27,6 +27,7 @@ Libs\AceDebug-2.0\AceDebug-2.0.lua
 Libs\AceEvent-2.0\AceEvent-2.0.lua
 Libs\AceLocale-2.2\AceLocale-2.2.lua
 Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua
+Libs\Waterfall-1.0\Waterfall-1.0.lua
 
 Libs\Babble-Boss-2.2\Babble-Boss-2.2.lua
 Libs\Babble-Zone-2.2\Babble-Zone-2.2.lua

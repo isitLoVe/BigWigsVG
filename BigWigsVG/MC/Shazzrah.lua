@@ -37,6 +37,13 @@ L:RegisterTranslations("enUS", function() return {
 	blink_cmd = "blink",
 	blink_name = "Blink Alert",
 	blink_desc = "Warn when Shazzrah Blinks",
+	
+	interrupt_cmd = "interrupt",
+	interrupt_name = "Spell Interrupt Alert",
+	interrupt_desc = "Warn when Shazzrah interrupts your spells",
+	
+	interrupt_bar = "~Spell Interrupt",
+	
 } end)
 
 ----------------------------------
@@ -46,8 +53,8 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsShazzrah = BigWigs:NewModule(boss)
 BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsShazzrah.enabletrigger = boss
-BigWigsShazzrah.toggleoptions = {"curse", "selfbuff", "blink", "bosskill"}
-BigWigsShazzrah.revision = tonumber(string.sub("$Revision: 19009 $", 12, -3))
+BigWigsShazzrah.toggleoptions = {"curse", "selfbuff", "blink", "interrupt", "bosskill"}
+BigWigsShazzrah.revision = tonumber(string.sub("$Revision: 19014 $", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -103,6 +110,10 @@ function BigWigsShazzrah:BigWigs_RecvSync( sync, rest )
 			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 			--self:ScheduleEvent("bwshazzrahblinkstart", self.StartBlink, 30, self )
 		end
+		if self.db.profile.interrupt then
+			self:TriggerEvent("BigWigs_StartBar", self, L["interrupt_bar"], 15, "Interface\\Icons\\Spell_Frost_IceShock")
+			self:ScheduleRepeatingEvent("bwshazzrahinterrupt", self.Interrupt, 16, self)
+		end
 	elseif sync == "ShazzrahBlink" and self.db.profile.blink then
 		--self:ScheduleEvent("BigWigs_Message", blinktime - 5, L["warn2"], "Urgent")
 		--self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], blinktime, "Interface\\Icons\\Spell_Arcane_Blink")
@@ -111,6 +122,10 @@ function BigWigsShazzrah:BigWigs_RecvSync( sync, rest )
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 30, "Interface\\Icons\\Spell_Holy_SealOfSalvation")
 		self:TriggerEvent("BigWigs_StartBar", self, L["daedenmagicnextbar"], 35, "Interface\\Icons\\Spell_Holy_SealOfSalvation")
 	end
+end
+
+function BigWigsShazzrah:Interrupt()
+	self:TriggerEvent("BigWigs_StartBar", self, L["interrupt_bar"], 16, "Interface\\Icons\\Spell_Frost_IceShock")
 end
 
 function BigWigsShazzrah:StartBlink()

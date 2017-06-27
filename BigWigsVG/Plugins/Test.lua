@@ -22,12 +22,17 @@ L:RegisterTranslations("enUS", function() return {
 	["Victory!"] = true,
 	["Options for testing."] = true,
 	["local"] = true,
+	["localhp"] = true,
 	["Local test"] = true,
+	["Local test HP"] = true,
 	["Perform a local test of BigWigs."] = true,
+	["Perform a local test of BigWigs HP Bars."] = true,
 	["sync"] = true,
 	["Sync test"] = true,
 	["Perform a sync test of BigWigs."] = true,
 	["Testing Sync"] = true,
+	["Test HP Bar 1"] = true,
+	["Test HP Bar 2"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -134,7 +139,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsTest = BigWigs:NewModule(L["Test"])
-BigWigsTest.revision = tonumber(string.sub("$Revision: 14954 $", 12, -3))
+BigWigsTest.revision = tonumber(string.sub("$Revision: 19014 $", 12, -3))
 
 BigWigsTest.consoleCmd = L["test"]
 BigWigsTest.consoleOptions = {
@@ -148,6 +153,12 @@ BigWigsTest.consoleOptions = {
 			desc = L["Perform a local test of BigWigs."],
 			func = function() BigWigsTest:TriggerEvent("BigWigs_Test") end,
 		},
+		[L["localhp"]] = {
+			type = "execute",
+			name = L["Local test HP"],
+			desc = L["Perform a local test of BigWigs HP Bars."],
+			func = function() BigWigsTest:TriggerEvent("BigWigs_TestHP") end,
+		},
 		[L["sync"]] = {
 			type = "execute",
 			name = L["Sync test"],
@@ -160,6 +171,7 @@ BigWigsTest.consoleOptions = {
 
 function BigWigsTest:OnEnable()
 	self:RegisterEvent("BigWigs_Test")
+	self:RegisterEvent("BigWigs_TestHP")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "TestSync", 5)
 	self:RegisterEvent("BigWigs_SyncTest")
@@ -190,3 +202,21 @@ function BigWigsTest:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 4"], 3, "Interface\\Icons\\Spell_Nature_ResistNature", true, "black")
 end
+
+function BigWigsTest:BigWigs_TestHP()
+    self:TriggerEvent("BigWigs_StartHPBar", self, L["Test HP Bar 1"], 100)
+    --self:TriggerEvent("BigWigs_SetHPBar", self, L["Test HP Bar 1"], 0)
+    self:TriggerEvent("BigWigs_StartHPBar", self, L["Test HP Bar 2"], 100)
+   -- self:TriggerEvent("BigWigs_SetHPBar", self, L["Test HP Bar 2"], 0)
+    health = 100
+	self:ScheduleRepeatingEvent("bwtesthpbarrepeat", self.UpdateTestHPBars, 0.1, self)
+end
+
+function BigWigsTest:UpdateTestHPBars()
+	if health > 0 then
+		health = health - 1
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["Test HP Bar 1"], 100-health)
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["Test HP Bar 2"], 100-health)
+	end
+end
+

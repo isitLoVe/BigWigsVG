@@ -6,6 +6,7 @@
 local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = AceLibrary("Babble-Boss-2.2")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local waterfall = AceLibrary("Waterfall-1.0")
 
 ----------------------------
 --      Localization      --
@@ -180,16 +181,18 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		disabled = function() return not BigWigs:IsActive() end,
 	},
 }}
-BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
-BigWigs.debugFrame = ChatFrame5
-BigWigs.revision = tonumber(string.sub("$Revision: 19013 $", 12, -3))
+BigWigs:RegisterChatCommand({"/bwc", "/BigWigsCmd"}, BigWigs.cmdtable)
+BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, function() waterfall:Open("BigWigs") end)
+waterfall:Register('BigWigs', 'aceOptions',BigWigs.cmdtable, 'title','BigWigs', 'colorR', 0.2, 'colorG', 0.6, 'colorB', 0.2) 
+BigWigs.debugFrame = DEFAULT_CHAT_FRAME
+BigWigs.revision = tonumber(string.sub("$Revision: 19014 $", 12, -3))
 
 --------------------------------
 --      Module Prototype      --
 --------------------------------
 
 BigWigs.modulePrototype.core = BigWigs
-BigWigs.modulePrototype.debugFrame = ChatFrame5
+BigWigs.modulePrototype.debugFrame = DEFAULT_CHAT_FRAME
 BigWigs.modulePrototype.revision = 1 -- To be overridden by the module!
 
 

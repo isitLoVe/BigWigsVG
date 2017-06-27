@@ -34,6 +34,10 @@ local firstWarning = nil
 local target = nil
 local tentacletime = timeP1Tentacle
 
+local fleshTentacle1Health = 100
+local fleshTentacle2Health = 100
+
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -103,6 +107,14 @@ L:RegisterTranslations("enUS", function() return {
 	groupwarning	= "Dark Glare on group %s (%s)",
 	positions2	= "Dark Glare ends in 5 sec",
 	phase2starting	= "The Eye is dead! Body incoming!",
+	
+	fleshtentacle_cmd = "fleshtentacle",
+    fleshtentacle_name = "Flesh Tentacle",
+	fleshtentacle_desc = "Healthbars of both Flesh tentacles",
+    fleshtentacle = "Flesh Tentacle",
+    fleshtentacle1 = "Flesh Tentacle 1",
+    fleshtentacle2 = "Flesh Tentacle 2",
+
 } end )
 
 ----------------------------------
@@ -112,8 +124,8 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsCThun = BigWigs:NewModule(cthun)
 BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
-BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
-BigWigsCThun.revision = tonumber(string.sub("$Revision: 19012 $", 12, -3))
+BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", "fleshtentacle" , -1, "giant", "weakened", "bosskill" }
+BigWigsCThun.revision = tonumber(string.sub("$Revision: 19014 $", 12, -3))
 
 function BigWigsCThun:OnEnable()
 	target = nil
@@ -216,6 +228,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		self:TriggerEvent("BigWigs_SendSync", "CThunGEdownVG")
 	elseif (msg == string.format(UNITDIESOTHER, cthun)) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], cthun), "Bosskill", nil, "Victory") end
+		BigWigsCThun:RemoveFleshTentacle()
 		self.core:ToggleModuleActive(self, false)
 	end
 end
@@ -323,6 +336,12 @@ function BigWigsCThun:CThunP2StartVG()
 		end
 
 		--self:ScheduleRepeatingEvent("bwcthuntargetp2", self.CheckTargetP2, timeTarget, self )
+		
+		if self.db.profile.fleshtentacle then
+			self:SetupFleshTentacle()
+		end
+
+		
 	end
 
 end
@@ -386,6 +405,11 @@ function BigWigsCThun:CThunWeakenedVG()
 	if self.db.profile.giant then
 		self:TriggerEvent("BigWigs_StartBar", self, L["barGiantE"], timeGiantEyeRapeleft + timeWeakened, "Interface\\Icons\\Ability_EyeOfTheOwl")
 		self:TriggerEvent("BigWigs_StartBar", self, L["barGiantC"], timeGiantClawRapeleft + timeWeakened, "Interface\\Icons\\Spell_Nature_Earthquake")
+	end
+	
+	if self.db.profile.fleshtentacle then
+		self:RemoveFleshTentacle()
+		self:ScheduleEvent("bwcthunfleshten", self.SetupFleshTentacle, 45, self )
 	end
 end
 
@@ -511,4 +535,59 @@ function BigWigsCThun:DarkGlare()
 		self:ScheduleRepeatingEvent("bwcthundarkglare", self.DarkGlare, timeP1Glare, self )
 		firstGlare = nil
 	end
+end
+
+function BigWigsCThun:SetupFleshTentacle()
+    self:TriggerEvent("BigWigs_StartHPBar", self, L["fleshtentacle1"], 100)
+    self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 0)
+    self:TriggerEvent("BigWigs_StartHPBar", self, L["fleshtentacle2"], 100)
+    self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 0)
+    
+	self:ScheduleRepeatingEvent("bwcthunCheckFleshTentacleHP", self.UpdateFleshTentacle, 1, self)
+end
+
+function BigWigsCThun:UpdateFleshTentacle()
+    local health = self:GetFleshTentacleHealth()
+    if health <= fleshTentacle1Health then
+		fleshTentacle1Health = health
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 100-fleshTentacle1Health)
+	else
+		fleshTentacle2Health = health
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 100-fleshTentacle2Health)
+	end
+end
+
+function BigWigsCThun:GetFleshTentacleHealth()    
+    local health = 100
+    if UnitName("playertarget") == L["fleshtentacle"] then
+		health = UnitHealth("playertarget")
+	else
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == L["fleshtentacle"] then
+				health = UnitHealth("Raid"..i.."target")
+				break
+			end
+		end
+	end
+    
+    -- 0 would remove the bar
+    if health == 0 then
+        health = 0.1
+    end
+    
+    return health
+end
+
+function BigWigsCThun:FleshTentacleDeath()
+    fleshTentacle1Health = 0
+    self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 99.9)
+end
+
+function BigWigsCThun:RemoveFleshTentacle()
+    fleshTentacle1Health = 100
+    fleshTentacle2Health = 100
+	self:TriggerEvent("BigWigs_StopHPBar", self, L["fleshtentacle1"])
+	self:TriggerEvent("BigWigs_StopHPBar", self, L["fleshtentacle2"])
+	self:CancelScheduledEvent("bwcthunCheckFleshTentacleHP")
+	self:CancelScheduledEvent("bwcthunfleshten")
 end
