@@ -160,8 +160,8 @@ function BigWigsCThun:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunP2StartVG", 20)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunWeakenedVG", 20)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunGEdownVG", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT1HP", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT2HP", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT1HP", 0.1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT2HP", 0.1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFTDead", 1)
 end
 
@@ -576,12 +576,12 @@ function BigWigsCThun:GetFleshTentacleHealth()
 		health = UnitHealth("playertarget")
 		DEFAULT_CHAT_FRAME:AddMessage("FT HP" .. health)
 	else
-		for i = 1, GetNumRaidMembers(), 1 do
+		--[[for i = 1, GetNumRaidMembers(), 1 do
 			if UnitName("Raid"..i.."target") == L["fleshtentacle"] then
 				health = UnitHealth("Raid"..i.."target")
 				break
 			end
-		end
+		end--]]
 	end
     
     -- 0 would remove the bar
