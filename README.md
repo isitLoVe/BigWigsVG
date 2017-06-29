@@ -13,7 +13,7 @@ VG edit by Flier & Luise (De Profundis)
 Delete all other BigWigs folders you have in Interface/Addons and copy BigWigsVG into it.
 If you are playing on other servers do not delete anything just disable BigWigsVG and enable your BigWigs version.
 
-Revision 19013
+Revision 19014
 
 ## Naxxramas:
 - [x] Anub'Rekhan
