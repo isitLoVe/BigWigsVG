@@ -574,7 +574,7 @@ function BigWigsCThun:GetFleshTentacleHealth()
     --local health = 100
     if UnitName("playertarget") == L["fleshtentacle"] then
 		health = UnitHealth("playertarget")
-		DEFAULT_CHAT_FRAME:AddMessage("FT HP" .. health)
+		--DEFAULT_CHAT_FRAME:AddMessage("FT HP" .. health)
 	else
 		--[[for i = 1, GetNumRaidMembers(), 1 do
 			if UnitName("Raid"..i.."target") == L["fleshtentacle"] then
