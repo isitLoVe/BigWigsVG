@@ -554,33 +554,34 @@ function BigWigsCThun:SetupFleshTentacle()
     self:TriggerEvent("BigWigs_StartHPBar", self, L["fleshtentacle2"], 100)
     self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 0)
     
-	self:ScheduleRepeatingEvent("bwcthunCheckFleshTentacleHP", self.UpdateFleshTentacle, 0.5, self)
+	self:ScheduleRepeatingEvent("bwcthunCheckFleshTentacleHP", self.UpdateFleshTentacle, 1, self)
 end
 
 function BigWigsCThun:UpdateFleshTentacle()
     local health = self:GetFleshTentacleHealth()
-    if health <= fleshTentacle1Health then
+    if health and health <= fleshTentacle1Health then
 		fleshTentacle1Health = health
-		self:TriggerEvent("BigWigs_SendSync", "CThunT1HP" .. health)
+		self:TriggerEvent("BigWigs_SendSync", "CThunT1HP " .. health)
 		--self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 100-fleshTentacle1Health)
-	else
+	elseif health then
 		fleshTentacle2Health = health
-		self:TriggerEvent("BigWigs_SendSync", "CThunT2HP" .. health)
+		self:TriggerEvent("BigWigs_SendSync", "CThunT2HP " .. health)
 		--self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 100-fleshTentacle2Health)
 	end
 end
 
 function BigWigsCThun:GetFleshTentacleHealth()    
-    local health = 100
+    --local health = 100
     if UnitName("playertarget") == L["fleshtentacle"] then
 		health = UnitHealth("playertarget")
-	--[[else
+		DEFAULT_CHAT_FRAME:AddMessage("FT HP" .. health)
+	else
 		for i = 1, GetNumRaidMembers(), 1 do
 			if UnitName("Raid"..i.."target") == L["fleshtentacle"] then
 				health = UnitHealth("Raid"..i.."target")
 				break
 			end
-		end --]]
+		end
 	end
     
     -- 0 would remove the bar
