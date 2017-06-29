@@ -160,6 +160,9 @@ function BigWigsCThun:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunP2StartVG", 20)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunWeakenedVG", 20)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CThunGEdownVG", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT1HP", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFT2HP", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CThunFTDead", 1)
 end
 
 ----------------------
@@ -230,6 +233,8 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], cthun), "Bosskill", nil, "Victory") end
 		BigWigsCThun:RemoveFleshTentacle()
 		self.core:ToggleModuleActive(self, false)
+	elseif (msg == string.format(UNITDIESOTHER, L["fleshtentacle"])) then
+		self:TriggerEvent("BigWigs_SendSync", "CThunFTDead")
 	end
 end
 
@@ -249,6 +254,12 @@ function BigWigsCThun:BigWigs_RecvSync(sync, rest)
 	elseif sync == "CThunGEdownVG" then
 		self:TriggerEvent("BigWigs_Message", L["gedownwarn"], "Positive")
 		BigWigsOnScreenIcons:GEyestop()
+	elseif sync == "CThunFTDead" then
+		self:FleshTentacleDeath()
+	elseif sync == "CThunT1HP" then
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 100-rest)
+	elseif sync == "CThunT2HP" then
+		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 100-rest)
 	end
 end
 
@@ -543,17 +554,19 @@ function BigWigsCThun:SetupFleshTentacle()
     self:TriggerEvent("BigWigs_StartHPBar", self, L["fleshtentacle2"], 100)
     self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 0)
     
-	self:ScheduleRepeatingEvent("bwcthunCheckFleshTentacleHP", self.UpdateFleshTentacle, 1, self)
+	self:ScheduleRepeatingEvent("bwcthunCheckFleshTentacleHP", self.UpdateFleshTentacle, 0.5, self)
 end
 
 function BigWigsCThun:UpdateFleshTentacle()
     local health = self:GetFleshTentacleHealth()
     if health <= fleshTentacle1Health then
 		fleshTentacle1Health = health
-		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 100-fleshTentacle1Health)
+		self:TriggerEvent("BigWigs_SendSync", "CThunT1HP" .. health)
+		--self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle1"], 100-fleshTentacle1Health)
 	else
 		fleshTentacle2Health = health
-		self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 100-fleshTentacle2Health)
+		self:TriggerEvent("BigWigs_SendSync", "CThunT2HP" .. health)
+		--self:TriggerEvent("BigWigs_SetHPBar", self, L["fleshtentacle2"], 100-fleshTentacle2Health)
 	end
 end
 
@@ -561,13 +574,13 @@ function BigWigsCThun:GetFleshTentacleHealth()
     local health = 100
     if UnitName("playertarget") == L["fleshtentacle"] then
 		health = UnitHealth("playertarget")
-	else
+	--[[else
 		for i = 1, GetNumRaidMembers(), 1 do
 			if UnitName("Raid"..i.."target") == L["fleshtentacle"] then
 				health = UnitHealth("Raid"..i.."target")
 				break
 			end
-		end
+		end --]]
 	end
     
     -- 0 would remove the bar
